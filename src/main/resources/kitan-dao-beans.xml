@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <tx:annotation-driven transaction-manager="kitan-transactionManager"/>
+    <context:component-scan base-package="by.ibrel.logic.service"/>
+
+    <bean id="kitan-ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="kitan-sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="kitan-ds"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <!--<prop key="javax.persistence.validation.mode">none</prop>-->
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
+            </props>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>by.ibrel.logic.entity</value>
+            </list>
+        </property>
+    </bean>
+
+    <jpa:repositories base-package="by.ibrel.logic.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
+
+
+    <bean id="kitan-transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <constructor-arg ref="kitan-entityManagerFactory" />
+    </bean>
+
+    <bean id="kitan-jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <!--<property name="showSql" value="true"/>-->
+        <property name="generateDdl" value="true"/>
+        <property name="database" value="MYSQL"/>
+    </bean>
+
+    <bean id="kitan-entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="kitan-ds"/>
+        <property name="jpaVendorAdapter" ref="kitan-jpaVendorAdapter"/>
+        <!--spring based scanning for entity classes-->
+        <property name="packagesToScan">
+            <list>
+                <value>by.ibrel.logic.entity</value>
+            </list>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <!--<prop key="javax.persistence.validation.mode">none</prop>-->
+            </props>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,20 @@
+*.class
+logs/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#idea
+.idea/
+.target/
+.git/
+out/
+*.iml
+
+# maven build folder
+overlays/
+target/
+*.log
+
