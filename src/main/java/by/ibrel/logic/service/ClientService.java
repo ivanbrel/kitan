@@ -24,7 +24,7 @@ public class ClientService implements IClientService {
 
     @Override
     public Client createClient(ClientDto clientDto) throws ClientExistsException {
-        if(clientExists(clientDto.getLastName(), clientDto.getAccount())){
+        if(clientExists(clientDto.getAccount())){
             throw new ClientExistsException("Client with last name " + clientDto.getLastName() + " and number account "
             + clientDto.getAccount() + " already exists");
         }
@@ -39,10 +39,9 @@ public class ClientService implements IClientService {
         return clientRepository.save(client);
     }
 
-    private boolean clientExists(final String lastName, final String account) {
-        final Client client = clientRepository.findByLastName(lastName);
-        final Client client2 = clientRepository.findByAccount(account);
-        return client != null && client2 != null;
+    private boolean clientExists(final String account) {
+        final Client client = clientRepository.findByAccount(account);
+        return client != null;
     }
 
     @Override
@@ -58,6 +57,11 @@ public class ClientService implements IClientService {
     @Override
     public Client findByNameClient(String nameClient) {
         return clientRepository.findByLastName(nameClient);
+    }
+
+    @Override
+    public Client findById(Long id) {
+        return clientRepository.findOne(id);
     }
 
     @Override

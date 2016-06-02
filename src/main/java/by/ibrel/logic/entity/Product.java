@@ -21,19 +21,21 @@ public class Product {
 
     private String countryProduct;
 
-    private Integer price;
+    private String price;
 
-    private Integer barcode;
+    private String barcode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
-    private Category category;
+    private String category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_ID", nullable = false)
-    private Client client;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PURCHASE_ID", nullable = true)
+    private Purchase purchase;
 
+    //check the status of the product, if true means free
     private boolean state;
+
+    //check the status of the product, if true means product sales
+    private boolean sales;
 
     public Product() {
     }
@@ -78,36 +80,36 @@ public class Product {
         this.color = color;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Integer getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(Integer barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public Client getClient() {
-        return client;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
     public String getCountryProduct() {
@@ -116,6 +118,14 @@ public class Product {
 
     public void setCountryProduct(String countryProduct) {
         this.countryProduct = countryProduct;
+    }
+
+    public boolean isSales() {
+        return sales;
+    }
+
+    public void setSales(boolean sales) {
+        this.sales = sales;
     }
 
     @Override
@@ -144,7 +154,7 @@ public class Product {
                 ", barcode=" + barcode +
                 ", countryProduct=" + countryProduct +
                 ", category=" + category +
-                ", client=" + client +
+                ", purchase=" + purchase +
                 '}';
     }
 }

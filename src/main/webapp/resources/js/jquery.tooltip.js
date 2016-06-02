@@ -23,8 +23,6 @@
 		title,
 		// timeout id for delayed tooltips
 		tID,
-		// IE 5.5 or 6
-		IE = $.browser.msie && /MSIE\s(5\.5|6\.)/.test(navigator.userAgent),
 		// flag for mouse tracking
 		track = false;
 	
@@ -58,27 +56,6 @@
 				.hover(save, hide)
 				.click(hide);
 		},
-		fixPNG: IE ? function() {
-			return this.each(function () {
-				var image = $(this).css('backgroundImage');
-				if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
-					image = RegExp.$1;
-					$(this).css({
-						'backgroundImage': 'none',
-						'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='" + image + "')"
-					}).each(function () {
-						var position = $(this).css('position');
-						if (position != 'absolute' && position != 'relative')
-							$(this).css('position', 'relative');
-					});
-				}
-			});
-		} : function() { return this; },
-		unfixPNG: IE ? function() {
-			return this.each(function () {
-				$(this).css({'filter': '', backgroundImage: ''});
-			});
-		} : function() { return this; },
 		hideWhenEmpty: function() {
 			return this.each(function() {
 				$(this)[ $(this).html() ? "show" : "hide" ]();

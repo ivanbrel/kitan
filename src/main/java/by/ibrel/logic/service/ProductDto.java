@@ -26,11 +26,15 @@ public class ProductDto {
 
     @NotNull
     @Size(min = 1)
-    private Integer price;
+    private String category;
 
     @NotNull
     @Size(min = 1)
-    private Integer barcode;
+    private String price;
+
+    @NotNull
+    @Size(min = 1)
+    private String barcode;
 
     public String getNameProduct() {
         return nameProduct;
@@ -64,20 +68,28 @@ public class ProductDto {
         this.countryProduct = countryProduct;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Integer getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(Integer barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override

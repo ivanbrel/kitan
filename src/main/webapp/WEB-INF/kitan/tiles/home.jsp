@@ -1,19 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
-<div class="clear"></div>
-
-<!-- start content-outer ........................................................................................................................START -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- start content-outer -->
 <div id="content-outer">
     <!-- start content -->
     <div id="content">
 
-        <!--  start page-heading -->
-        <div id="page-heading">
-            <h1>Add product</h1>
-        </div>
-        <!-- end page-heading -->
 
+        <div id="page-heading"><h1>Оформить заказ</h1></div>
+
+<form method="POST" action="${ctx}/purchase/add">
         <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
             <tr>
                 <th rowspan="3" class="sized"><img src="${ctx}/resources/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
@@ -25,202 +22,121 @@
             <tr>
                 <td id="tbl-border-left"></td>
                 <td>
-                    <!--  start content-table-inner ...................................................................... START -->
+                    <!--  start content-table-inner -->
                     <div id="content-table-inner">
 
-                        <!--  start table-content  -->
-                        <div id="table-content">
-
-                            <!--  start message-yellow -->
-                            <div id="message-yellow">
-                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td class="yellow-left">You have a new message. <a href="">Go to Inbox.</a></td>
-                                        <td class="yellow-right"><a class="close-yellow"><img src="${ctx}/resources/img/table/icon_close_yellow.gif"   alt="" /></a></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--  end message-yellow -->
-
-                            <!--  start message-red -->
-                            <div id="message-red">
-                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td class="red-left">Error. <a href="">Please try again.</a></td>
-                                        <td class="red-right"><a class="close-red"><img src="${ctx}/resources/img/table/icon_close_red.gif"   alt="" /></a></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--  end message-red -->
-
-                            <!--  start message-blue -->
-                            <div id="message-blue">
-                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
-                                        <td class="blue-right"><a class="close-blue"><img src="${ctx}/resources/img/table/icon_close_blue.gif"   alt="" /></a></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--  end message-blue -->
-
-                            <!--  start message-green -->
-                            <div id="message-green">
-                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td class="green-left">Product added sucessfully. <a href="">Add new one.</a></td>
-                                        <td class="green-right"><a class="close-green"><img src="${ctx}/resources/img/table/icon_close_green.gif"   alt="" /></a></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--  end message-green -->
-
-
-                            <!--  start product-table ..................................................................................... -->
-                            <form id="mainform" action="">
-                                <table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-                                    <tr>
-                                        <th class="table-header-check"><a id="toggle-all" ></a> </th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Наименование</a>	</th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">цена</a></th>
-                                        <th class="table-header-repeat line-left"><a href="">тип</a></th>
-                                        <th class="table-header-repeat line-left"><a href="">цвет</a></th>
-                                        <th class="table-header-repeat line-left"><a href="">цвет <рамы></рамы></a></th>
-                                        <th class="table-header-options line-left"><a href="">Options</a></th>
-                                    </tr>
-                                    <tr>
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="alternate-row">
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="alternate-row">
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="alternate-row">
-                                        <td><input  type="checkbox"/></td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td>kitan</td>
-                                        <td class="options-width">
-                                            <a href="" title="Edit" class="icon-1 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-2 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-3 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-4 info-tooltip"></a>
-                                            <a href="" title="Edit" class="icon-5 info-tooltip"></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <!--  end product-table................................... -->
-                            </form>
-                        </div>
-                        <!--  end content-table  -->
-
-                        <!--  start actions-box ............................................... -->
-                        <div id="actions-box">
-                            <a href="" class="action-slider"></a>
-                            <div id="actions-box-slider">
-                                <a href="" class="action-edit">Edit</a>
-                                <a href="" class="action-delete">Delete</a>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <!-- end actions-box........... -->
-
-                        <!--  start paging..................................................... -->
-                        <table border="0" cellpadding="0" cellspacing="0" id="paging-table">
-                            <tr>
+                        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                            <tr valign="top">
                                 <td>
-                                    <a href="" class="page-far-left"></a>
-                                    <a href="" class="page-left"></a>
-                                    <div id="page-info">Page <strong>1</strong> / 15</div>
-                                    <a href="" class="page-right"></a>
-                                    <a href="" class="page-far-right"></a>
+                                    <!-- start id-form -->
+                                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
+                                        <tr>
+                                            <th valign="top">Покупатель:</th>
+                                            <td><input type="text" class="form-control" name="clientId"/></td>
+                                            <td><button type="button" class="btn btn-primary">Выбор покупателя</button></td>
+                                            <td>
+                                                <%--error--%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">Продукт: </th>
+                                            <td><input type="text" class="form-control" name="productId"/></td>
+                                            <td><button type="button" class="btn btn-primary">Выбор продукта</button></td>
+                                            <td>
+                                               <%----%>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">Цена:</th>
+                                            <td><input type="text" class="form-control" /></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <jsp:useBean id="now" class="java.util.Date" scope="page"/>
+                                            <th valign="top">Дата покупки:</th>
+                                            <td><input type="text" class="form-control" name="date" value="<fmt:formatDate type="time" value="${now}" pattern="dd.MM.yyyy HH:mm:ss"/>"/></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th valign="top">Примечание к покупке:</th>
+                                            <td><textarea class="form-control" rows="3"></textarea></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <td valign="top">
+                                                <input type="submit" class="btn btn-success" value="Выполнить заказ"/>
+                                                <input type="button" class="btn btn-danger" value="Очистить форму" />
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                    <!-- end id-form  -->
+
                                 </td>
                                 <td>
-                                    <select  class="styledselect_pages">
-                                        <option value="">Number of rows</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                    </select>
+
+                                    <!--  start related-activities -->
+                                    <div id="related-activities">
+
+                                        <!--  start related-act-top -->
+                                        <div id="related-act-top">
+                                            <img src="${ctx}/resources/img/forms/header_related_act.gif" width="271" height="43" alt="" />
+                                        </div>
+                                        <!-- end related-act-top -->
+
+                                        <!--  start related-act-bottom -->
+                                        <div id="related-act-bottom">
+
+                                            <!--  start related-act-inner -->
+                                            <div id="related-act-inner">
+
+                                                <div class="left"><a href=""><img src="${ctx}/resources/img/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+                                                <div class="right">
+                                                    <h5>Клиенты</h5>
+
+                                                    <ul class="greyarrow">
+                                                        <li><a href="${ctx}/client/add-page">Создать нового клиента</a></li>
+                                                        <li><a href="${ctx}/client/list">Все клиенты</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="clear"></div>
+                                                <div class="lines-dotted-short"></div>
+
+                                                <div class="left"><a href=""><img src="${ctx}/resources/img/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
+                                                <div class="right">
+                                                    <h5>Товар</h5>
+
+                                                    <ul class="greyarrow">
+                                                        <li><a href="${ctx}/product/list">Посмотреть весь товар</a></li>
+                                                        <li><a href="">Что то ещё с товаром</a> </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <!-- end related-act-inner -->
+                                            <div class="clear"></div>
+
+                                        </div>
+                                        <!-- end related-act-bottom -->
+
+                                    </div>
+                                    <!-- end related-activities -->
+
                                 </td>
                             </tr>
+                            <tr>
+                                <td><img src="${ctx}/resources/img/shared/blank.gif" width="695" height="1" alt="blank" /></td>
+                                <td></td>
+                            </tr>
                         </table>
-                        <!--  end paging................ -->
 
                         <div class="clear"></div>
-
                     </div>
-                    <!--  end content-table-inner ............................................END  -->
+                    <!--  end content-table-inner  -->
                 </td>
                 <td id="tbl-border-right"></td>
             </tr>
@@ -230,12 +146,12 @@
                 <th class="sized bottomright"></th>
             </tr>
         </table>
-        <div class="clear">&nbsp;</div>
 
+        <div class="clear">&nbsp;</div>
+</form>
     </div>
+
     <!--  end content -->
     <div class="clear">&nbsp;</div>
 </div>
-<!--  end content-outer........................................................END -->
-
-<div class="clear">&nbsp;</div>
+<!--  end content-outer -->

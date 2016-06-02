@@ -12,17 +12,20 @@
         <put-attribute name="footer" value="/WEB-INF/kitan/templates/footer.jsp"/>
     </definition>
 
+    <definition name="kitan.error" template="/WEB-INF/kitan/templates/errortemplate/templateerror.jsp">
+        <put-attribute name="titleKey" value=""/>
+        <put-attribute name="inHeader" value="/WEB-INF/kitan/templates/errortemplate/inHeadError.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/kitan/templates/errortemplate/footerError.jsp"/>
+    </definition>
+
     <definition name="auth.login" template="/login.jsp"/>
+
     <definition name="auth.registration" template="/WEB-INF/kitan/tiles/registration.jsp"/>
 
     <definition name="main.home" extends="kitan.main">
         <put-attribute name="titleKey" value="Главная"/>
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/home.jsp"/>
-    </definition>
-
-    <definition name="main.add.client" extends="kitan.main">
-        <put-attribute name="titleKey" value="Добавить клиента"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addClient.jsp"/>
     </definition>
 
     <definition name="main.contacts" extends="kitan.main">
@@ -40,10 +43,65 @@
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/ref.jsp"/>
     </definition>
 
+    <!--user page-->
     <definition name="auth.user.list" extends="kitan.main">
         <put-attribute name="titleKey" value="Список пользователей"/>
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/userslist.jsp"/>
     </definition>
 
+    <definition name="auth.user.edit" extends="kitan.main">
+        <put-attribute name="titleKey" value="Список пользователей"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/userInformation.jsp"/>
+    </definition>
+
+    <!--client pages-->
+    <definition name="client.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Все клиенты"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/clientList.jsp"/>
+    </definition>
+
+    <definition name="client.add" extends="kitan.main">
+        <put-attribute name="titleKey" value="Добавить клиента"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addClient.jsp"/>
+    </definition>
+
+    <definition name="client.edit" extends="kitan.main">
+        <put-attribute name="titleKey" value="Изменить клиента"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/editClient.jsp"/>
+    </definition>
+
+    <!--product pages-->
+    <definition name="product.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Продукт"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/productList.jsp"/>
+    </definition>
+
+    <definition name="product.add" extends="kitan.main">
+        <put-attribute name="titleKey" value="Добавить продукт"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addProduct.jsp"/>
+    </definition>
+
+    <definition name="product.edit" extends="kitan.main">
+        <put-attribute name="titleKey" value="Изменить продукт"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/editProduct.jsp"/>
+    </definition>
+
+    <!--purchase page-->
+    <definition name="purchase.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Заказы"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/purchaseList.jsp"/>
+    </definition>
+
+    <definition extends="kitan.error" name="error.403">
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/403.jsp"/>
+    </definition>
+    <definition extends="kitan.error" name="error.404">
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/404.jsp"/>
+    </definition>
+    <definition extends="kitan.error" name="error.trace">
+    <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/errortrace.jsp"/>
+    </definition>
+
+    <definition template="/WEB-INF/kitan/tiles/test.jsp" name="test"/>
 
 </tiles-definitions>

@@ -24,8 +24,8 @@ public class Client {
 
     private String account;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private Collection<Product> products;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
+    private Collection<Purchase> purchases;
 
     public Client() {
     }
@@ -78,12 +78,12 @@ public class Client {
         this.account = account;
     }
 
-    public Collection<Product> getProducts() {
-        return products;
+    public Collection<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setProducts(Collection<Product> products) {
-        this.products = products;
+    public void setPurchases(Collection<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class Client {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", account='" + account + '\'' +
-                ", product=" + products +
+                ", product=" + purchases +
                 '}';
     }
 }

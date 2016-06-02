@@ -10,7 +10,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>Login/Logout animation concept</title>
+    <title>Регистрация</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
@@ -24,38 +24,38 @@
     <div class="demo">
         <div class="login">
             <div class="registr__form">
-                <form id="regform" method="POST" action="/">
+                <form id="regform" method="POST" action="${pageContext.request.contextPath}/registration">
                     <div class="login__row">
                         <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                             <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                         </svg>
-                        <input type="text" class="login__input name" name="firstName" placeholder="first name"/>
+                        <input type="text" class="login__input name" name="firstName" placeholder="Имя"/>
                     </div>
                     <div class="login__row">
                         <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                             <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                         </svg>
-                        <input type="text" class="login__input pass" name="lastName" placeholder="last name"/>
+                        <input type="text" class="login__input pass" name="lastName" placeholder="Фамилия"/>
                     </div>
                     <div class="login__row">
                         <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                             <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                         </svg>
-                        <input id="login" type="text" class="login__input pass" name="login" placeholder="login"/>
+                        <input id="login" type="text" class="login__input pass" name="login" placeholder="Логин"/>
                     </div>
                     <div class="login__row">
                         <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                             <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
                         </svg>
-                        <input id="password" type="password" class="login__input pass" name="password" placeholder="password"/>
+                        <input id="password" type="password" class="login__input pass" name="password" placeholder="Пароль"/>
                     </div>
                     <div class="login__row">
                         <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                             <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
                         </svg>
-                        <input id="matchPassword" type="password" class="login__input pass" name="matchingPassword" placeholder="confirm password"/>
+                        <input id="matchPassword" type="password" class="login__input pass" name="matchingPassword" placeholder="Повторите пароль"/>
                     </div>
-                    <button type="submit" class="login__submit">Sign up</button>
+                    <button type="submit" class="login__submit">Регистрация</button>
                 </form>
             </div>
             <div class="app__logout">

@@ -16,6 +16,8 @@ public class ProductService implements IProductService{
 
     /**
      * synchronized methods to access the product!!!
+     * if isState == try, product available
+     * if isSales == try, product sales and unavailable
      */
 
     @Autowired
@@ -37,7 +39,9 @@ public class ProductService implements IProductService{
         product.setCountryProduct(productDto.getCountryProduct());
         product.setBarcode(productDto.getBarcode());
         product.setPrice(productDto.getPrice());
+        product.setCategory(productDto.getCategory());
         product.setState(true);
+        product.setSales(false);
         return productRepository.save(product);
     }
 
@@ -51,6 +55,7 @@ public class ProductService implements IProductService{
             entity.setCountryProduct(product.getCountryProduct());
             entity.setBarcode(product.getBarcode());
             entity.setPrice(product.getPrice());
+            product.setState(true);
         }
         saveProduct(entity);
     }
@@ -66,8 +71,12 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void sellProduct(Long id) {
-
+    public synchronized void sellProduct(Long id) {
+        Product e = productRepository.findOne(id);
+        if (e!=null && e.isState()){
+           e.setSales(true);
+        }
+        saveProduct(e);
     }
 
     @Override

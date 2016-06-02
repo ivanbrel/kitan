@@ -1,5 +1,10 @@
 package by.ibrel.web.util;
 
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+
+import java.util.List;
+
 public class GenericResponse {
     private String message;
     private String error;
@@ -10,9 +15,10 @@ public class GenericResponse {
     }
 
     public GenericResponse(final String message, final String error) {
-        super();
-        this.message = message;
-        this.error = error;
+
+    }
+
+    public GenericResponse(List<FieldError> fieldErrors, List<ObjectError> globalErrors) {
     }
 
     public String getMessage() {

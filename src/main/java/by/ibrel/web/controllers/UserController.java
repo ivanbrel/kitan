@@ -103,4 +103,12 @@ public class UserController {
         model.addAttribute("success", "Данные пользователя " + u.getLogin() + " изменены");
         return "users.success";
     }
+
+    @RequestMapping(value = {"/edit/user"}, method = RequestMethod.GET)
+    public String editCommonUser( ModelMap model) {
+        User u = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("user", u);
+        model.addAttribute("edit", true);
+        return "auth.user.edit";
+    }
 }

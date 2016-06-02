@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
+<script>var ctx = "${ctx}";</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="${ctx}/resources/css/screen.css" type="text/css" media="screen" title="default" />
 <!--[if IE]>
@@ -8,26 +9,17 @@
 <![endif]-->
 
 <!--  jquery core -->
-<script src="${ctx}/resources/js/jquery-1.4.1.min.js" type="text/javascript"></script>
+<script src="${ctx}/resources/js/jquery-2.2.2.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/resources/css/bootstrap.css"/>
 <script type="text/javascript" src="${ctx}/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.quicksearch.js"></script>
 
+<script type="text/javascript" src="${ctx}/resources/js/excellentexport.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/excellentexport.min.js"></script>
+
 <!--  checkbox styling script -->
 <script src="${ctx}/resources/js/ui.core.js" type="text/javascript"></script>
-<script src="${ctx}/resources/js/ui.checkbox.js" type="text/javascript"></script>
 <script src="${ctx}/resources/js/jquery.bind.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function(){
-        $('input').checkBox();
-        $('#toggle-all').click(function(){
-            $('#toggle-all').toggleClass('toggle-checked');
-            $('#mainform input[type=checkbox]').checkBox('toggle');
-            return false;
-        });
-    });
-</script>
-
 <![if !IE 7]>
 
 <!--  styled select box script version 1 -->
@@ -136,7 +128,7 @@
         var updateSelects = function (selectedDate)
         {
             var selectedDate = new Date(selectedDate);
-            $('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
+            $('#d').find('option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
             $('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
             $('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
         }
@@ -166,8 +158,47 @@
 
 <!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
 <script src="${ctx}/resources/js/jquery.pngFix.pack.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(document).pngFix( );
-    });
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/site-examples.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/buttons.dataTables.min.css">
+<style type="text/css" class="init">
+
+</style>
+<script type="text/javascript" async="" src="${ctx}/resources/js/ga.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/site.js">
+</script>
+<script type="text/javascript" src="${ctx}/resources/js/dynamic.php" async="">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jquery-2.2.2.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jquery.dataTables.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/dataTables.buttons.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.flash.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jszip.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/pdfmake.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/vfs_fonts.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.html5.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.print.min.js">
+</script>
+<script type="text/javascript" language="javascript" src="${ctx}/resources/js/demo.js">
+</script>
+<script type="text/javascript" class="init">
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
+    } );
 </script>

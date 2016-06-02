@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Start: page-top-outer -->
 <div id="page-top-outer">
@@ -59,7 +61,7 @@
             <!--  start account-content -->
             <div class="account-content">
                 <div class="account-drop-inner">
-                    <a href="" id="acc-settings">Настройки</a>
+                    <a href="${ctx}/edit/user" id="acc-settings">Настройки</a>
                     <div class="clear">&nbsp;</div>
                     <div class="acc-line">&nbsp;</div>
                     <a href="" id="acc-details">Личная информация</a>
@@ -69,6 +71,16 @@
                     <div class="clear">&nbsp;</div>
                     <div class="acc-line">&nbsp;</div>
                     <a href="" id="acc-stats">Статистика</a>
+                    <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')" />
+                    <c:choose>
+                        <c:when test="${loggedIn}">
+                            <div class="clear">&nbsp;</div>
+                            <div class="acc-line">&nbsp;</div>
+                            <a href="" id="acc-settings">Управление пользователями</a>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <!--  end account-content -->
@@ -81,49 +93,38 @@
         <div class="nav">
             <div class="table">
 
-                <ul class="select"><li><a href="${ctx}/home"><b>Главная</b><!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
-                    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                </li>
+                <ul class="select">
+                    <li><a href="${ctx}/home"><b>Заказы</b></a>
+                    <div class="select_sub">
+                    <ul class="sub">
+                        <li><a href="${ctx}/purchase/list">Все заказы</a></li>
+                        <li><a href="${ctx}/home">Оформить заказ</a></li>
+                    </ul>
+                    </div>
+                    </li>
                 </ul>
 
                 <div class="nav-divider">&nbsp;</div>
 
-                <ul class="current"><li><a href="#nogo"><b>Продукция</b><!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
-                    <div class="select_sub show">
+                <ul class="select"><li><a href="${ctx}/product/list"><b>Продукция</b></a>
+                    <div class="select_sub">
                         <ul class="sub">
-                            <li class="sub_show"><a href="#nogo">Вся продукция</a></li>
-                            <li><a href="${ctx}/addprod">Добавить товар</a></li>
+                            <li class="sub_show"><a href="${ctx}/product/list">Вся продукция</a></li>
+                            <li><a href="${ctx}/product/add-page">Добавить товар</a></li>
                         </ul>
                     </div>
                     <!--[if lte IE 6]></td></tr></table></a><![endif]-->
                 </li>
                 </ul>
-
                 <div class="nav-divider">&nbsp;</div>
 
-                <ul class="select"><li><a href="#nogo"><b>Категории</b><!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
+                <ul class="select">
+                    <li><a href="${ctx}/client/list"><b>Клиенты</b></a>
+
                     <div class="select_sub">
                         <ul class="sub">
-                            <li><a href="#nogo">Коляски</a></li>
-                            <li><a href="#nogo">Стульчики</a></li>
-                            <li><a href="#nogo">Кроватки</a></li>
-                        </ul>
-                    </div>
-                    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                </li>
-                </ul>
-
-                <div class="nav-divider">&nbsp;</div>
-
-                <ul class="select"><li><a href="#nogo"><b>Клиенты</b><!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
-                    <div class="select_sub">
-                        <ul class="sub">
-                            <li><a href="#nogo">Все клиенты</a></li>
-                            <li><a href="${ctx}/addClient">Добавить клиента</a></li>
+                            <li><a href="${ctx}/client/list">Все клиенты</a></li>
+                            <li><a href="${ctx}/client/add-page">Добавить клиента</a></li>
                         </ul>
                     </div>
                     <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -139,6 +140,7 @@
                             <li><a href="${ctx}/about">О программе</a></li>
                             <li><a href="${ctx}/contacts">Контакты</a></li>
                             <li><a href="${ctx}/ref">Ссылки</a></li>
+                            <li><a href="${ctx}/test">TEST</a></li>
                         </ul>
                     </div>
                     <!--[if lte IE 6]></td></tr></table></a><![endif]-->

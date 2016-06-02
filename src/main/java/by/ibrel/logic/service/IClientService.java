@@ -18,6 +18,8 @@ public interface IClientService {
 
     Client findByNameClient(String nameClient);
 
+    Client findById(Long id);
+
     List<Client> findAllClient();
 
     void updateClient(Client client);

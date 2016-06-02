@@ -13,13 +13,11 @@
         <intercept-url pattern="/registrationpage*" access="permitAll"/>
         <intercept-url pattern="/registration*" access="permitAll"/>
         <intercept-url pattern="/checkLogin*" access="permitAll"/>
-
-        <intercept-url pattern="/userslist*" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="isAuthenticated()" />
 
         <csrf disabled="true"/>
 
-        <form-login login-page="/login"
+        <form-login login-page="/login.jsp"
                     authentication-success-handler-ref="myAuthenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"
                     default-target-url="/index.jsp"/>

@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>by.ibrel</groupId>
     <artifactId>kitan</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>kitan</name>
     <packaging>war</packaging>
@@ -188,11 +186,11 @@
             <artifactId>jquery</artifactId>
             <version>1.11.3</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.webjars</groupId>-->
-            <!--<artifactId>jqgrid</artifactId>-->
-            <!--<version>5.0.1</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jqgrid</artifactId>
+            <version>5.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
@@ -217,7 +215,6 @@
                     <groupId>javax.servlet.jsp</groupId>
                 </exclusion>
             </exclusions>
-
         </dependency>
 
         <dependency>
@@ -252,6 +249,13 @@
             <artifactId>tiles-compat</artifactId>
             <version>${tiles.version}</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/commons-lang/commons-lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.2</version>
+        </dependency>
+
 
     </dependencies>
 
