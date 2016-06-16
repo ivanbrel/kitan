@@ -106,11 +106,26 @@
         <constructor-arg value="11"/>
     </bean>
 
-    <mvc:view-controller path="/login" view-name="auth.login"/>
+    <!-- Defines which remember me implementation to use - in this case using a database table to log 'remembered' tokens -->
+    <bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+        <constructor-arg index="0" value="rememberKey"/>
+        <constructor-arg index="1" ref="userDetailsService"/>
+        <constructor-arg index="2" ref="jdbcTokenRepository"/>
+        <property name="alwaysRemember" value="true" />
+    </bean>
+
+    <!-- Uses a database table to maintain a set of persistent login data -->
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="createTableOnStartup" value="false" />
+        <property name="dataSource" ref="kitan-ds" />
+    </bean>
+
+    <mvc:view-controller path="/login_" view-name="auth.login"/>
     <mvc:view-controller path="/registrationpage" view-name="auth.registration"/>
     <mvc:view-controller path="/home" view-name="main.home"/>
     <mvc:view-controller path="/addClient" view-name="main.add.client"/>
     <mvc:view-controller path="/contacts" view-name="main.contacts"/>
+    <!--<mvc:view-controller path="/help" view-name="main.help"/>-->
     <mvc:view-controller path="/ref" view-name="main.ref"/>
     <mvc:view-controller path="/about" view-name="main.about"/>
     <mvc:view-controller path="/users/list" view-name="auth.user.list"/>

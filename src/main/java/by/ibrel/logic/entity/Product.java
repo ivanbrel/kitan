@@ -27,8 +27,8 @@ public class Product {
 
     private String category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PURCHASE_ID", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "PURCHASE_ID")
     private Purchase purchase;
 
     //check the status of the product, if true means free
@@ -145,16 +145,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", nameProduct='" + nameProduct + '\'' +
-                ", model='" + model + '\'' +
-                ", color='" + color + '\'' +
-                ", price=" + price +
-                ", barcode=" + barcode +
-                ", countryProduct=" + countryProduct +
-                ", category=" + category +
-                ", purchase=" + purchase +
-                '}';
+        final StringBuilder builder = new StringBuilder();
+        builder.append(id);
+        return builder.toString();
     }
 }

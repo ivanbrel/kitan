@@ -1,160 +1,240 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- Start: page-top-outer -->
-<div id="page-top-outer">
 
-    <!-- Start: page-top -->
-    <div id="page-top">
-
-        <!-- start logo -->
-        <div id="logo">
-
+<div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a href="${ctx}/index.jsp" class="site_title"><span>Kitan</span></a>
         </div>
-        <!-- end logo -->
 
-        <!--  start top-search -->
-        <div id="top-search">
-            <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td><input type="text" value="Поиск" onblur="if (this.value=='') { this.value='Search'; }" onfocus="if (this.value=='Search') { this.value=''; }" class="top-search-inp" /></td>
-                    <td>
-                        <select  class="styledselect">
-                            <option value=""> All</option>
-                            <option value=""> Products</option>
-                            <option value=""> Categories</option>
-                            <option value="">Clients</option>
-                            <option value="">News</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="image" src="${ctx}/resources/img/shared/top_search_btn.gif"  />
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <!--  end top-search -->
-        <div class="clear"></div>
+        <div class="clearfix"></div>
 
-    </div>
-    <!-- End: page-top -->
-
-</div>
-<!-- End: page-top-outer -->
-
-<div class="clear">&nbsp;</div>
-
-<!--  start nav-outer-repeat................................................................................................. START -->
-<div class="nav-outer-repeat">
-    <!--  start nav-outer -->
-    <div class="nav-outer">
-
-        <!-- start nav-right -->
-        <div id="nav-right">
-
-            <div class="nav-divider">&nbsp;</div>
-            <div class="showhide-account"><img src="${ctx}/resources/img/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
-            <div class="nav-divider">&nbsp;</div>
-            <a href="${ctx}/logout" id="logout"><img src="${ctx}/resources/img/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
-            <div class="clear">&nbsp;</div>
-
-            <!--  start account-content -->
-            <div class="account-content">
-                <div class="account-drop-inner">
-                    <a href="${ctx}/edit/user" id="acc-settings">Настройки</a>
-                    <div class="clear">&nbsp;</div>
-                    <div class="acc-line">&nbsp;</div>
-                    <a href="" id="acc-details">Личная информация</a>
-                    <div class="clear">&nbsp;</div>
-                    <div class="acc-line">&nbsp;</div>
-                    <a href="" id="acc-inbox">Почта</a>
-                    <div class="clear">&nbsp;</div>
-                    <div class="acc-line">&nbsp;</div>
-                    <a href="" id="acc-stats">Статистика</a>
-                    <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')" />
-                    <c:choose>
-                        <c:when test="${loggedIn}">
-                            <div class="clear">&nbsp;</div>
-                            <div class="acc-line">&nbsp;</div>
-                            <a href="" id="acc-settings">Управление пользователями</a>
-                        </c:when>
-                        <c:otherwise>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+        <!-- menu profile quick info -->
+        <div class="profile">
+            <div class="profile_pic">
+                <img src="${ctx}/resources/bootstrap/images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
-            <!--  end account-content -->
-
+            <div class="profile_info">
+                <span>Добро пожаловать,</span>
+                <h2><sec:authentication property="principal.username"/></h2>
+            </div>
         </div>
-        <!-- end nav-right -->
+        <!-- /menu profile quick info -->
 
+        <br />
 
-        <!--  start nav -->
-        <div class="nav">
-            <div class="table">
-
-                <ul class="select">
-                    <li><a href="${ctx}/home"><b>Заказы</b></a>
-                    <div class="select_sub">
-                    <ul class="sub">
-                        <li><a href="${ctx}/purchase/list">Все заказы</a></li>
-                        <li><a href="${ctx}/home">Оформить заказ</a></li>
-                    </ul>
-                    </div>
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>Панель управления</h3>
+                <ul class="nav side-menu">
+                    <li><a><i class="fa fa-home"></i> Главная <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="index.html">Dashboard</a></li>
+                            <li><a href="index2.html">Dashboard2</a></li>
+                            <li><a href="index3.html">Dashboard3</a></li>
+                        </ul>
                     </li>
-                </ul>
-
-                <div class="nav-divider">&nbsp;</div>
-
-                <ul class="select"><li><a href="${ctx}/product/list"><b>Продукция</b></a>
-                    <div class="select_sub">
-                        <ul class="sub">
-                            <li class="sub_show"><a href="${ctx}/product/list">Вся продукция</a></li>
-                            <li><a href="${ctx}/product/add-page">Добавить товар</a></li>
+                    <li><a><i class="fa fa-edit"></i> Формы <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="${ctx}/client/add-page">Добавить нового клиента</a></li>
+                            <li><a href="${ctx}/product/add-page">Добавить новый продукт</a></li>
                         </ul>
-                    </div>
-                    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                </li>
-                </ul>
-                <div class="nav-divider">&nbsp;</div>
-
-                <ul class="select">
-                    <li><a href="${ctx}/client/list"><b>Клиенты</b></a>
-
-                    <div class="select_sub">
-                        <ul class="sub">
+                    </li>
+                    <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="general_elements.html">General Elements</a></li>
+                            <li><a href="media_gallery.html">Media Gallery</a></li>
+                            <li><a href="typography.html">Typography</a></li>
+                            <li><a href="icons.html">Icons</a></li>
+                            <li><a href="glyphicons.html">Glyphicons</a></li>
+                            <li><a href="widgets.html">Widgets</a></li>
+                            <li><a href="invoice.html">Invoice</a></li>
+                            <li><a href="inbox.html">Inbox</a></li>
+                            <li><a href="calendar.html">Calendar</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-table"></i> Таблицы <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
                             <li><a href="${ctx}/client/list">Все клиенты</a></li>
-                            <li><a href="${ctx}/client/add-page">Добавить клиента</a></li>
+                            <li><a href="${ctx}/product/list">Весь товар</a></li>
+                            <li><a href="${ctx}/purchase/list">Все заказы</a></li>
                         </ul>
-                    </div>
-                    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                </li>
-                </ul>
-
-                <div class="nav-divider">&nbsp;</div>
-
-                <ul class="select"><li><a href="#nogo"><b>Инфо</b><!--[if IE 7]><!--></a><!--<![endif]-->
-                    <!--[if lte IE 6]><table><tr><td><![endif]-->
-                    <div class="select_sub">
-                        <ul class="sub">
+                    </li>
+                    <li><a><i class="fa fa-bar-chart-o"></i>Информация <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
                             <li><a href="${ctx}/about">О программе</a></li>
                             <li><a href="${ctx}/contacts">Контакты</a></li>
+                            <li><a href="${ctx}/help">Помощь</a></li>
                             <li><a href="${ctx}/ref">Ссылки</a></li>
-                            <li><a href="${ctx}/test">TEST</a></li>
                         </ul>
-                    </div>
-                    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-                </li>
+                    </li>
+                    <li><a><i class="fa fa-clone"></i>Административная панель <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+                            <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                        </ul>
+                    </li>
                 </ul>
-
-                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-        </div>
-        <!--  start nav -->
+            <%--<div class="menu_section">--%>
+                <%--<h3>Live On</h3>--%>
+                <%--<ul class="nav side-menu">--%>
+                    <%--<li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>--%>
+                        <%--<ul class="nav child_menu">--%>
+                            <%--<li><a href="e_commerce.html">E-commerce</a></li>--%>
+                            <%--<li><a href="projects.html">Projects</a></li>--%>
+                            <%--<li><a href="project_detail.html">Project Detail</a></li>--%>
+                            <%--<li><a href="contacts.html">Contacts</a></li>--%>
+                            <%--<li><a href="profile.html">Profile</a></li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>--%>
+                        <%--<ul class="nav child_menu">--%>
+                            <%--<li><a href="page_403.html">403 Error</a></li>--%>
+                            <%--<li><a href="page_404.html">404 Error</a></li>--%>
+                            <%--<li><a href="page_500.html">500 Error</a></li>--%>
+                            <%--<li><a href="plain_page.html">Plain Page</a></li>--%>
+                            <%--<li><a href="login.html">Login Page</a></li>--%>
+                            <%--<li><a href="pricing_tables.html">Pricing Tables</a></li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>--%>
+                        <%--<ul class="nav child_menu">--%>
+                            <%--<li><a href="#level1_1">Level One</a>--%>
+                            <%--<li><a>Level One<span class="fa fa-chevron-down"></span></a>--%>
+                                <%--<ul class="nav child_menu">--%>
+                                    <%--<li class="sub_menu"><a href="level2.html">Level Two</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li><a href="#level2_1">Level Two</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li><a href="#level2_2">Level Two</a>--%>
+                                    <%--</li>--%>
+                                <%--</ul>--%>
+                            <%--</li>--%>
+                            <%--<li><a href="#level1_2">Level One</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
 
+        </div>
+        <!-- /sidebar menu -->
+
+        <!-- /menu footer buttons -->
+        <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+        </div>
+        <!-- /menu footer buttons -->
     </div>
-    <div class="clear"></div>
-    <!--  start nav-outer -->
 </div>
-<!--  start nav-outer-repeat................................................... END -->
+
+<!-- top navigation -->
+<div class="top_nav">
+    <div class="nav_menu">
+        <nav>
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="${ctx}/resources/bootstrap/images/img.jpg" alt=""><sec:authentication property="principal.username"/>
+                        <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li><a href="javascript:;"> Profile</a></li>
+                        <li>
+                            <a href="javascript:;">
+                                <span class="badge bg-red pull-right">50%</span>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li><a href="javascript:;">Help</a></li>
+                        <li><a href="${ctx}/logout"><i class="fa fa-sign-out pull-right"></i> Выход</a></li>
+                    </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge bg-green">6</span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        <li>
+                            <a>
+                                <span class="image"><img src="${ctx}/resources/bootstrap/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span><sec:authentication property="principal.username"/></span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image"><img src="${ctx}/resources/bootstrap/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image"><img src="${ctx}/resources/bootstrap/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image"><img src="${ctx}/resources/bootstrap/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="text-center">
+                                <a>
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

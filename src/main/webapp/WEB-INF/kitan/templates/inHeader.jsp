@@ -2,203 +2,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
 <script>var ctx = "${ctx}";</script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="${ctx}/resources/css/screen.css" type="text/css" media="screen" title="default" />
-<!--[if IE]>
-<link rel="stylesheet" media="all" type="text/css" href="/resources/css/pro_dropline_ie.css" />
-<![endif]-->
-
-<!--  jquery core -->
-<script src="${ctx}/resources/js/jquery-2.2.2.min.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/bootstrap.css"/>
-<script type="text/javascript" src="${ctx}/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/js/jquery.quicksearch.js"></script>
-
-<script type="text/javascript" src="${ctx}/resources/js/excellentexport.js"></script>
-<script type="text/javascript" src="${ctx}/resources/js/excellentexport.min.js"></script>
-
-<!--  checkbox styling script -->
-<script src="${ctx}/resources/js/ui.core.js" type="text/javascript"></script>
-<script src="${ctx}/resources/js/jquery.bind.js" type="text/javascript"></script>
-<![if !IE 7]>
-
-<!--  styled select box script version 1 -->
-<script src="${ctx}/resources/js/jquery.selectbox-0.5.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.styledselect').selectbox({ inputClass: "selectbox_styled" });
-    });
-</script>
-
-
-<![endif]>
-
-<!--  styled select box script version 2 -->
-<script src="${ctx}/resources/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.styledselect_form_1').selectbox({ inputClass: "styledselect_form_1" });
-        $('.styledselect_form_2').selectbox({ inputClass: "styledselect_form_2" });
-    });
-</script>
-
-<!--  styled select box script version 3 -->
-<script src="${ctx}/resources/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.styledselect_pages').selectbox({ inputClass: "styledselect_pages" });
-    });
-</script>
-
-<!--  styled file upload script -->
-<script src="${ctx}/resources/js/jquery.filestyle.js" type="text/javascript"></script>
-<script type="text/javascript" charset="utf-8">
-    $(function() {
-        $("input.file_1").filestyle({
-            image: "/resources/img/forms/choose-file.gif",
-            imageheight : 21,
-            imagewidth : 78,
-            width : 310
-        });
-    });
-</script>
-
-<!-- Custom jquery scripts -->
-<script src="${ctx}/resources/js/custom_jquery.js" type="text/javascript"></script>
-
-<!-- Tooltips -->
-<script src="${ctx}/resources/js/jquery.tooltip.js" type="text/javascript"></script>
-<script src="${ctx}/resources/js/jquery.dimensions.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function() {
-        $('a.info-tooltip ').tooltip({
-            track: true,
-            delay: 0,
-            fixPNG: true,
-            showURL: false,
-            showBody: " - ",
-            top: -35,
-            left: 5
-        });
-    });
-</script>
-
-
-<!--  date picker script -->
-<link rel="stylesheet" href="${ctx}/resources/css/datePicker.css" type="text/css" />
-<script src="${ctx}/resources/js/date.js" type="text/javascript"></script>
-<script src="${ctx}/resources/js/jquery.datePicker.js" type="text/javascript"></script>
-<script type="text/javascript" charset="utf-8">
-    $(function()
-    {
-
-// initialise the "Select date" link
-        $('#date-pick')
-                .datePicker(
-                        // associate the link with a date picker
-                        {
-                            createButton:false,
-                            startDate:'01/01/2005',
-                            endDate:'31/12/2020'
-                        }
-                ).bind(
-                // when the link is clicked display the date picker
-                'click',
-                function()
-                {
-                    updateSelects($(this).dpGetSelected()[0]);
-                    $(this).dpDisplay();
-                    return false;
-                }
-        ).bind(
-                // when a date is selected update the SELECTs
-                'dateSelected',
-                function(e, selectedDate, $td, state)
-                {
-                    updateSelects(selectedDate);
-                }
-        ).bind(
-                'dpClosed',
-                function(e, selected)
-                {
-                    updateSelects(selected[0]);
-                }
-        );
-
-        var updateSelects = function (selectedDate)
-        {
-            var selectedDate = new Date(selectedDate);
-            $('#d').find('option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
-            $('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
-            $('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
-        }
-// listen for when the selects are changed and update the picker
-        $('#d, #m, #y')
-                .bind(
-                        'change',
-                        function()
-                        {
-                            var d = new Date(
-                                    $('#y').val(),
-                                    $('#m').val()-1,
-                                    $('#d').val()
-                            );
-                            $('#date-pick').dpSetSelected(d.asString());
-                        }
-                );
-
-// default the position of the selects to today
-        var today = new Date();
-        updateSelects(today.getTime());
-
-// and update the datePicker to reflect it...
-        $('#d').trigger('change');
-    });
-</script>
-
-<!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-<script src="${ctx}/resources/js/jquery.pngFix.pack.js" type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/site-examples.css">
-<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="${ctx}/resources/css/buttons.dataTables.min.css">
-<style type="text/css" class="init">
+<!-- Bootstrap -->
+<link href="${ctx}/resources/bootstrap/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="${ctx}/resources/bootstrap/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="${ctx}/resources/bootstrap/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- Datatables -->
+<link href="${ctx}/resources/bootstrap/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/resources/bootstrap/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/resources/bootstrap/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/resources/bootstrap/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/resources/bootstrap/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-</style>
-<script type="text/javascript" async="" src="${ctx}/resources/js/ga.js"></script>
-<script type="text/javascript" src="${ctx}/resources/js/site.js">
-</script>
-<script type="text/javascript" src="${ctx}/resources/js/dynamic.php" async="">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jquery-2.2.2.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jquery.dataTables.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/dataTables.buttons.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.flash.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/jszip.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/pdfmake.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/vfs_fonts.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.html5.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/buttons.print.min.js">
-</script>
-<script type="text/javascript" language="javascript" src="${ctx}/resources/js/demo.js">
-</script>
-<script type="text/javascript" class="init">
-    $(document).ready(function() {
-        $('#example').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        } );
-    } );
-</script>
+<!-- Custom Theme Style -->
+<link href="${ctx}/resources/bootstrap/css/custom.min.css" rel="stylesheet">

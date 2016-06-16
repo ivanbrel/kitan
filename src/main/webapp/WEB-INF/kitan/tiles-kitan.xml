@@ -91,6 +91,10 @@
         <put-attribute name="titleKey" value="Заказы"/>
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/purchaseList.jsp"/>
     </definition>
+    <definition name="purchase.add.product" extends="kitan.main">
+        <put-attribute name="titleKey" value="Выбор продукта"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addProductInPurchase.jsp"/>
+    </definition>
 
     <definition extends="kitan.error" name="error.403">
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/403.jsp"/>

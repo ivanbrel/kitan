@@ -17,14 +17,16 @@
 
         <csrf disabled="true"/>
 
-        <form-login login-page="/login.jsp"
+        <form-login login-page="/login_"
                     authentication-success-handler-ref="myAuthenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"
                     default-target-url="/index.jsp"/>
 
-        <logout logout-url="/logout" logout-success-url="/login" />
+        <logout logout-url="/logout" logout-success-url="/login_" />
 
-        <remember-me user-service-ref="userDetailsService"/>
+        <remember-me
+                key="rememberKey"
+                services-ref="rememberMeServices"/>
     </http>
 
     <global-method-security pre-post-annotations="enabled"/>

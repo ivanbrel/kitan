@@ -1,114 +1,105 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="clear"></div>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- start content-outer -->
-<div id="content-outer">
-    <!-- start content -->
-    <div id="content">
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
 
+        <div class="clearfix"></div>
 
-        <div id="page-heading"><h1>Добавить продутк</h1></div>
+        <div class="row">
 
-        <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
-            <tr>
-                <th rowspan="3" class="sized"><img src="${ctx}/resources/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
-                <th class="topleft"></th>
-                <td id="tbl-border-top">&nbsp;</td>
-                <th class="topright"></th>
-                <th rowspan="3" class="sized"><img src="${ctx}/resources/img/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
-            </tr>
-            <tr>
-                <td id="tbl-border-left"></td>
-                <td>
-                    <!--  start content-table-inner -->
-                    <div id="content-table-inner">
-
-                        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                            <tr valign="top">
-                                <td>
-                                    <!-- start id-form -->
-                                    <form action="${ctx}/product/add" method="POST">
-                                        <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-                                            <tr>
-                                                <th valign="top">Наименование:</th>
-                                                <td><input type="text" class="inp-form" name="nameProduct"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Модель:</th>
-                                                <td><input type="text" class="inp-form" name="model"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Цвет:</th>
-                                                <td><input type="text" class="inp-form" name="color"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Страна производитель:</th>
-                                                <td><input type="text" class="inp-form" name="countryProduct"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Цена:</th>
-                                                <td><input type="text" class="inp-form" name="price"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Штрихкод:</th>
-                                                <td><input type="text" class="inp-form" name="barcode"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Категория:</th>
-                                                <td><input type="text" class="inp-form" name="category"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th valign="top">Заметки:</th>
-                                                <td><textarea rows="" cols="" class="form-textarea"></textarea></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <td valign="top">
-                                                    <input type="submit" value="" class="form-submit" />
-                                                    <input type="reset" value="" class="form-reset"  />
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                    <!-- end id-form  -->
-
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td><img src="${ctx}/resources/img/shared/blank.gif" width="695" height="1" alt="blank" /></td>
-                                <td></td>
-                            </tr>
-                        </table>
-
-                        <div class="clear"></div>
-
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Добавить товар </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
                     </div>
-                    <!--  end content-table-inner  -->
-                </td>
-                <td id="tbl-border-right"></td>
-            </tr>
-            <tr>
-                <th class="sized bottomleft"></th>
-                <td id="tbl-border-bottom">&nbsp;</td>
-                <th class="sized bottomright"></th>
-            </tr>
-        </table>
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30">
+                            Заполните форму для добавление нового товара
+                        </p>
 
-        <div class="clear">&nbsp;</div>
+                        <!-- start id-form -->
 
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/product/add" method="POST">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameProduct">Наименование продукта </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="nameProduct" name="nameProduct" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Модель </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="model" name="model" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="color" class="form-control col-md-7 col-xs-12" type="text" name="color">
+                                </div>
+                            </div>
+                            <%--<div class="form-group">--%>
+                            <%--<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>--%>
+                            <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                            <%--<div id="gender" class="btn-group" data-toggle="buttons">--%>
+                            <%--<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
+                            <%--<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;--%>
+                            <%--</label>--%>
+                            <%--<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
+                            <%--<input type="radio" name="gender" value="female"> Female--%>
+                            <%--</label>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
+                            <div class="form-group">
+                                <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="countryProduct" name="countryProduct" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="control-label col-md-3 col-sm-3 col-xs-12">Цена </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="price" name="price" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="category" name="category" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="submit" value="Добавить" class="btn btn-success" />
+                                    <input type="reset" value="Отменить" class="btn btn-default"  />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <!--  end content -->
-    <div class="clear">&nbsp;</div>
 </div>
-<!--  end content-outer -->
-
-<div class="clear">&nbsp;</div>

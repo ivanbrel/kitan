@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
+    <link href="${ctx}/resources/img/logo.png" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 
 
@@ -14,7 +15,7 @@
 
     <link rel="stylesheet" href="${ctx}/resources/css/style.css">
 
-    <script src="${ctx}/resources/js/jquery-2.2.2.min.js"></script>
+    <script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
 
     <%--<script src="/resources/js/index.js"></script>--%>
 
