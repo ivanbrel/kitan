@@ -43,15 +43,29 @@
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/ref.jsp"/>
     </definition>
 
+    <definition name="main.help" extends="kitan.main">
+        <put-attribute name="titleKey" value="Помощь"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/help.jsp"/>
+    </definition>
+
     <!--user page-->
     <definition name="auth.user.list" extends="kitan.main">
         <put-attribute name="titleKey" value="Список пользователей"/>
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/userslist.jsp"/>
     </definition>
+    <definition name="auth.user.add" extends="kitan.main">
+        <put-attribute name="titleKey" value="Добавить пользователя"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/useradd.jsp"/>
+    </definition>
+
+    <definition name="auth.user.role.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Список ролей"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/roleslist.jsp"/>
+    </definition>
 
     <definition name="auth.user.edit" extends="kitan.main">
         <put-attribute name="titleKey" value="Список пользователей"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/userInformation.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/manager_user/useredit.jsp"/>
     </definition>
 
     <!--client pages-->

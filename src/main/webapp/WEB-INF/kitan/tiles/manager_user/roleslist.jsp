@@ -8,72 +8,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <!-- use it for correct load static resourses -->
-    <c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
-    <%--for client side , ex. ajax in javaScript--%>
-    <script>var ctx = "${ctx}";</script>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Список пользователей АС "УСОГДП"</title>
-    <link href="${ctx}/resources/img/favicon.ico" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="${ctx}/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="${ctx}/webjars/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="${ctx}/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${ctx}/resources/js/jquery.quicksearch.js"></script>
-</head>
-<body>
-<br>
-<div class="container">
-    <ul class="nav nav-pills">
-        <li role="presentation"><li><a href="${ctx}/login">На главную</a></li>
-        <li role="presentation"><a href="${ctx}/userslist">Список пользователей</a></li>
-        <li role="presentation"><a href="${ctx}/nsi">nsi</a></li>
-        <li role="presentation"><a href="${ctx}/roleslist">Управление ролями</a></li>
-    </ul>
-</div>
+<div class="right_col" role="main">
+    <div class="">
 
-<br>
-<div class="container" id="content">
-    <h2>Список ролей</h2>
-    <div class="well">
-        <form action="${ctx}/add-new-role" method="post">
-            <div class="col-xs-4">
-                <input type="text" class="form-control" name="name" value="" required="required"/>
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Список клиентов </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30">
+                            В данной таблице представлен список всех клиентов </p>
+                        <table id="datatable-buttons" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Имя роли</th>
+                                <th>Привилегии</th>
+                                <th width="100">Опции</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <c:forEach items="${roles}" var="role">
+                                <tr>
+                                    <td><small>${role.name}</small></td>
+                                    <td><small>${role.privileges}</small></td>
+                                    <td>
+                                        <a href="<c:url value='/edit-role-${role.name}' />" class="btn btn-success custom-width" data-toggle="tooltip" data-placement="bottom" title="Редактировать роль"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a href="<c:url value='/delete-role-${role.id}' />" class="btn btn-danger custom-width" data-toggle="tooltip" data-placement="bottom" title="Удалить роль"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <input type="submit" class="btn btn-success custom-width" value="Добавить новую роль">
-        </form>
-    </div>
-    <form>
-        <div class="col-xs-3">
-            <input type="text" class="form-control" id="search" placeholder="Поиск...">
-        </div>
-    </form>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th><small>Роль</small></th>
-            <th width="1000"><small>Привилегии</small></th>
-            <th width="5"><small></small></th>
-            <th width="5"><small></small></th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${roles}" var="role">
-            <tr>
-                <td><small>${role.name}</small></td>
-                <td><small>${role.privileges}</small></td>
-                <td><a href="<c:url value='/edit-role-${role.name}' />" class="btn btn-success custom-width" data-toggle="tooltip" data-placement="bottom" title="Редактировать роль"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                <td><a href="<c:url value='/delete-role-${role.id}' />" class="btn btn-danger custom-width" data-toggle="tooltip" data-placement="bottom" title="Удалить роль"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
 
-<script type="text/javascript">
-    $('input#search').quicksearch('table tbody tr');
-</script>
-</body>
-</html>
+        </div>
+    </div>
+</div>

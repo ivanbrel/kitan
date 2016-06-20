@@ -70,10 +70,11 @@
                             <li><a href="${ctx}/ref">Ссылки</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-clone"></i>Административная панель <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-clone"></i>Админ панель <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                            <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                            <li><a href="${ctx}/users/list">Список пользователе</a></li>
+                            <li><a href="${ctx}/users/role/list">Список ролей</a></li>
+                            <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
                         </ul>
                     </li>
                 </ul>
