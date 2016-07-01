@@ -11,7 +11,7 @@
 <head>
     <tiles:insertAttribute name="inHeader"/>
     <title><tiles:getAsString name="titleKey"/></title>
-    <link href="${ctx}/resources/img/favicon.jpg" rel="shortcut icon">
+    <link href="${ctx}/resources/img/logo.png" rel="shortcut icon">
 </head>
 <body class="error_page">
 <div  id="wrap" class="clearfix">

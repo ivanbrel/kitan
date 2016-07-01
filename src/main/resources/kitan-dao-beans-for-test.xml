@@ -6,14 +6,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <tx:annotation-driven transaction-manager="kitan-transactionManager"/>
-    <context:component-scan base-package="by.ibrel.kitan.logic.service"/>
-    <context:component-scan base-package="by.ibrel.kitan.auth.service"/>
+    <context:component-scan base-package="by.ibrel.logic.de.service"/>
 
     <bean id="kitan-ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/kitan"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
     </bean>
 
     <bean id="kitan-sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -29,15 +28,15 @@
         </property>
         <property name="packagesToScan">
             <list>
-                <value>by.ibrel.kitan.logic.dao.entity</value>
-                <value>by.ibrel.kitan.auth.dao.entity</value>
+                <value>by.ibrel.logic.entity</value>
+                <value>by.ibrel.logic.de.entity</value>
             </list>
         </property>
     </bean>
 
-    <jpa:repositories base-package="by.ibrel.kitan.logic.dao.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
+    <jpa:repositories base-package="by.ibrel.logic.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
 
-    <jpa:repositories base-package="by.ibrel.kitan.auth.dao.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
+    <jpa:repositories base-package="by.ibrel.logic.de.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
 
 
     <bean id="kitan-transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -56,8 +55,8 @@
         <!--spring based scanning for entity classes-->
         <property name="packagesToScan">
             <list>
-                <value>by.ibrel.kitan.logic.dao.entity</value>
-                <value>by.ibrel.kitan.auth.dao.entity</value>
+                <value>by.ibrel.logic.entity</value>
+                <value>by.ibrel.logic.de.entity</value>
             </list>
         </property>
         <property name="jpaProperties">
@@ -71,4 +70,10 @@
         </property>
     </bean>
 
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg value="11"/>
+    </bean>
+
+    <bean id="remoteFolderService" class="by.ibrel.logic.de.service.RemoteFolderService"/>
+    <bean id="localFolderService" class="by.ibrel.logic.de.service.LocalFolderService"/>
 </beans>

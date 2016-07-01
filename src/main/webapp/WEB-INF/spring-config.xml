@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="by.ibrel.web.controllers"/>
+    <context:component-scan base-package="by.ibrel.kitan.web.controllers"/>
     <context:property-placeholder location="classpath:jdbc.properties" file-encoding="UTF-8"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
@@ -73,24 +73,23 @@
 
     <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <context:component-scan base-package="by.ibrel.logic"/>
-    <context:component-scan base-package="by.ibrel.logic.service"/>
-    <context:component-scan base-package="by.ibrel.web.security"/>
-    <context:component-scan base-package="by.ibrel.logic.entity"/>
-    <context:component-scan base-package="by.ibrel.logic.repository"/>
+    <context:component-scan base-package="by.ibrel.kitan.logic"/>
+    <context:component-scan base-package="by.ibrel.kitan.auth"/>
+    <context:component-scan base-package="by.ibrel.kitan.web.security"/>
+
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
 
-    <bean id="passwordMatchesValidator" class="by.ibrel.logic.validation.PasswordMatchesValidator"/>
+    <bean id="passwordMatchesValidator" class="by.ibrel.kitan.auth.validation.PasswordMatchesValidator"/>
 
     <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="userDetailsService"/>
         <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>
 
-    <bean id="myAuthenticationSuccessHandler" class="by.ibrel.web.security.MySimpleUrlAuthenticationSuccessHandler"/>
+    <bean id="myAuthenticationSuccessHandler" class="by.ibrel.kitan.web.security.MySimpleUrlAuthenticationSuccessHandler"/>
 
-    <bean id="userDetailsService" class="by.ibrel.web.security.MyUserDetailsService"/>
+    <bean id="userDetailsService" class="by.ibrel.kitan.web.security.MyUserDetailsService"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames" value="messages"/>
@@ -135,6 +134,8 @@
     <mvc:view-controller path="/purchase/list" view-name="purchase.list"/>
     <mvc:view-controller path="/product/list" view-name="product.list"/>
     <mvc:view-controller path="/product/add-page" view-name="product.add"/>
+    <mvc:view-controller path="/price/list" view-name="price.list"/>
+    <mvc:view-controller path="/price/add-page" view-name="price.add"/>
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
     <mvc:view-controller path="/error/trace" view-name="error.trace"/>

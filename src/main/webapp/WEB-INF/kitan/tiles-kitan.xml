@@ -71,45 +71,64 @@
     <!--client pages-->
     <definition name="client.list" extends="kitan.main">
         <put-attribute name="titleKey" value="Все клиенты"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/clientList.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/clientList.jsp"/>
     </definition>
 
     <definition name="client.add" extends="kitan.main">
         <put-attribute name="titleKey" value="Добавить клиента"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addClient.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addClient.jsp"/>
     </definition>
 
     <definition name="client.edit" extends="kitan.main">
         <put-attribute name="titleKey" value="Изменить клиента"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/editClient.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/editClient.jsp"/>
     </definition>
 
     <!--product pages-->
     <definition name="product.list" extends="kitan.main">
         <put-attribute name="titleKey" value="Продукт"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/productList.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/productList.jsp"/>
     </definition>
 
     <definition name="product.add" extends="kitan.main">
         <put-attribute name="titleKey" value="Добавить продукт"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addProduct.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addProduct.jsp"/>
     </definition>
 
     <definition name="product.edit" extends="kitan.main">
         <put-attribute name="titleKey" value="Изменить продукт"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/editProduct.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/editProduct.jsp"/>
     </definition>
 
     <!--purchase page-->
     <definition name="purchase.list" extends="kitan.main">
         <put-attribute name="titleKey" value="Заказы"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/purchaseList.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/purchaseList.jsp"/>
     </definition>
     <definition name="purchase.add.product" extends="kitan.main">
         <put-attribute name="titleKey" value="Выбор продукта"/>
-        <put-attribute name="content" value="/WEB-INF/kitan/tiles/addProductInPurchase.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addProductInPurchase.jsp"/>
     </definition>
 
+    <!--price page-->
+    <definition name="price.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Цены"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/priceList.jsp"/>
+    </definition>
+    <definition name="price.add" extends="kitan.main">
+        <put-attribute name="titleKey" value="Добавить цену"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addPrice.jsp"/>
+    </definition>
+    <definition name="price.edit" extends="kitan.main">
+        <put-attribute name="titleKey" value="Изменить цену"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/editPrice.jsp"/>
+    </definition>
+    <definition name="price.add.product" extends="kitan.main">
+        <put-attribute name="titleKey" value="Добавить цену к товару"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addPriceInProduct.jsp"/>
+    </definition>
+
+    <!--error page-->
     <definition extends="kitan.error" name="error.403">
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/403.jsp"/>
     </definition>

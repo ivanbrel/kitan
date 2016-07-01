@@ -23,6 +23,7 @@
         <guava.version>19.0</guava.version>
         <passay.version>1.0</passay.version>
         <lombok.version>1.16.8</lombok.version>
+        <junit.version>4.12</junit.version>
 
         <mysql.driver.version>5.1.31</mysql.driver.version>
 
@@ -249,6 +250,7 @@
             <artifactId>tiles-compat</artifactId>
             <version>${tiles.version}</version>
         </dependency>
+
         <!-- http://mvnrepository.com/artifact/commons-lang/commons-lang -->
         <dependency>
             <groupId>commons-lang</groupId>
@@ -256,6 +258,20 @@
             <version>2.2</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
