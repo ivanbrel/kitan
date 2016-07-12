@@ -28,7 +28,6 @@ public class ClientController {
     private IClientService service;
 
     @RequestMapping(value = {"/client/list"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String listClients(ModelMap model) {
 
         List<Client> clients = service.findAllClient();
@@ -38,7 +37,6 @@ public class ClientController {
 
     //add new client
     @RequestMapping(value = {"/client/add"}, method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String addClient(@Valid final ClientDto clientDto, final ModelMap model){
         LOGGER.debug("Add new client with name:" + clientDto);
 
@@ -61,14 +59,12 @@ public class ClientController {
     }
 
     @RequestMapping(value = {"/client/delete/{id}"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String deleteClient(@PathVariable Long id) {
         service.deleteClient(id);
         return "redirect:/client/list";
     }
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String updateClient(@Valid final Client c, final BindingResult result, final ModelMap model){
         if (result.hasErrors()){return "client.edit";}
         service.updateClient(c);
@@ -77,7 +73,6 @@ public class ClientController {
     }
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String editClient(@PathVariable Long id, ModelMap model) {
         final Client client = service.findById(id);
         model.addAttribute("client", client);

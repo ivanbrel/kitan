@@ -2,7 +2,7 @@ package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.service.impl.IUserService;
-import by.ibrel.kitan.auth.service.UserDto;
+import by.ibrel.kitan.auth.service.dto.UserDto;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
 import by.ibrel.kitan.auth.exception.UserAlreadyExistException;
 import by.ibrel.kitan.web.util.GenericResponse;
@@ -32,7 +32,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
-    public GenericResponse registerUser(@Valid final UserDto userDto, final HttpServletRequest request){
+    public GenericResponse registerUser(@Valid final UserDto userDto){
         LOGGER.debug("Registering user account with information: {}" + userDto);
 
         final User registered = createUserAccount(userDto);
@@ -65,7 +65,7 @@ public class RegistrationController {
 
         boolean flag = false;
 
-        if (user!=null) flag = true;
+        if (user==null) flag = true;
 
         return flag;
     }

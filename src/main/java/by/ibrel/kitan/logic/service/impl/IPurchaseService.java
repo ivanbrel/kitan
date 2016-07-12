@@ -12,7 +12,7 @@ public interface IPurchaseService {
 
     List<Purchase> allPurchase();
 
-    void sellProduct(Purchase purchase, Integer count);
+    void sellProduct(Purchase purchase, Integer count) throws Exception;
 
     void delete(Long id);
 }

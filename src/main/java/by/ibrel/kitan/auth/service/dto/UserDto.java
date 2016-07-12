@@ -1,4 +1,4 @@
-package by.ibrel.kitan.auth.service;
+package by.ibrel.kitan.auth.service.dto;
 
 import by.ibrel.kitan.auth.validation.PasswordMatches;
 import by.ibrel.kitan.auth.validation.ValidPassword;

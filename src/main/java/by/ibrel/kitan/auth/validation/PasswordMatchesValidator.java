@@ -1,6 +1,6 @@
 package by.ibrel.kitan.auth.validation;
 
-import by.ibrel.kitan.auth.service.UserDto;
+import by.ibrel.kitan.auth.service.dto.UserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

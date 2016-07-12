@@ -50,9 +50,15 @@
                                     <td><small>${user.login}</small></td>
                                     <td><small>${user.roles}</small></td>
                                     <td>
-                                        <%--<a href="<c:url value='/edit-user-${user.login}' />" class="btn btn-success custom-width" data-toggle="tooltip" data-placement="bottom" title="Редактировать пользователя"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>--%>
-                                        <%--<a href="<c:url value='/change-password-${user.login}'/>" class="btn btn-info custom-width" data-toggle="tooltip" data-placement="bottom" title="Сбросить пароль"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></a>--%>
-                                        <%--<a href="<c:url value='/delete-user-${user.id}' />" class="btn btn-danger custom-width" data-toggle="tooltip" data-placement="bottom" title="Удалить пользователя"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>--%>
+                                        <a href="<c:url value='/user/edit/${user.login}'/>" title="Edit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="<c:url value='/user/delete/${user.id}'/>" title="Delete" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="<c:url value='/user/change-password/${user.login}'/>" title="Change password" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:forEach>

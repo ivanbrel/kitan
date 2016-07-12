@@ -1,5 +1,6 @@
 package by.ibrel.kitan.auth.service;
 
+import by.ibrel.kitan.auth.service.dto.UserDto;
 import by.ibrel.kitan.auth.service.impl.IUserService;
 import by.ibrel.kitan.auth.dao.repository.RoleRepository;
 import by.ibrel.kitan.auth.dao.repository.UserRepository;
@@ -41,7 +42,7 @@ public class UserService implements IUserService {
 
         user.setFirstName(accountDto.getFirstName());
         user.setLastName(accountDto.getLastName());
-        user.setLogin(passwordEncoder.encode(accountDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setLogin(accountDto.getLogin());
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return repository.save(user);
@@ -96,9 +97,6 @@ public class UserService implements IUserService {
 
     private boolean loginExist(final String login){
         final User user = repository.findByUser(login);
-        if (user!= null){
-            return true;
-        }
-        return false;
+        return user != null;
     }
 }

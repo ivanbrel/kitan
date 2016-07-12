@@ -9,8 +9,7 @@
     <http>
 
         <intercept-url pattern="/resources/**" access = "permitAll" />
-        <intercept-url pattern="/login*" access = "permitAll"/>
-        <intercept-url pattern="/registrationpage*" access="permitAll"/>
+        <intercept-url pattern="/login_*" access = "permitAll"/>
         <intercept-url pattern="/registration*" access="permitAll"/>
         <intercept-url pattern="/checkLogin*" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()" />

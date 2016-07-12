@@ -1,27 +1,54 @@
 $(document).ready(function () {
-    $('regform').submit(function(event) {
-        register(event);
+
+    $('#form').submit(function (event) {
+        //for(var i=0; i < 200000000; i++);
+        //{
+        //    var n = noty({
+        //        text: 'Проверка данных ...',
+        //        animation: {
+        //            open: {height: 'toggle'}, // jQuery animate function property object
+        //            close: {height: 'toggle'}, // jQuery animate function property object
+        //            easing: 'swing', // easing
+        //            speed: 100 // opening & closing animation speed
+        //        }
+        //    });
+        //    n.show();
+        //}
+        if ($("#login").val()!=0 && $("#password").val()!=0 && $("#firstName").val()!=0 && $("#lastName").val()!=0) {
+            register(event);
+        } else {
+            alert("Поля, помеченные звездочкой, обязательны для заполнения");
+            return false;
+        }
     });
 
-    //$('#login').on('blur', function(){
-    //    jQuery.ajax({
-    //        type:"POST",
-    //        url:"/checkLogin",
-    //        data:{"login":document.getElementById('login').value} ,
-    //        success: function(data){
-    //            if( data == true) {
-    //                $("#userLoginExist").show().html([["Пользователь с таким логином уже существует!"]]);
-    //                $("#userLoginFree").html("").hide();
-    //            }else if(data == false){
-    //                $("#userLoginFree").show().html([["Логин свободен"]]);
-    //                $("#userLoginExist").html("").hide();
-    //            }
-    //
-    //        }
-    //    })
-    //});
+    $('#login').on('blur', function () {
 
-    $(":password").keyup(function(){
+        jQuery.ajax({
+            type: "POST",
+            url: ctx + "/checkLogin",
+            data: {"login": document.getElementById('login').value},
+            success: function (data) {
+                //check on empty field "user"
+                if ($("#login").val() != 0) {
+                    if (data == false) {
+                        //check on exists user
+                        $("#userLoginExist").show().html([["Пользователь с таким логином уже существует!"]]);
+                        $("#userLoginFree").html("").hide();
+                    } else if (data == true) {
+                        $("#userLoginFree").show().html([["Логин свободен"]]);
+                        $("#userLoginExist").html("").hide();
+                    }
+                } else {
+                    $("#userLoginExist").html("").hide();
+                    $("#userLoginFree").html("").hide();
+                }
+
+            }
+        })
+    });
+
+    $(":password").keyup(function () {
         //if($("#password").val() != $("#matchPassword").val()){
         //    $("#globalError").show().html([["Пароли не совпадают!"]]);
         //}else{
@@ -47,21 +74,33 @@ $(document).ready(function () {
     //    }
     //};
     //$('#password').pwstrength(options);
+
 });
+
 
 function register(event){
     event.preventDefault();
     $(".alert").html("").hide();
     $(".error-list").html("");
     if($("#password").val() != $("#matchPassword").val()){
-        //$("#globalError").show().html([["Пароли не совпадают!"]]);
+        $("#globalError").show().html([["Пароли не совпадают!"]]);
         return;
     }
-    var formData= $('regform').serialize();
-    $.post("/registration",formData ,function(data){
+    var formData= $('#form').serialize();
+    $.post(ctx + "/registration",formData ,function(data){
             if(data.message == "success"){
                 alert("Регистрация прошла успешно!");
-                window.location.href = "/login";
+                //var n = noty({
+                //    text: 'Регистрация прошла успешно!',
+                //    animation: {
+                //        open: {height: 'toggle'}, // jQuery animate function property object
+                //        close: {height: 'toggle'}, // jQuery animate function property object
+                //        easing: 'swing', // easing
+                //        speed: 100 // opening & closing animation speed
+                //    }
+                //});
+                //n.show();
+                window.location.href = ctx + "/login_";
             }
 
         })
@@ -71,7 +110,7 @@ function register(event){
                 alert("Пользователь с таким логином уже существует!");
             }
             else if(data.responseJSON.error.indexOf("InternalError") > -1){
-                window.location.href = "login?message=" + data.responseJSON.message;
+                window.location.href = "login_?message=" + data.responseJSON.message;
             }
             else{
                 var errors = $.parseJSON(data.responseJSON.message);

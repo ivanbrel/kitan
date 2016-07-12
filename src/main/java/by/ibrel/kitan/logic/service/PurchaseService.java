@@ -1,17 +1,17 @@
 package by.ibrel.kitan.logic.service;
 
-import by.ibrel.kitan.logic.dao.entity.Client;
-import by.ibrel.kitan.logic.dao.entity.Price;
-import by.ibrel.kitan.logic.dao.entity.Product;
+import by.ibrel.kitan.logic.dao.entity.*;
+import by.ibrel.kitan.logic.dao.repository.InfoPurchaseProductRepository;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
-import by.ibrel.kitan.logic.dao.entity.Purchase;
 import by.ibrel.kitan.logic.dao.repository.ClientRepository;
 import by.ibrel.kitan.logic.dao.repository.PurchaseRepository;
 import by.ibrel.kitan.logic.service.impl.IPurchaseService;
+import by.ibrel.kitan.web.controllers.ExceptionHandlerController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +30,9 @@ public class PurchaseService implements IPurchaseService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private InfoPurchaseProductRepository infoPurchaseProductRepository;
+
     //API
 
     @Override
@@ -40,7 +43,8 @@ public class PurchaseService implements IPurchaseService {
         purchase.setNumberPurchase(getMaxValue());
         purchase.setDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
         purchase.setClient(clientAdd);
-        purchase.setPriceSummary(0);
+        purchase.setPriceSummary(0.0);
+        purchase.setCountSummary(0);
 
         return purchaseRepository.save(purchase);
     }
@@ -51,29 +55,33 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public synchronized void sellProduct(final Purchase purchase, final Integer count) {
+    public synchronized void sellProduct(final Purchase purchase, final Integer count) throws Exception {
         Purchase entity = purchaseRepository.findOne(purchase.getId());
 
-        Collection<Product> products = purchase.getProducts();
+        //Collection<Product> products = purchase.getProducts();
 
-        for (Product product:products){
+        Collection<Product> p = entity.getProducts();
+
+        for (Product product:purchase.getProducts()){
 
             product = productRepository.findOne(product.getId());
 
-            if (product.isState()) {
+            p.add(product);
 
-                product.setState(false);
-                product.setPurchase(entity);
-                entity.setPriceSummary(entity.getPriceSummary()+SummaryPrice(product,count));
+            entity.setPriceSummary(entity.getPriceSummary()+SummaryPrice(product,count));
+            entity.setCountSummary(entity.getCountSummary()+infoCount(entity,product,count));
+
+            if (product.getCount()>0) {
                 product.setCount(product.getCount() - count);
-
-            }else {
-
-                //TODO show user message
-
-                System.out.println("Product " + product.getNameProduct() + " occupied!");
+            }else{
+                //TODO info client that count <0
+                throw new Exception();
             }
+
         }
+
+        entity.setProducts(p);
+
         purchaseRepository.save(entity);
     }
 
@@ -81,18 +89,9 @@ public class PurchaseService implements IPurchaseService {
     public synchronized void delete(Long id) {
         Purchase entity = purchaseRepository.findOne(id);
 
-        if (entity.getProducts()==null){
-            purchaseRepository.delete(id);
-        }else {
-            Collection<Product> products = entity.getProducts();
-            for (Product product : products) {
-                product = productRepository.findOne(product.getId());
-                product.setState(true);
-                product.setPurchase(null);
-            }
-            purchaseRepository.save(entity);
-            purchaseRepository.delete(id);
-        }
+        entity.getProducts().clear();
+        entity.getInfoPurchaseProducts().clear();
+        purchaseRepository.delete(entity);
     }
 
     //get max value in table "purchase", for find max value == number purchase
@@ -107,9 +106,23 @@ public class PurchaseService implements IPurchaseService {
     }
 
     //calculating summary price
-    protected int SummaryPrice(Product product, final int count){
-        int sum = 0;
+    protected double SummaryPrice(Product product, final double count){
+        double sum = 0;
         sum += product.getPrice().getByRuble()*count;
         return sum;
+    }
+
+    protected int infoCount(final Purchase purchase, final Product product, final Integer count){
+
+        InfoPurchaseProduct infoPurchaseProduct = new InfoPurchaseProduct();
+        infoPurchaseProduct.setPurchase(purchase);
+        infoPurchaseProduct.setProduct(product);
+        infoPurchaseProduct.setCount(count);
+
+        //ruble!!!!
+        infoPurchaseProduct.setPrice(product.getPrice().getByRuble());
+
+        infoPurchaseProductRepository.save(infoPurchaseProduct);
+        return count;
     }
 }

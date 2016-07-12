@@ -81,11 +81,9 @@ public class PriceController {
         return "redirect:/price/list";
     }
 
-    //TODO edit controller
-
     //add price in product
     @RequestMapping(value = {"/price/add/{id}"}, method = RequestMethod.POST)
-    public String addPrice(@Valid  Price price, BindingResult result, ModelMap modelMap){
+    public String addToProduct(@Valid  Price price, BindingResult result, ModelMap modelMap){
 
         if (result.hasErrors()){
             LOGGER.debug("FAIL! Data is not correct!");
@@ -116,7 +114,7 @@ public class PriceController {
     }
 
     @RequestMapping(value = {"/price/add/{id}"}, method = RequestMethod.GET)
-    public String addPrice(@PathVariable("id") final Long id, ModelMap modelMap){
+    public String priceToProduct(@PathVariable("id") final Long id, ModelMap modelMap){
 
         final Price price = repository.findOne(id);
 
@@ -126,5 +124,23 @@ public class PriceController {
 
         modelMap.addAttribute("productsList", productsList);
         return "price.add.product";
+    }
+
+    @RequestMapping(value = { "/price/edit/{id}" }, method = RequestMethod.POST)
+    public String updatePrice(@Valid final Price p, final BindingResult result, final ModelMap model){
+        if (result.hasErrors()){return "price.edit";}
+        service.updatePrice(p);
+        model.addAttribute("success", "Данные " + p.getId() + " изменены");
+        return "price.edit";
+    }
+
+    @RequestMapping(value = { "/price/edit/{id}" }, method = RequestMethod.GET)
+    public String editPrice(@PathVariable Long id, ModelMap model) {
+
+        final Price price = service.findById(id);
+
+        model.addAttribute("price", price);
+
+        return "price.edit";
     }
 }

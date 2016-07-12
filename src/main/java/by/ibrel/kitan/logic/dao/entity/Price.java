@@ -18,13 +18,13 @@ public class Price implements Serializable {
 
     private String priceForProduct;
 
-    private Integer byRuble;
+    private Double byRuble;
 
-    private Integer rusRuble;
+    private Double rusRuble;
 
-    private Integer usaDollar;
+    private Double usaDollar;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Product product;
 
     public Price() {
@@ -46,27 +46,27 @@ public class Price implements Serializable {
         this.priceForProduct = priceForProduct;
     }
 
-    public Integer getByRuble() {
+    public Double getByRuble() {
         return byRuble;
     }
 
-    public void setByRuble(Integer byRuble) {
+    public void setByRuble(Double byRuble) {
         this.byRuble = byRuble;
     }
 
-    public Integer getRusRuble() {
+    public Double getRusRuble() {
         return rusRuble;
     }
 
-    public void setRusRuble(Integer rusRuble) {
+    public void setRusRuble(Double rusRuble) {
         this.rusRuble = rusRuble;
     }
 
-    public Integer getUsaDollar() {
+    public Double getUsaDollar() {
         return usaDollar;
     }
 
-    public void setUsaDollar(Integer usaDollar) {
+    public void setUsaDollar(Double usaDollar) {
         this.usaDollar = usaDollar;
     }
 

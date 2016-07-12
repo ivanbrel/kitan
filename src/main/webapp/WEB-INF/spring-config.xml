@@ -120,14 +120,14 @@
     </bean>
 
     <mvc:view-controller path="/login_" view-name="auth.login"/>
-    <mvc:view-controller path="/registrationpage" view-name="auth.registration"/>
     <mvc:view-controller path="/home" view-name="main.home"/>
     <mvc:view-controller path="/contacts" view-name="main.contacts"/>
     <mvc:view-controller path="/help" view-name="main.help"/>
     <mvc:view-controller path="/ref" view-name="main.ref"/>
     <mvc:view-controller path="/about" view-name="main.about"/>
     <mvc:view-controller path="/users/list" view-name="auth.user.list"/>
-    <mvc:view-controller path="/users/role/list" view-name="auth.user.role.list"/>
+    <mvc:view-controller path="/user/edit" view-name="auth.user.edit"/>
+    <mvc:view-controller path="/role/list" view-name="auth.role.list"/>
     <mvc:view-controller path="/users/add-page" view-name="auth.user.add"/>
     <mvc:view-controller path="/client/list" view-name="client.list"/>
     <mvc:view-controller path="/client/add-page" view-name="client.add"/>
@@ -138,6 +138,7 @@
     <mvc:view-controller path="/price/add-page" view-name="price.add"/>
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
+    <mvc:view-controller path="/error/405" view-name="error.405"/>
     <mvc:view-controller path="/error/trace" view-name="error.trace"/>
     <mvc:view-controller path="/error/403" view-name="error.403"/>
     <mvc:view-controller path="/test" view-name="test"/>

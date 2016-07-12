@@ -89,9 +89,7 @@
                                 </div>
                             </div>
 
-                            <%--TODO add column--%>
-
-                            <div class="ln_solid"></div>
+                           <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <input type="submit" value="Добавить" class="btn btn-success" />
@@ -99,6 +97,27 @@
                                 </div>
                             </div>
                         </form>
+
+
+                        <%--------------------------------------------------------------------------------------------------------------------------%>
+                        <%--<div class="form-group">--%>
+                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12"><a onclick="textareaFunction()">Добавить новую строку</a></label>--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                        <%--<span id="newAtrr"></span>--%>
+                        <%--<input type="button" value="удалить" class="btn btn-default"  onclick="resetElementsCus()"/>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--------------------------------------------------------------------------------------------------------------------------%>
+
+                        <div id="list">
+                            <input class="listnote" type = "text"/>
+                            <input class="listnote" type = "text"/>
+                            <input class="listnote" type = "text"/>
+                        </div>
+                        <button id="add">Добавить</button>
+                        <button id="send">Отправить</button>
                     </div>
                 </div>
             </div>
@@ -106,3 +125,7 @@
         </div>
     </div>
 </div>
+<!-- jQuery -->
+<script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="${ctx}/resources/js/add.and.post.column.js"></script>

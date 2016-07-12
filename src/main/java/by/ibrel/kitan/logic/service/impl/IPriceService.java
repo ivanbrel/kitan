@@ -16,6 +16,8 @@ public interface IPriceService {
 
     void deletePrice(Long id);
 
+    Price findById(Long id);
+
     List<Price> allPrice();
 
     void updatePrice(Price price);

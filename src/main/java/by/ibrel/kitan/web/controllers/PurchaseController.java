@@ -71,7 +71,7 @@ public class PurchaseController {
 
     //add product
     @RequestMapping(value = {"/purchase/sell/{id}"}, method = RequestMethod.POST)
-    public String sellProduct(@Valid  Purchase purchase, @Valid Integer count, BindingResult result,ModelMap modelMap){
+    public String sellProduct(@Valid  Purchase purchase, @Valid Integer count, BindingResult result,ModelMap modelMap) throws Exception {
 
         if (result.hasErrors()){
             LOGGER.debug("!ERROR! data is not correct! ");

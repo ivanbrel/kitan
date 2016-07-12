@@ -41,7 +41,7 @@
                                 <th>Цвет</th>
                                 <th>Страна</th>
                                 <th>Категория</th>
-                                <th>Статус</th>
+                                <%--<th>Статус</th>--%>
                                 <th>Количество</th>
                             </tr>
                             </thead>
@@ -56,10 +56,10 @@
                                             <td><c:out value="${elements.color}"/></td>
                                             <td><c:out value="${elements.countryProduct}"/></td>
                                             <td><c:out value="${elements.category}"/></td>
-                                            <td><c:out value="${elements.state}"/></td>
+                                            <%--<td><c:out value="${elements.state}"/></td>--%>
                                             <td>
                                                 <p>
-                                                    <label><input type="text" id="count" class="field-divided" name="count" value="${elements.count}" required="required"/></label>
+                                                    <label><input type="text" id="count" class="field-divided" name="count" value="" required="required"/></label>
                                                 </p>
                                             </td>
                                             <td width="10" style=" border-collapse: collapse; border: 2px solid white" >

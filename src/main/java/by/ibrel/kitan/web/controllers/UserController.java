@@ -38,53 +38,37 @@ public class UserController {
         return "auth.user.list";
     }
 
-    @RequestMapping(value = {"/edit-user-{user}"}, method = RequestMethod.POST)
-    public String updateUser(@Valid User u, BindingResult result, ModelMap model, @PathVariable String user) {
+    @RequestMapping(value = {"/user/edit/{user}"}, method = RequestMethod.POST)
+    public String updateUser(@Valid final User user, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
-            return "users.edit";
+            return "auth.user.edit";
         }
 
-        userService.updateUser(u);
+        userService.updateUser(user);
 
-
-        model.addAttribute("success", "Данные пользователя " + u.getLogin() + " изменены");
-        return "users.edit";
+        model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
+        return "auth.user.edit";
     }
 
-    @RequestMapping(value = {"/edit-user-{user}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/edit/{user}"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String user, ModelMap model) {
         User u = userService.findByLogin(user);
         model.addAttribute("user", u);
         model.addAttribute("edit", true);
-        return "users.edit";
+        return "auth.user.edit";
     }
 
-    @RequestMapping(value = {"/delete-user-{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/delete/{id}"}, method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "users.list";
+        return "auth.user.list";
     }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String showUser(ModelMap model, Principal principal) {
-
-        if (principal != null) {
-
-            org.springframework.security.core.userdetails.User activeUser = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
-
-            User u = userService.findByLogin(activeUser.getUsername());
-            model.addAttribute("user", u);
-
-            return "login.login";
-        }
-        return "login.login";
-    }
-
-    @RequestMapping(value = {"/updatePassword"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/update/password"}, method = RequestMethod.POST)
     @ResponseBody
-    public GenericResponse updateUserPassword(@RequestParam("password") final String password, @RequestParam("oldpassword") final String oldPassword) {
+    public GenericResponse updateUserPassword(@RequestParam("password") final String password, @RequestParam("oldPassword") final String oldPassword) {
         final User user = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if (!userService.checkIfValidOldPassword(user, oldPassword)) {
@@ -95,20 +79,37 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = {"/change-password-{user}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/change-password/{user}"}, method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String changePassword(@PathVariable String user, ModelMap model) {
         User u = userService.findByLogin(user);
         userService.changeUserPassword(u, DEFAULT_PASS);
         model.addAttribute("success", "Данные пользователя " + u.getLogin() + " изменены");
-        return "users.success";
+        return "redirect:/users/list";
     }
 
-    @RequestMapping(value = {"/edit/user"}, method = RequestMethod.GET)
+    //for common user
+    @RequestMapping(value = {"/user/edit"}, method = RequestMethod.GET)
     public String editCommonUser( ModelMap model) {
-        User u = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("user", u);
+
+        final User user = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("user", user);
         model.addAttribute("edit", true);
         return "auth.user.edit";
     }
+
+    //for common user
+    @RequestMapping(value = { "/user/edit" }, method = RequestMethod.POST)
+    public String updateCommonUser(@Valid final User user, final BindingResult result, final ModelMap model){
+
+        if (result.hasErrors()){return "users.edit";}
+
+        userService.updateUser(user);
+
+        model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
+
+        return "auth.user.edit";
+    }
+
 }

@@ -26,6 +26,4 @@ public interface IProductService {
     boolean checkStatus(Long id);
 
     Product getProduct(Long id);
-
-    Product addClient(Client client);
 }

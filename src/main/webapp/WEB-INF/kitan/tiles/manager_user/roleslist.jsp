@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ibrel
-  Date: 29.04.2016
-  Time: 14:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,8 +10,16 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
+                    <div class="well">
+                        <form action="${ctx}/role/add" method="post">
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="name" value="" required="required"/>
+                            </div>
+                            <input type="submit" class="btn btn-success custom-width" value="Добавить новую роль">
+                        </form>
+                    </div>
                     <div class="x_title">
-                        <h2>Список клиентов </h2>
+                        <h2>Список ролей </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -38,24 +39,28 @@
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
-                            В данной таблице представлен список всех клиентов </p>
+                            В данной таблице представлен список всех ролей </p>
                         <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>Имя роли</th>
-                                <th>Привилегии</th>
+                                <th><small>Роль</small></th>
+                                <th width="1000"><small>Привилегии</small></th>
                                 <th width="100">Опции</th>
                             </tr>
                             </thead>
-
                             <tbody>
                             <c:forEach items="${roles}" var="role">
                                 <tr>
+
                                     <td><small>${role.name}</small></td>
                                     <td><small>${role.privileges}</small></td>
                                     <td>
-                                        <a href="<c:url value='/edit-role-${role.name}' />" class="btn btn-success custom-width" data-toggle="tooltip" data-placement="bottom" title="Редактировать роль"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        <a href="<c:url value='/delete-role-${role.id}' />" class="btn btn-danger custom-width" data-toggle="tooltip" data-placement="bottom" title="Удалить роль"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        <a href="<c:url value='/role/edit/${role.name}'/>" title="Edit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="<c:url value='/role/delete/${role.id}'/>" title="Delete" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -6,6 +6,8 @@ import by.ibrel.kitan.logic.dao.repository.PriceRepository;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.service.dto.PriceDto;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.List;
 @Service
 @Transactional
 public class PriceService implements IPriceService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private PriceRepository repository;
@@ -47,7 +51,18 @@ public class PriceService implements IPriceService {
 
     @Override
     public void deletePrice(Long id) {
+        final Price price = repository.findOne(id);
+
+        if (price.getProduct() != null){
+            //TODO display a message
+            LOGGER.info("Warning, price associated with product");
+        }
         repository.delete(id);
+    }
+
+    @Override
+    public Price findById(Long id) {
+        return repository.findOne(id);
     }
 
     @Override
@@ -58,8 +73,15 @@ public class PriceService implements IPriceService {
     @Override
     public void updatePrice(Price price) {
 
-        //TODO
+        Price entity = repository.findOne(price.getId());
 
+        if (entity!=null) {
+            entity.setPriceForProduct(price.getPriceForProduct());
+            entity.setByRuble(price.getByRuble());
+            entity.setRusRuble(price.getRusRuble());
+            entity.setUsaDollar(price.getUsaDollar());
+        }
+        repository.save(entity);
     }
 
     @Override

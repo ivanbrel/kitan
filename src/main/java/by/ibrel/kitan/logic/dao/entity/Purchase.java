@@ -18,14 +18,20 @@ public class Purchase implements Serializable {
 
     private String date;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "purchase")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinTable(name = "purchase_product", schema ="main", joinColumns = @JoinColumn(name = "PURCHASE_ID", referencedColumnName = "PURCHASE_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
     private Collection<Product> products;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    public Integer priceSummary;
+    public Double priceSummary;
+
+    public Integer countSummary;
+
+    @OneToMany(mappedBy = "purchase")
+    private Collection<InfoPurchaseProduct> infoPurchaseProducts;
 
     public Purchase() {
     }
@@ -70,12 +76,28 @@ public class Purchase implements Serializable {
         this.client = client;
     }
 
-    public Integer getPriceSummary() {
+    public Double getPriceSummary() {
         return priceSummary;
     }
 
-    public void setPriceSummary(Integer priceSummary) {
+    public void setPriceSummary(Double priceSummary) {
         this.priceSummary = priceSummary;
+    }
+
+    public Collection<InfoPurchaseProduct> getInfoPurchaseProducts() {
+        return infoPurchaseProducts;
+    }
+
+    public void setInfoPurchaseProducts(Collection<InfoPurchaseProduct> infoPurchaseProducts) {
+        this.infoPurchaseProducts = infoPurchaseProducts;
+    }
+
+    public Integer getCountSummary() {
+        return countSummary;
+    }
+
+    public void setCountSummary(Integer countSummary) {
+        this.countSummary = countSummary;
     }
 
     @Override

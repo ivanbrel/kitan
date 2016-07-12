@@ -2,7 +2,7 @@ package by.ibrel.kitan.auth.service.impl;
 
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
-import by.ibrel.kitan.auth.service.UserDto;
+import by.ibrel.kitan.auth.service.dto.UserDto;
 
 import java.util.List;
 

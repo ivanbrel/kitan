@@ -13,7 +13,7 @@
         <!-- menu profile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="${ctx}/resources/bootstrap/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="${ctx}/resources/img/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Добро пожаловать,</span>
@@ -76,7 +76,7 @@
                     <li><a><i class="fa fa-clone"></i>Админ панель <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/users/list">Список пользователе</a></li>
-                            <li><a href="${ctx}/users/role/list">Список ролей</a></li>
+                            <li><a href="${ctx}/role/list">Список ролей</a></li>
                             <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
                         </ul>
                     </li>
@@ -158,18 +158,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="${ctx}/resources/bootstrap/images/img.jpg" alt=""><sec:authentication property="principal.username"/>
+                        <img src="${ctx}/resources/img/logo.png" alt=""><sec:authentication property="principal.username"/>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> Личный кабинет</a></li>
+                        <li><a href="${ctx}/user/edit"> Личный кабинет</a></li>
                         <li>
                             <a href="javascript:;">
                                 <%--<span class="badge bg-red pull-right">50%</span>--%>
                                 <span>Настройки</span>
                             </a>
                         </li>
-                        <li><a href="javascript:;">Помощь</a></li>
+                        <li><a href="${ctx}/help">Помощь</a></li>
                         <li><a href="${ctx}/logout"><i class="fa fa-sign-out pull-right"></i> Выход</a></li>
                     </ul>
                 </li>

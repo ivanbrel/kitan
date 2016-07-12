@@ -12,7 +12,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Зарегистрировать нового клиента </h2>
+                        <h2>Изменение клиента </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -31,13 +31,10 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <p class="text-muted font-13 m-b-30">
-                            Заполните форму для добавление нового клиента
-                        </p>
 
                         <!-- start id-form -->
 
-                        <form:form modelAttribute="client" id="demo-form2" class="form-horizontal form-label-left" action="${ctx}/client/add" method="POST">
+                        <form:form modelAttribute="client" id="form" class="form-horizontal form-label-left" method="post">
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Фамилия <span class="required">*</span>
@@ -59,19 +56,6 @@
                                     <form:input path="email" id="email" class="form-control col-md-7 col-xs-12" type="email" name="email"/>
                                 </div>
                             </div>
-                            <%--<div class="form-group">--%>
-                            <%--<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>--%>
-                            <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                            <%--<div id="gender" class="btn-group" data-toggle="buttons">--%>
-                            <%--<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                            <%--<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;--%>
-                            <%--</label>--%>
-                            <%--<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                            <%--<input type="radio" name="gender" value="female"> Female--%>
-                            <%--</label>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
                             <div class="form-group">
                                 <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Телефон <span class="required">*</span>
                                 </label>
@@ -89,15 +73,14 @@
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <input type="submit" value="Добавить" class="btn btn-success" />
-                                    <input type="reset" value="Отменить" class="btn btn-default"  />
+                                    <input type="submit" value="Обновить" class="btn btn-success" />
+                                    <input type="button" value="Отменить" class="btn btn-default"  onclick="history.back()"/>
                                 </div>
                             </div>
                         </form:form>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

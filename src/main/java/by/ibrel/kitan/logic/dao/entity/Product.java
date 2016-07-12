@@ -2,6 +2,7 @@ package by.ibrel.kitan.logic.dao.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,16 +26,15 @@ public class Product implements Serializable {
 
     private String countryProduct;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private Price price;
 
     private String barcode;
 
     private String category;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "PURCHASE_ID")
-    private Purchase purchase;
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.REMOVE)
+    private Collection<Purchase> purchases;
 
     //check the status of the product, if true means free
     private boolean state;
@@ -44,8 +44,12 @@ public class Product implements Serializable {
 
     private Integer count;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
-    private List<NewAttribute> newColumn;
+    @Column(name = "new_column")
+    @ElementCollection
+    private List<String> newColumn;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private InfoPurchaseProduct infoPurchaseProduct;
 
     public Product() {
     }
@@ -114,12 +118,12 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public Purchase getPurchase() {
-        return purchase;
+    public Collection<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setPurchases(Collection<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     public String getCountryProduct() {
@@ -146,12 +150,20 @@ public class Product implements Serializable {
         this.count = count;
     }
 
-    public List<NewAttribute> getNewColumn() {
+    public List<String> getNewColumn() {
         return newColumn;
     }
 
-    public void setNewColumn(List<NewAttribute> newColumn) {
+    public void setNewColumn(List<String> newColumn) {
         this.newColumn = newColumn;
+    }
+
+    public InfoPurchaseProduct getInfoPurchaseProduct() {
+        return infoPurchaseProduct;
+    }
+
+    public void setInfoPurchaseProduct(InfoPurchaseProduct infoPurchaseProduct) {
+        this.infoPurchaseProduct = infoPurchaseProduct;
     }
 
     @Override

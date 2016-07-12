@@ -40,6 +40,7 @@
                                 <th>Продукты</th>
                                 <th>Клиент</th>
                                 <th>Итоговая цена</th>
+                                <th>Итоговое количество</th>
                                 <th>Опции</th>
                             </tr>
                             </thead>
@@ -52,6 +53,7 @@
                                     <td>${purchases.products}</td>
                                     <td>${purchases.client.lastName}</td>
                                     <td>${purchases.priceSummary}</td>
+                                    <td>${purchases.countSummary}</td>
                                     <td>
                                         <small>
                                         <%--<a href="<c:url value='/client/edit/${product.id}'/>" title="Edit" class="icon-1 info-tooltip"></a>--%>

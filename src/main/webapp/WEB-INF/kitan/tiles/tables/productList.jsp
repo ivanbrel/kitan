@@ -57,7 +57,7 @@
                                         <td>${product.model}</td>
                                         <td>${product.color}</td>
                                         <td>${product.countryProduct}</td>
-                                        <td>${product.price.priceForProduct}</td>
+                                        <td>${product.price.byRuble}</td>
                                         <td>${product.barcode}</td>
                                         <td>${product.category}</td>
                                         <td>${product.state}</td>
@@ -69,6 +69,9 @@
                                             </a>
                                             <a href="<c:url value='/product/delete/${product.id}'/>" title="Delete" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </a>
+                                            <a href="<c:url value='/product/add/column/${product.id}'/>" title="Add Column" class="btn btn-default btn-xs">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                             </a>
                                         </td>
                                     </tr>

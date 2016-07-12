@@ -1,11 +1,11 @@
 package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
-import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.dao.entity.Product;
-import by.ibrel.kitan.logic.dao.repository.ClientRepository;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
 import by.ibrel.kitan.logic.service.impl.IProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +25,12 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+
     //API
 
     @Override
-    public Product addProduct(ProductDto productDto){
+    public Product addProduct(final ProductDto productDto){
 
         Product product = new Product();
 
@@ -38,29 +40,33 @@ public class ProductService implements IProductService {
         product.setCountryProduct(productDto.getCountryProduct());
         product.setBarcode(productDto.getBarcode());
         product.setCategory(productDto.getCategory());
+        product.setNewColumn(null);
 
         //TODO check entering data !!!!
         product.setCount(Integer.parseInt(productDto.getCount()));
 
-        product.setState(true);
-        product.setSales(false);
+//        product.setState(true);
+//        product.setSales(false);
 
         return productRepository.save(product);
     }
 
     @Override
     public synchronized void editProduct(Product product) {
+
         Product entity = productRepository.findOne(product.getId());
+
         if (entity!=null){
             entity.setNameProduct(product.getNameProduct());
             entity.setModel(product.getModel());
             entity.setColor(product.getColor());
             entity.setCountryProduct(product.getCountryProduct());
             entity.setBarcode(product.getBarcode());
-            entity.setPrice(product.getPrice());
-            product.setState(true);
         }
+
         saveProduct(entity);
+
+        LOGGER.debug("Product " +product.getId() +" is update");
     }
 
     @Override
@@ -76,9 +82,9 @@ public class ProductService implements IProductService {
     @Override
     public synchronized void sellProduct(Long id) {
         Product e = productRepository.findOne(id);
-        if (e!=null && e.isState()){
-           e.setSales(true);
-        }
+//        if (e!=null && e.isState()){
+//           e.setSales(true);
+//        }
         saveProduct(e);
     }
 
@@ -98,12 +104,10 @@ public class ProductService implements IProductService {
         Product product = productRepository.getOne(id);
         if (checkStatus(product.getId())){
 
+        //TODO
+
         }
         return product;
     }
 
-    @Override
-    public synchronized Product addClient(Client client) {
-        return null;
-    }
 }

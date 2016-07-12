@@ -57,7 +57,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
             }
         }
         if (isUser) {
-            return "/index.jsp" + authentication.getName();
+            return "/index.jsp";
         } else if (isAdmin) {
             return "/index.jsp";
         } else {

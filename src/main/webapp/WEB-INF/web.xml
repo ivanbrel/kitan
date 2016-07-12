@@ -82,8 +82,12 @@
     <location>/error/404</location>
   </error-page>
   <error-page>
-    <error-code>403</error-code>
+    <error-code>405</error-code>
     <location>/error/405</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error/403</location>
   </error-page>
 
   <jsp-config>

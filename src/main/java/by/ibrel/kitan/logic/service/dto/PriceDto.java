@@ -11,13 +11,13 @@ public class PriceDto {
     private String priceForProduct;
 
     @NotNull
-    private Integer byRuble;
+    private Double byRuble;
 
     @NotNull
-    private Integer rusRuble;
+    private Double rusRuble;
 
     @NotNull
-    private Integer usaDollar;
+    private Double usaDollar;
 
     public String getPriceForProduct() {
         return priceForProduct;
@@ -27,27 +27,27 @@ public class PriceDto {
         this.priceForProduct = priceForProduct;
     }
 
-    public Integer getByRuble() {
+    public Double getByRuble() {
         return byRuble;
     }
 
-    public void setByRuble(Integer byRuble) {
+    public void setByRuble(Double byRuble) {
         this.byRuble = byRuble;
     }
 
-    public Integer getRusRuble() {
+    public Double getRusRuble() {
         return rusRuble;
     }
 
-    public void setRusRuble(Integer rusRuble) {
+    public void setRusRuble(Double rusRuble) {
         this.rusRuble = rusRuble;
     }
 
-    public Integer getUsaDollar() {
+    public Double getUsaDollar() {
         return usaDollar;
     }
 
-    public void setUsaDollar(Integer usaDollar) {
+    public void setUsaDollar(Double usaDollar) {
         this.usaDollar = usaDollar;
     }
 }

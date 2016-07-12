@@ -4,16 +4,19 @@ import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
+import by.ibrel.kitan.web.util.GenericResponse;
+import org.apache.commons.digester.SetTopRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -60,21 +63,38 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
-//    TODO edit controller
+    @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.POST)
+    public String updateProduct(@Valid Product product, final BindingResult result, final ModelMap model){
+        if (result.hasErrors()){return "product.edit";}
 
-//    @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.POST)
-//    public String updateCategory(@Valid final Long id, final BindingResult result, final ModelMap model){
-//        if (result.hasErrors()){return "category.edit";}
-//        service.editProduct(id);
-//        model.addAttribute("success", "Данные клиента " + c.getId() + " изменены");
-//        return "category.edit";
-//    }
-//
-//    @RequestMapping(value = { "/category/edit/{category}" }, method = RequestMethod.GET)
-//    public String editClient(@PathVariable String category, ModelMap model) {
-//        final Category c = service.findByNameCategory(category);
-//        model.addAttribute("category", c);
-//        model.addAttribute("edit", true);
-//        return "category.edit";
-//    }
+        service.editProduct(product);
+
+        model.addAttribute("success", "Данные продукта " + product.getId() + " изменены");
+
+        return "product.edit";
+    }
+
+    @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.GET)
+    public String editProduct(@PathVariable Long id, ModelMap model) {
+
+        final Product product = service.getProduct(id);
+
+        model.addAttribute("product", product);
+
+        model.addAttribute("edit", true);
+
+        return "product.edit";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public @ResponseBody String handlerRequest( @RequestParam ("json") String json, @RequestParam ("name") String name) throws Exception {
+
+        List<String> items = Arrays.asList(json.split("\\s*,\\s*"));
+
+        System.out.println(json);
+        System.out.println(name);
+        System.out.println(items);
+
+        return json;
+    }
 }
