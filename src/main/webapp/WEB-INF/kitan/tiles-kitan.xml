@@ -111,6 +111,10 @@
         <put-attribute name="titleKey" value="Выбор продукта"/>
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/addProductInPurchase.jsp"/>
     </definition>
+    <definition name="purchase.show" extends="kitan.main">
+        <put-attribute name="titleKey" value="Выбор продукта"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/purchaseShow.jsp"/>
+    </definition>
 
     <!--price page-->
     <definition name="price.list" extends="kitan.main">

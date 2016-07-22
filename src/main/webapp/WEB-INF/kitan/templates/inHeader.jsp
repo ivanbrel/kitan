@@ -21,5 +21,11 @@
 <link href="${ctx}/resources/bootstrap/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
 <link href="${ctx}/resources/bootstrap/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+<%--file upload--%>
+<link href="${ctx}/resources/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
+<%--image popup--%>
+<link href="${ctx}/resources/css/ekko-lightbox.min.css" rel="stylesheet">
+
 <!-- Custom Theme Style -->
 <link href="${ctx}/resources/bootstrap/css/custom.min.css" rel="stylesheet">

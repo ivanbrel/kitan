@@ -6,20 +6,25 @@ import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.dao.repository.ClientRepository;
 import by.ibrel.kitan.logic.dao.repository.PurchaseRepository;
 import by.ibrel.kitan.logic.service.impl.IPurchaseService;
-import by.ibrel.kitan.web.controllers.ExceptionHandlerController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Entity;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import static by.ibrel.kitan.logic.Const.START_NUMBER;
+
+
 @Service
 @Transactional
 public class PurchaseService implements IPurchaseService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private PurchaseRepository purchaseRepository;
@@ -37,6 +42,7 @@ public class PurchaseService implements IPurchaseService {
 
     @Override
     public Purchase createPurchase(final Client client) {
+
         final Purchase purchase = new Purchase();
         final Client clientAdd = clientRepository.findOne(client.getId());
 
@@ -46,7 +52,9 @@ public class PurchaseService implements IPurchaseService {
         purchase.setPriceSummary(0.0);
         purchase.setCountSummary(0);
 
-        return purchaseRepository.save(purchase);
+        purchaseRepository.save(purchase);
+
+        return purchase;
     }
 
     @Override
@@ -66,18 +74,21 @@ public class PurchaseService implements IPurchaseService {
 
             product = productRepository.findOne(product.getId());
 
-            p.add(product);
+            if (count<product.getCount()) {
+                p.add(product);
 
-            entity.setPriceSummary(entity.getPriceSummary()+SummaryPrice(product,count));
-            entity.setCountSummary(entity.getCountSummary()+infoCount(entity,product,count));
+                entity.setPriceSummary(entity.getPriceSummary()+SummaryPrice(product,count, entity.getClient().getDiscountPrice()));
+                entity.setCountSummary(entity.getCountSummary()+infoCount(entity,product,count));
 
-            if (product.getCount()>0) {
+
                 product.setCount(product.getCount() - count);
-            }else{
-                //TODO info client that count <0
-                throw new Exception();
-            }
+                productRepository.save(product);
 
+            }else LOGGER.debug("Purchase count > product count");{
+
+                //TODO info client that count <0
+
+            }
         }
 
         entity.setProducts(p);
@@ -89,40 +100,42 @@ public class PurchaseService implements IPurchaseService {
     public synchronized void delete(Long id) {
         Purchase entity = purchaseRepository.findOne(id);
 
-        entity.getProducts().clear();
-        entity.getInfoPurchaseProducts().clear();
+//        entity.getProducts().clear();
+//        entity.getInfoPurchaseProducts().clear();
         purchaseRepository.delete(entity);
     }
 
     //get max value in table "purchase", for find max value == number purchase
     protected Integer getMaxValue(){
-        if(purchaseRepository.findMaxValue()!=null) {
-            final Purchase purchase = purchaseRepository.findMaxValue();
-            int i = purchase.getNumberPurchase();
+        if(purchaseRepository.findMaxValue()!= null) {
+            Integer i = purchaseRepository.findMaxValue();
             return ++i;
         }else {
-            return 1;
+            return START_NUMBER;
         }
     }
 
     //calculating summary price
-    protected double SummaryPrice(Product product, final double count){
+    private double SummaryPrice(Product product, final double count, final double discount){
         double sum = 0;
-        sum += product.getPrice().getByRuble()*count;
+
+        //discount
+        sum += ((product.getPrice())-(product.getPrice()*discount/100))*count;
         return sum;
     }
 
-    protected int infoCount(final Purchase purchase, final Product product, final Integer count){
+    private int infoCount(final Purchase purchase, final Product product, final Integer count){
 
         InfoPurchaseProduct infoPurchaseProduct = new InfoPurchaseProduct();
         infoPurchaseProduct.setPurchase(purchase);
         infoPurchaseProduct.setProduct(product);
         infoPurchaseProduct.setCount(count);
+        infoPurchaseProduct.setNumberPurchase(purchase.getNumberPurchase());
 
-        //ruble!!!!
-        infoPurchaseProduct.setPrice(product.getPrice().getByRuble());
+        infoPurchaseProduct.setPrice(product.getPrice());
 
         infoPurchaseProductRepository.save(infoPurchaseProduct);
         return count;
     }
+
 }

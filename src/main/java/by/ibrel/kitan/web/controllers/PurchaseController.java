@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/")
@@ -62,16 +63,18 @@ public class PurchaseController {
 
         final Client client = clientService.findById(id);
 
-        service.createPurchase(client);
+        //TODO problem
+        Purchase purchase = service.createPurchase(client);
 
         model.addAttribute("success");
-        return "redirect:/purchase/list";
+        model.addAttribute("purchases", purchase);
+        return "purchase.show";
     }
 
 
     //add product
     @RequestMapping(value = {"/purchase/sell/{id}"}, method = RequestMethod.POST)
-    public String sellProduct(@Valid  Purchase purchase, @Valid Integer count, BindingResult result,ModelMap modelMap) throws Exception {
+    public String sellProduct(@Valid  Purchase purchase, @Valid Integer count, BindingResult result, ModelMap modelMap) throws Exception {
 
         if (result.hasErrors()){
             LOGGER.debug("!ERROR! data is not correct! ");
@@ -99,7 +102,7 @@ public class PurchaseController {
     }
 
     @RequestMapping(value = {"/purchase/sell/{id}"}, method = RequestMethod.GET)
-    public String addProduct(@PathVariable("id") final Long id, ModelMap modelMap){
+    public String addProduct(@PathVariable final Long id, ModelMap modelMap){
 
         final Purchase purchase = repository.findOne(id);
 

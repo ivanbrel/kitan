@@ -1,71 +1,54 @@
 package by.ibrel.kitan.auth.dao.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 07.04.2016.
+ *
  */
+
+@ToString
 @Entity
-@Table(name = "role", schema ="auth")
+@Table(name = "role")
 public class Role implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    private static final long serialVersionUID = 1L;
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter
     private Long id;
 
-    @ManyToMany(mappedBy = "roles")
+    @Getter @Setter
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Collection<User> users;
 
+    @Getter @Setter
+    //@NotFound(action=NotFoundAction.IGNORE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(name = "roles_privileges", schema ="auth", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns =  @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
 
+    @Getter @Setter
     private String name;
 
     public Role() {
-        super();
     }
 
     public Role(final String name) {
-        super();
         this.name = name;
     }
 
     //
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(final Collection<User> users) {
-        this.users = users;
-    }
-
-    public Collection<Privilege> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(final Collection<Privilege> privileges) {
-        this.privileges = privileges;
-    }
 
     @Override
     public int hashCode() {
@@ -87,16 +70,10 @@ public class Role implements Serializable {
             return false;
         }
         final Role role = (Role) obj;
-        if (!role.equals(role.name)) {
+        if (!name.equals(role.name)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Role [name=").append(name).append("]").append("[id=").append(id).append("]");
-        return builder.toString();
-    }
 }

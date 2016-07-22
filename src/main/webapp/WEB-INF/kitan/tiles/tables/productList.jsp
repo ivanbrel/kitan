@@ -36,15 +36,13 @@
                         <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>Наименование</th>
                                 <th>Модель</th>
                                 <th>Цвет</th>
                                 <th>Страна</th>
                                 <th>Цена</th>
-                                <th>Штрихкод</th>
                                 <th>Категория</th>
-                                <th>Статус</th>
-                                <th>Продано</th>
                                 <th>Количество</th>
                                 <th width="100">Опции</th>
                             </tr>
@@ -53,15 +51,17 @@
                             <tbody>
                                 <c:forEach items="${product}" var="product">
                                     <tr>
+                                        <td>
+                                            <a href="<c:url value="/resources/img/upload/${product.productImage.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
+                                                <img src="<c:url value="/resources/img/upload/${product.productImage.fileName}"/>" class="avatar">
+                                            </a>
+                                        </td>
                                         <td>${product.nameProduct}</td>
                                         <td>${product.model}</td>
                                         <td>${product.color}</td>
                                         <td>${product.countryProduct}</td>
-                                        <td>${product.price.byRuble}</td>
-                                        <td>${product.barcode}</td>
+                                        <td>${product.price}</td>
                                         <td>${product.category}</td>
-                                        <td>${product.state}</td>
-                                        <td>${product.sales}</td>
                                         <td>${product.count}</td>
                                         <td>
                                             <a href="<c:url value='/product/edit/${product.id}'/>" title="Edit" class="btn btn-default btn-xs">
@@ -85,3 +85,6 @@
         </div>
     </div>
 </div>
+
+
+

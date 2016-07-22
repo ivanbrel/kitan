@@ -1,8 +1,8 @@
 package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.dao.entity.Client;
-import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.dao.repository.ClientRepository;
+import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.service.dto.ClientDto;
 import by.ibrel.kitan.logic.service.impl.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ClientService implements IClientService {
+public class ClientService implements IClientService{
 
     /**
      *dependence problem clientRepository !
      */
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientRepository repository;
 
     //API
 
@@ -38,53 +38,58 @@ public class ClientService implements IClientService {
         client.setEmail(clientDto.getEmail());
         client.setPhone(clientDto.getPhone());
         client.setAccount(clientDto.getAccount());
-        return clientRepository.save(client);
+
+        //TODO check value
+        client.setDiscountPrice(Double.parseDouble(clientDto.getDiscount()));
+
+        return repository.save(client);
     }
 
     private boolean clientExists(final String account) {
-        final Client client = clientRepository.findByAccount(account);
+        final Client client = repository.findByAccount(account);
         return client != null;
     }
 
     @Override
     public void saveNewClient(Client client) {
-        clientRepository.save(client);
+        repository.save(client);
     }
 
     @Override
     public Client getClient(Long id) {
-        return clientRepository.findOne(id);
+        return repository.findOne(id);
     }
 
     @Override
     public Client findByNameClient(String nameClient) {
-        return clientRepository.findByLastName(nameClient);
+        return repository.findByLastName(nameClient);
     }
 
     @Override
     public Client findById(Long id) {
-        return clientRepository.findOne(id);
+        return repository.findOne(id);
     }
 
     @Override
     public List<Client> findAllClient() {
-        return clientRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public void updateClient(Client client) {
-        Client entity = clientRepository.findByAccount(client.getAccount());
+        Client entity = repository.findByAccount(client.getAccount());
         if(entity!=null){
             entity.setFirstName(client.getFirstName());
             entity.setLastName(client.getLastName());
             entity.setPhone(client.getPhone());
             entity.setEmail(client.getEmail());
         }
-        clientRepository.save(entity);
+        repository.save(entity);
     }
 
     @Override
     public void deleteClient(Long id) {
-        clientRepository.delete(id);
+        repository.delete(id);
     }
+
 }

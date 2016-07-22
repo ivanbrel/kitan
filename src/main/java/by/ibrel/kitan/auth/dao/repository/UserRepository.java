@@ -4,6 +4,7 @@ import by.ibrel.kitan.auth.dao.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+
 /**
  * Created by ibrel on 08.04.2016.
  */

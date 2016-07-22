@@ -1,190 +1,93 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 13/05/16.
+ *
  */
 
+@EqualsAndHashCode
 @Entity
-@Table(name = "product", schema ="main")
+@Table(name = "product")
 public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PRODUCT_ID", unique = true, nullable = false)
+    @Column(name = "PRODUCT_ID")
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private String nameProduct;
 
+    @Getter @Setter
     private String model;
 
+    @Getter @Setter
     private String color;
 
+    @Getter @Setter
     private String countryProduct;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    private Price price;
+    @Getter @Setter
+    private Double price;
 
+    @Getter @Setter
     private String barcode;
 
+    @Getter @Setter
     private String category;
 
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.REMOVE)
+    @Getter @Setter
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
+//    @NotFound(action = NotFoundAction.IGNORE)
     private Collection<Purchase> purchases;
 
     //check the status of the product, if true means free
+    @Getter @Setter
     private boolean state;
 
     //check the status of the product, if true means product sales
+    @Getter @Setter
     private boolean sales;
 
+    @Getter @Setter
     private Integer count;
 
-    @Column(name = "new_column")
+    @Getter @Setter
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "product_newcolumn")
     private List<String> newColumn;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @Getter @Setter
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
     private InfoPurchaseProduct infoPurchaseProduct;
 
-    public Product() {
-    }
-
-    public boolean isState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public Price getPrice() {
-        return price;
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Collection<Purchase> getPurchases() {
-        return purchases;
-    }
-
-    public void setPurchases(Collection<Purchase> purchases) {
-        this.purchases = purchases;
-    }
-
-    public String getCountryProduct() {
-        return countryProduct;
-    }
-
-    public void setCountryProduct(String countryProduct) {
-        this.countryProduct = countryProduct;
-    }
-
-    public boolean isSales() {
-        return sales;
-    }
-
-    public void setSales(boolean sales) {
-        this.sales = sales;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public List<String> getNewColumn() {
-        return newColumn;
-    }
-
-    public void setNewColumn(List<String> newColumn) {
-        this.newColumn = newColumn;
-    }
-
-    public InfoPurchaseProduct getInfoPurchaseProduct() {
-        return infoPurchaseProduct;
-    }
-
-    public void setInfoPurchaseProduct(InfoPurchaseProduct infoPurchaseProduct) {
-        this.infoPurchaseProduct = infoPurchaseProduct;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        return id.equals(product.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+    @Getter @Setter
+    @OneToOne(mappedBy = "product",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private ProductImage productImage;
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(id);
-        return builder.toString();
+        return "Product{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }

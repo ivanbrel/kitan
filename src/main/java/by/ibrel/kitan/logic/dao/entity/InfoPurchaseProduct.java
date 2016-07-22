@@ -1,91 +1,58 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 07/07/16.
+ *
  */
+@EqualsAndHashCode
 @Entity
-@Table(name = "info_purchase", schema ="main")
+@Table(name = "detail_info_purchase")
 public class InfoPurchaseProduct implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "PURCHASE_ID")
     private Purchase purchase;
 
+    @Getter @Setter
     @OneToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
+    @Getter @Setter
     private Integer count;
 
+    @Getter @Setter
     private Double price;
 
-    public Long getId() {
-        return id;
-    }
+    @Getter @Setter
+    private Double discount;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Purchase getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InfoPurchaseProduct that = (InfoPurchaseProduct) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @Getter @Setter
+    private Integer numberPurchase;
 
     @Override
     public String toString() {
         return "InfoPurchaseProduct{" +
                 "id=" + id +
-                ", purchase=" + purchase +
-                ", product=" + product +
-                ", count=" + count +
                 '}';
     }
 }

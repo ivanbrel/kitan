@@ -119,6 +119,17 @@
         <property name="dataSource" ref="kitan-ds" />
     </bean>
 
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- max upload size in bytes -->
+        <property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+
+        <!-- max size of file in memory (in bytes) -->
+        <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+
+    </bean>
+
     <mvc:view-controller path="/login_" view-name="auth.login"/>
     <mvc:view-controller path="/home" view-name="main.home"/>
     <mvc:view-controller path="/contacts" view-name="main.contacts"/>
@@ -136,6 +147,7 @@
     <mvc:view-controller path="/product/add-page" view-name="product.add"/>
     <mvc:view-controller path="/price/list" view-name="price.list"/>
     <mvc:view-controller path="/price/add-page" view-name="price.add"/>
+    <mvc:view-controller path="/purchase/show" view-name="purchase.show"/>
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
     <mvc:view-controller path="/error/405" view-name="error.405"/>

@@ -49,6 +49,12 @@
 <!-- Custom Theme Scripts -->
 <script src="${ctx}/resources/bootstrap/js/custom.min.js"></script>
 
+<script src="${ctx}/resources/js/ekko-lightbox.min.js"></script>
+
+<script src="${ctx}/resources/js/add.and.post.column.js"></script>
+
+<script src="${ctx}/resources/js/fileinput.min.js"></script>
+
 <!-- Datatables -->
 <script>
     $(document).ready(function() {
@@ -116,6 +122,87 @@
         });
 
         TableManageButtons.init();
+    });
+</script>
+
+<%--Image popup--%>
+<script>
+    $(document).ready(function ($) {
+        // delegate calls to data-toggle="lightbox"
+        $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function (event) {
+            event.preventDefault();
+            return $(this).ekkoLightbox({
+                onShown: function () {
+                    if (window.console) {
+                        return console.log('show image');
+                    }
+                },
+                onNavigate: function (direction, itemIndex) {
+                    if (window.console) {
+                        return console.log('Navigating ' + direction + '. Current item: ' + itemIndex);
+                    }
+                }
+            });
+        });
+
+        //Programatically call
+        $('#open-image').click(function (e) {
+            e.preventDefault();
+            $(this).ekkoLightbox();
+        });
+        $('#open-youtube').click(function (e) {
+            e.preventDefault();
+            $(this).ekkoLightbox();
+        });
+
+        // navigateTo
+        $(document).delegate('*[data-gallery="navigateTo"]', 'click', function (event) {
+            event.preventDefault();
+
+            var lb;
+            return $(this).ekkoLightbox({
+                onShown: function () {
+
+                    lb = this;
+
+                    $(lb.modal_content).on('click', '.modal-footer a', function (e) {
+
+                        e.preventDefault();
+                        lb.navigateTo(2);
+
+                    });
+
+                }
+            });
+        });
+    });
+</script>
+
+<%--file upload--%>
+<script>
+    $("#file-3").fileinput({
+        showUpload: false,
+        showCaption: false,
+        browseClass: "btn btn-primary btn-lg",
+        fileType: "any",
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+    });
+    $(".btn-warning").on('click', function() {
+        if ($('#file-4').attr('disabled')) {
+            $('#file-4').fileinput('enable');
+        } else {
+            $('#file-4').fileinput('disable');
+        }
+    });
+    $(".btn-info").on('click', function() {
+        $('#file-4').fileinput('refresh', {previewClass:'bg-info'});
+    });
+    $(document).ready(function() {
+        $("#test-upload").fileinput({
+            'showPreview' : false,
+            'allowedFileExtensions' : ['jpg', 'png','gif'],
+            'elErrorContainer': '#errorBlock'
+        });
     });
 </script>
 </body>

@@ -40,6 +40,7 @@ public class ProductService implements IProductService {
         product.setCountryProduct(productDto.getCountryProduct());
         product.setBarcode(productDto.getBarcode());
         product.setCategory(productDto.getCategory());
+        product.setPrice(Double.parseDouble(productDto.getPrice()));
         product.setNewColumn(null);
 
         //TODO check entering data !!!!
@@ -76,6 +77,19 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteProduct(Long id) {
+
+//        Product product = productRepository.findOne(id);
+//        if (product.getPrice()!=null
+//                ||product.getInfoPurchaseProduct()!=null
+//                ||product.getProductImage()!=null
+//                ||product.getPurchases()!=null) {
+//
+//            product.setPrice(null);
+//            product.setInfoPurchaseProduct(null);
+//            ProductImage productImage = imageRepository.findOne(product.getProductImage().getId());
+//            imageRepository.delete(productImage);
+//            product.setPurchases(null);
+//        }
         productRepository.delete(id);
     }
 
@@ -101,13 +115,7 @@ public class ProductService implements IProductService {
 
     @Override
     public synchronized Product getProduct(Long id) {
-        Product product = productRepository.getOne(id);
-        if (checkStatus(product.getId())){
-
-        //TODO
-
-        }
-        return product;
+        return productRepository.findOne(id);
     }
 
 }

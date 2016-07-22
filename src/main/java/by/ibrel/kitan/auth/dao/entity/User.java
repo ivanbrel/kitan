@@ -1,83 +1,52 @@
 package by.ibrel.kitan.auth.dao.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 07.04.2016.
+ *
  */
+
+@ToString
 @Entity
-@Table(name = "user", schema ="auth")
+@Table(name = "user")
 public class User implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    private static final long serialVersionUID = 1L;
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private String firstName;
 
+    @Getter @Setter
     private String lastName;
 
+    @Getter @Setter
     private String login;
 
+    @Getter @Setter
     @Column(length = 60)
     private String password;
 
+    @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
-    @JoinTable(name = "user_roles", schema ="auth", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
     public User() {
-        super();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
     }
 
     @Override
@@ -104,12 +73,5 @@ public class User implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("User [firstName=").append(firstName).append("]").append("[lastName=").append(lastName).append("]").append("[username").append(login).append("]");
-        return builder.toString();
     }
 }

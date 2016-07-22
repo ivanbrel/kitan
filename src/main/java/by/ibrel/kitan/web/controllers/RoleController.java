@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by ibrel on 05/07/16.
+ *
  */
 @Controller
 @RequestMapping("/")

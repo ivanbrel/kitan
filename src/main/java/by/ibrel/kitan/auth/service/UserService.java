@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 08.04.2016.
@@ -44,7 +46,7 @@ public class UserService implements IUserService {
         user.setLastName(accountDto.getLastName());
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setLogin(accountDto.getLogin());
-        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
         return repository.save(user);
         
     }

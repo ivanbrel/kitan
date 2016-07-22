@@ -28,6 +28,8 @@ public class ClientDto {
     @Size(min = 1)
     private String account;
 
+    private String discount;
+
     public String getFirstName() {
         return firstName;
     }
@@ -66,6 +68,14 @@ public class ClientDto {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 
     @Override

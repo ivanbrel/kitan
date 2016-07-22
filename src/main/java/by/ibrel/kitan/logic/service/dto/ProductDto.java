@@ -1,7 +1,5 @@
 package by.ibrel.kitan.logic.service.dto;
 
-import by.ibrel.kitan.logic.dao.entity.NewAttribute;
-import by.ibrel.kitan.logic.dao.entity.Product;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by ibrel on 13/05/16.
+ *
  */
 public class ProductDto {
 
@@ -41,8 +40,6 @@ public class ProductDto {
     private String barcode;
 
     private String count;
-
-    private List<String> newAtrr;
 
     public String getNameProduct() {
         return nameProduct;
@@ -108,13 +105,6 @@ public class ProductDto {
         this.count = count;
     }
 
-    public List<String> getNewAtrr() {
-        return newAtrr;
-    }
-
-    public void setNewAtrr(List<String> newAtrr) {
-        this.newAtrr = newAtrr;
-    }
 
     @Override
     public String toString() {

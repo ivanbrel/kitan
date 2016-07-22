@@ -13,21 +13,6 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Список товаров </h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Settings 1</a>
-                                    </li>
-                                    <li><a href="#">Settings 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -36,6 +21,7 @@
                         <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>Наименование</th>
                                 <th>Модель</th>
                                 <th>Цвет</th>
@@ -50,7 +36,12 @@
                                 <c:forEach items="${productsList}" var="elements">
                                     <tr>
                                         <form:form method="POST" modelAttribute="purchase">
-                                            <td id="idProduct" style="display: none"><form:input value="${elements}" path="products"/></td>
+                                            <td id="idProduct" style="display: none"><form:input value="${elements.id}" path="products"/></td>
+                                            <td>
+                                                <a href="<c:url value="/resources/img/upload/${elements.productImage.fileName}"/>" data-toggle="lightbox" data-title="${elements.nameProduct}" data-footer="${elements.price}">
+                                                    <img src="<c:url value="/resources/img/upload/${elements.productImage.fileName}"/>" class="avatar">
+                                                </a>
+                                            </td>
                                             <td><c:out value="${elements.nameProduct}"/></td>
                                             <td><c:out value="${elements.model}"/></td>
                                             <td><c:out value="${elements.color}"/></td>
@@ -59,7 +50,7 @@
                                             <%--<td><c:out value="${elements.state}"/></td>--%>
                                             <td>
                                                 <p>
-                                                    <label><input type="text" id="count" class="field-divided" name="count" value="" required="required"/></label>
+                                                    <label><input type="number" id="count" class="field-divided" name="count" value="" required="required"/></label>
                                                 </p>
                                             </td>
                                             <td width="10" style=" border-collapse: collapse; border: 2px solid white" >

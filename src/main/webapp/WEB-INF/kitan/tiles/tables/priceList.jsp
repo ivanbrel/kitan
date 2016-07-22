@@ -11,7 +11,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Список цен </h2>
+                        <h2>Актуальный курс </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -31,15 +31,17 @@
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
-                            В данной таблице представлен список всех цен </p>
-                        <table id="datatable-buttons" class="table table-striped table-bordered">
+                            В данной таблице представлен актуальный курс </p>
+                        <table  class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>Для товара</th>
-                                <th>BU_RUB</th>
-                                <th>RUS_RUB</th>
-                                <th>USA_DOL</th>
-                                <th>info</th>
+                                <th>Доллар США</th>
+                                <th>Белоруский рубль</th>
+                                <th>Руский рубль</th>
+                                <th>ЕвроL</th>
+                                <th>Украинская гривня</th>
+                                <th>Китайская юань</th>
+                                <th>Польский злотый</th>
                                 <th width="100">Опции</th>
                             </tr>
                             </thead>
@@ -47,11 +49,13 @@
                             <tbody>
                             <c:forEach items="${price}" var="price">
                                 <tr>
-                                    <td>${price.product.nameProduct}</td>
-                                    <td>${price.byRuble}</td>
-                                    <td>${price.rusRuble}</td>
-                                    <td>${price.usaDollar}</td>
-                                    <td>${price.priceForProduct}</td>
+                                    <td>${price.dollarUSA}</td>
+                                    <td>${price.rubleBY}</td>
+                                    <td>${price.rubleRUS}</td>
+                                    <td>${price.euro}</td>
+                                    <td>${price.grivUA}</td>
+                                    <td>${price.chinaUAN}</td>
+                                    <td>${price.polandZLOT}</td>
                                     <td>
                                         <a href="<c:url value='/price/edit/${price.id}'/>" title="Edit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

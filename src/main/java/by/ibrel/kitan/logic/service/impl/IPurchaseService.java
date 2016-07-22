@@ -1,7 +1,6 @@
 package by.ibrel.kitan.logic.service.impl;
 
 import by.ibrel.kitan.logic.dao.entity.Client;
-import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.dao.entity.Purchase;
 
 import java.util.List;

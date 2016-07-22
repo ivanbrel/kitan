@@ -12,27 +12,22 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Список клиентов </h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Settings 1</a>
-                                    </li>
-                                    <li><a href="#">Settings 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
+
                         <div class="clearfix"></div>
+
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
                             В данной таблице представлен список всех клиентов </p>
-                        <table id="datatable-buttons" class="table table-striped table-bordered">
+
+                        <div class="clearfix"></div>
+
+                        <div class="alert alert-info alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button>
+                            Выберите клиента нажатием кнопки <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> в опциях к клиенту
+                        </div>
+                        <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
                             <thead>
                             <tr>
                                 <th>Фамилия</th>
@@ -40,7 +35,7 @@
                                 <th>EMAIL</th>
                                 <th>Телефон</th>
                                 <th>Счёт</th>
-                                <th width="100">Опции</th>
+                                <th width="120">Опции</th>
                             </tr>
                             </thead>
 

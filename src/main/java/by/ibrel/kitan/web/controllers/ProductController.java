@@ -1,11 +1,11 @@
 package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.logic.dao.entity.Product;
+import by.ibrel.kitan.logic.dao.entity.ProductImage;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
+import by.ibrel.kitan.logic.service.impl.IProductImageService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
-import by.ibrel.kitan.web.util.GenericResponse;
-import org.apache.commons.digester.SetTopRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static by.ibrel.kitan.logic.Const.ROOT;
 
 @Controller
 public class ProductController {
@@ -26,6 +33,11 @@ public class ProductController {
 
     @Autowired
     private IProductService service;
+
+    @Autowired
+    private IProductImageService imageService;
+
+    private ArrayList<String> listAtrr = new ArrayList<String>();
 
     @RequestMapping(value = {"/product/list"}, method = RequestMethod.GET)
     public String listProduct(ModelMap model) {
@@ -36,25 +48,13 @@ public class ProductController {
 
     //add new product
     @RequestMapping(value = {"/product/add"}, method = RequestMethod.POST)
-    public String addProduct(@Valid final ProductDto productDto, final ModelMap model) {
+    public String addProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload, final ModelMap model) {
         LOGGER.debug("Add new client with name:" + productDto);
 
-        final Product add = createProduct(productDto);
-        if (add==null){
-            throw new ClientExistsException();
-        }
+        createProduct(productDto, fileUpload);
+
         model.addAttribute("success");
         return "redirect:/product/list";
-    }
-
-    private Product createProduct(ProductDto productDto) {
-        Product add;
-        try{
-            add = service.addProduct(productDto);
-        }catch (final ClientExistsException e){
-            return null;
-        }
-        return add;
     }
 
     @RequestMapping(value = {"/product/delete/{id}"}, method = RequestMethod.GET)
@@ -86,15 +86,59 @@ public class ProductController {
         return "product.edit";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public @ResponseBody String handlerRequest( @RequestParam ("json") String json, @RequestParam ("name") String name) throws Exception {
+    @RequestMapping(value = "/product/add/atrr", method = RequestMethod.POST)
+    public @ResponseBody ArrayList<String> handlerRequest(@RequestParam ("json") String json) throws Exception {
 
-        List<String> items = Arrays.asList(json.split("\\s*,\\s*"));
+        ArrayList<String> list = new ArrayList<String>(Arrays.asList(json.split("\\s*,\\s*")));
 
-        System.out.println(json);
-        System.out.println(name);
-        System.out.println(items);
+        if (listAtrr.isEmpty())
+            listAtrr.clear();
+        listAtrr.addAll(list);
 
-        return json;
+        return listAtrr;
+    }
+
+    private void addNewColumn(final List<String> listAtrr, final Long ProductId){
+
+        Product product = service.getProduct(ProductId);
+
+        for (String s:listAtrr){
+            if (!Objects.equals(s, "")){
+                product.getNewColumn().add(s);
+            }
+        }
+
+        service.saveProduct(product);
+    }
+
+    private void createProduct(ProductDto productDto, MultipartFile fileUpload) {
+
+        try{
+
+            Product product = service.addProduct(productDto);
+//            addNewColumn(listAtrr,product.getId());
+            savePicture(fileUpload,product.getId());
+
+        }catch (final ClientExistsException | IOException e){
+            throw new ClientExistsException(e);
+        }
+    }
+
+    private void savePicture(MultipartFile fileUpload, Long id) throws IOException {
+
+        if (fileUpload != null ) {
+
+            LOGGER.debug("Saving file: " + fileUpload.getOriginalFilename());
+
+            ProductImage productImage = new ProductImage();
+            productImage.setFileName(id+"_"+fileUpload.getOriginalFilename());
+            productImage.setProduct(service.getProduct(id));
+
+            Files.copy(fileUpload.getInputStream(), Paths.get(ROOT, id+"_"+fileUpload.getOriginalFilename()));
+
+            imageService.saveProductImage(productImage);
+
+        }
+
     }
 }

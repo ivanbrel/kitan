@@ -36,34 +36,47 @@
 
                         <form:form modelAttribute="price" id="form2" class="form-horizontal form-label-left" method="POST">
 
-                            <%--<div class="form-group">--%>
-                                <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="product">Продукт </label>--%>
-                                <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                                    <%--<form:input path="product.nameProduct" type="text" id="product" name="product" class="form-control col-md-7 col-xs-12"/>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="byRuble">BY рубли </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="dollarUSA">Доллар США </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="byRuble" type="text" id="byRuble" name="byRuble" class="form-control col-md-7 col-xs-12"/>
+                                    <form:input path="dollarUSA" type="text" id="dollarUSA" name="dollarUSA" class="form-control col-md-7 col-xs-12"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rubleBY">BY рубли </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="rubleBY" type="text" id="rubleBY" name="rubleBY" class="form-control col-md-7 col-xs-12"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rusRuble">RUS рубли </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rubleRUS">RUS рубли </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="rusRuble" id="rusRuble" class="form-control col-md-7 col-xs-12" type="text" name="rusRuble"/>
+                                    <form:input path="rubleRUS" id="rubleRUS" class="form-control col-md-7 col-xs-12" type="text" name="rubleRUS"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="usaDollar" class="control-label col-md-3 col-sm-3 col-xs-12">USA долл.</label>
+                                <label for="euro" class="control-label col-md-3 col-sm-3 col-xs-12">EURO </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="usaDollar" id="usaDollar" name="usaDollar" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="euro" id="euro" name="euro" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="priceForProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Информация </label>
+                                <label for="grivUA" class="control-label col-md-3 col-sm-3 col-xs-12">Гривня </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:textarea path="priceForProduct" id="priceForProduct" name="priceForProduct" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="grivUA" id="grivUA" name="grivUA" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chinaUAN" class="control-label col-md-3 col-sm-3 col-xs-12">CHINA </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="chinaUAN" id="chinaUAN" name="chinaUAN" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="polandZLOT" class="control-label col-md-3 col-sm-3 col-xs-12">Poland </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="polandZLOT" id="polandZLOT" name="polandZLOT" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>

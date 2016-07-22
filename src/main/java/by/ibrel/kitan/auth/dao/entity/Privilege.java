@@ -1,59 +1,50 @@
 package by.ibrel.kitan.auth.dao.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 07.04.2016.
+ *
  */
+
+@ToString
 @Entity
-@Table(name = "privilege", schema ="auth")
+@Table(name = "privilege")
 public class Privilege implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private String name;
 
+    @Getter @Setter
+//    @NotFound(action=NotFoundAction.IGNORE)
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "privileges")
     private Collection<Role> roles;
 
     public Privilege() {
-        super();
     }
 
     public Privilege(final String name) {
-        super();
         this.name = name;
     }
 
     //
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(final Collection<Role> roles) {
-        this.roles = roles;
-    }
 
     @Override
     public int hashCode() {
@@ -75,16 +66,10 @@ public class Privilege implements Serializable {
             return false;
         }
         final Privilege privilege = (Privilege) obj;
-        if (!privilege.equals(privilege.name)) {
+        if (!name.equals(privilege.name)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Privilege [name=").append(name).append("]").append("[id=").append(id).append("]");
-        return builder.toString();
-    }
 }

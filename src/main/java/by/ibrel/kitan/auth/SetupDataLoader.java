@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by ibrel on 5.5.16.
+ *
  */
 
 @Component
@@ -65,7 +67,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    private final Privilege createPrivilegeIfNotFound(final String name) {
+    private Privilege createPrivilegeIfNotFound(final String name) {
         Privilege privilege = privilegeRepository.findByName(name);
         if (privilege == null) {
             privilege = new Privilege(name);
@@ -75,18 +77,26 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    private final Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
+    private Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
         Role role = roleRepository.findByName(name);
+//        Privilege privilege = privilegeRepository.findByName("READ_PRIVILEGE");
+
         if (role == null) {
             role = new Role(name);
+
+//            for (Privilege privilege:privileges){
+//                //role.getPrivileges().add(privilegeRepository.findByName(privilege.getName()));
+//                role.setPrivileges(Arrays.asList(privilegeRepository.findByName(privilege.getName())));
+//            }
             role.setPrivileges(privileges);
+            //role.setPrivileges(Arrays.asList(privilege));
             roleRepository.save(role);
         }
         return role;
     }
 
     @Transactional
-    private final User createUserIfNotFound(final String name){
+    private User createUserIfNotFound(final String name){
 
         final Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         User user = userRepository.findByUser(name);

@@ -44,21 +44,30 @@
                                 <th>Опции</th>
                             </tr>
                             </thead>
-
                             <tbody>
                             <c:forEach items="${purchases}" var="purchases">
                                 <tr>
                                     <td>${purchases.numberPurchase}</td>
                                     <td>${purchases.date}</td>
-                                    <td>${purchases.products}</td>
+
+                                    <%----%>
+                                    <td>
+                                    <c:forEach items="${purchases.products}" var="productThis">
+                                        <p>${productThis.nameProduct}</p>
+                                    </c:forEach>
+                                    <%----%>
+                                    </td>
                                     <td>${purchases.client.lastName}</td>
                                     <td>${purchases.priceSummary}</td>
                                     <td>${purchases.countSummary}</td>
                                     <td>
                                         <small>
-                                        <%--<a href="<c:url value='/client/edit/${product.id}'/>" title="Edit" class="icon-1 info-tooltip"></a>--%>
+
                                             <a href="<c:url value='/purchase/sell/${purchases.id}'/>" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </a>
+                                            <a href="<c:url value='/purchase/edit/${purchases.id}'/>"  class="btn btn-default btn-xs">
+                                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                             </a>
                                             <a href="<c:url value='/purchase/delete/${purchases.id}'/>"  class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

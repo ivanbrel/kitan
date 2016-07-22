@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -37,7 +36,7 @@
 
                         <!-- start id-form -->
 
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/product/add" method="POST">
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/product/add" method="POST" enctype="multipart/form-data">
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameProduct">Наименование продукта </label>
@@ -57,19 +56,6 @@
                                     <input id="color" class="form-control col-md-7 col-xs-12" type="text" name="color">
                                 </div>
                             </div>
-                            <%--<div class="form-group">--%>
-                            <%--<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>--%>
-                            <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                            <%--<div id="gender" class="btn-group" data-toggle="buttons">--%>
-                            <%--<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                            <%--<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;--%>
-                            <%--</label>--%>
-                            <%--<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                            <%--<input type="radio" name="gender" value="female"> Female--%>
-                            <%--</label>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
                             <div class="form-group">
                                 <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -83,9 +69,33 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="price" class="control-label col-md-3 col-sm-3 col-xs-12">Цена </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="price" name="price" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="count" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="count" name="count" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    <input id="count" name="count" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                </div>
+                            </div>
+
+                            <%--<div id="list">--%>
+
+                            <%--</div>--%>
+
+                            <%--<div class="form-group">--%>
+                                <%--<a class="btn btn-default" id="add">Добавить</a>--%>
+                            <%--</div>--%>
+
+                            <%--<br><br><br>--%>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Изображение </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="file-3" name="fileUpload" type="file" multiple=false>
+                                    <%--<input name="fileUpload" type="file" class="file" multiple>--%>
                                 </div>
                             </div>
 
@@ -97,27 +107,6 @@
                                 </div>
                             </div>
                         </form>
-
-
-                        <%--------------------------------------------------------------------------------------------------------------------------%>
-                        <%--<div class="form-group">--%>
-                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12"><a onclick="textareaFunction()">Добавить новую строку</a></label>--%>
-                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                        <%--<span id="newAtrr"></span>--%>
-                        <%--<input type="button" value="удалить" class="btn btn-default"  onclick="resetElementsCus()"/>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--------------------------------------------------------------------------------------------------------------------------%>
-
-                        <div id="list">
-                            <input class="listnote" type = "text"/>
-                            <input class="listnote" type = "text"/>
-                            <input class="listnote" type = "text"/>
-                        </div>
-                        <button id="add">Добавить</button>
-                        <button id="send">Отправить</button>
                     </div>
                 </div>
             </div>
@@ -125,7 +114,3 @@
         </div>
     </div>
 </div>
-<!-- jQuery -->
-<script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
-<!-- jQuery -->
-<script src="${ctx}/resources/js/add.and.post.column.js"></script>

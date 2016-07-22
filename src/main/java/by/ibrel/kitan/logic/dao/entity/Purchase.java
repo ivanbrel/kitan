@@ -1,123 +1,63 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
+import java.util.UUID;
 
+@EqualsAndHashCode
 @Entity
-@Table(name = "purchase", schema ="main")
+@Table(name = "purchase")
 public class Purchase implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PURCHASE_ID")
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private Integer numberPurchase;
 
+    @Getter @Setter
+//    @Temporal(TemporalType.DATE)
     private String date;
 
+    @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(name = "purchase_product", schema ="main", joinColumns = @JoinColumn(name = "PURCHASE_ID", referencedColumnName = "PURCHASE_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
+    @JoinTable(name = "purchase_product", joinColumns = @JoinColumn(name = "PURCHASE_ID", referencedColumnName = "PURCHASE_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
     private Collection<Product> products;
 
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    public Double priceSummary;
+    @Getter @Setter
+    private Double priceSummary;
 
-    public Integer countSummary;
+    @Getter @Setter
+    private Integer countSummary;
 
-    @OneToMany(mappedBy = "purchase")
+    @Getter @Setter
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.REMOVE)
     private Collection<InfoPurchaseProduct> infoPurchaseProducts;
-
-    public Purchase() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getNumberPurchase() {
-        return numberPurchase;
-    }
-
-    public void setNumberPurchase(Integer numberPurchase) {
-        this.numberPurchase = numberPurchase;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Collection<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Collection<Product> product) {
-        this.products = product;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Double getPriceSummary() {
-        return priceSummary;
-    }
-
-    public void setPriceSummary(Double priceSummary) {
-        this.priceSummary = priceSummary;
-    }
-
-    public Collection<InfoPurchaseProduct> getInfoPurchaseProducts() {
-        return infoPurchaseProducts;
-    }
-
-    public void setInfoPurchaseProducts(Collection<InfoPurchaseProduct> infoPurchaseProducts) {
-        this.infoPurchaseProducts = infoPurchaseProducts;
-    }
-
-    public Integer getCountSummary() {
-        return countSummary;
-    }
-
-    public void setCountSummary(Integer countSummary) {
-        this.countSummary = countSummary;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Purchase purchase = (Purchase) o;
-        return Objects.equals(id, purchase.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("[PURCHASE_ID=").append(id).append("]");
-        return builder.toString();
+        return "Purchase{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }
 

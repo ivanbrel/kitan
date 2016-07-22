@@ -75,14 +75,20 @@
                                     <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Телефон <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                        <input id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="account" class="control-label col-md-3 col-sm-3 col-xs-12">Счёт клиента <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="account" name="account" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                        <input id="account" name="account" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="discount" class="control-label col-md-3 col-sm-3 col-xs-12">Персональная скидка</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="discount" name="discount" class="date-picker form-control col-md-7 col-xs-12"  type="number">
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>

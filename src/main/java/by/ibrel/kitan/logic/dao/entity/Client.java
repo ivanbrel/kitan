@@ -1,122 +1,57 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by ibrel on 13/05/16.
+ *
  */
 @Entity
-@Table(name = "client", schema ="main")
+@Table(name = "client")
+@EqualsAndHashCode
 public class Client implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CLIENT_ID", unique = true, nullable = false)
+    private static final long serialVersionUID = 1L;
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private String firstName;
 
+    @Getter @Setter
     private String lastName;
 
+    @Getter @Setter
     private String email;
 
+    @Getter @Setter
     private String phone;
 
+    @Getter @Setter
     private String account;
 
+    @Getter @Setter
+    private Double discountPrice;
+
+    @Getter @Setter
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     private Collection<Purchase> purchases;
-
-    public Client() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public Collection<Purchase> getPurchases() {
-        return purchases;
-    }
-
-    public void setPurchases(Collection<Purchase> purchases) {
-        this.purchases = purchases;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Client client = (Client) o;
-
-        if (!id.equals(client.id)) return false;
-        return account.equals(client.account);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + account.hashCode();
-        return result;
-    }
 
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", account='" + account + '\'' +
-                ", product=" + purchases +
                 '}';
     }
 }
