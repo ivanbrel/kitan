@@ -41,35 +41,44 @@
                                 <th>Клиент</th>
                                 <th>Итоговая цена</th>
                                 <th>Итоговое количество</th>
+                                <th>Статус</th>
                                 <th>Опции</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${purchases}" var="purchases">
+                            <c:forEach items="${cart}" var="cart">
                                 <tr>
-                                    <td>${purchases.numberPurchase}</td>
-                                    <td>${purchases.date}</td>
+                                    <td>${cart.numberCart}</td>
+                                    <td>${cart.date}</td>
 
                                     <%----%>
                                     <td>
-                                    <c:forEach items="${purchases.products}" var="productThis">
+                                    <c:forEach items="${cart.products}" var="productThis">
                                         <p>${productThis.nameProduct}</p>
                                     </c:forEach>
                                     <%----%>
                                     </td>
-                                    <td>${purchases.client.lastName}</td>
-                                    <td>${purchases.priceSummary}</td>
-                                    <td>${purchases.countSummary}</td>
+                                    <td>${cart.client.lastName}</td>
+                                    <%--<td>${cart.priceSummary}</td>--%>
+                                    <td data-toggle="tooltip" data-placement="right"
+                                        title="
+                                            <c:forEach items="${price}" var="price">
+                                            BY: ${price.rubleBY*product.price}
+                                            RUS: ${price.rubleRUS*product.price}
+                                            Euro: ${price.euro*product.price}
+                                            </c:forEach>">${cart.priceSummary}</td>
+                                    <td>${cart.quantity}</td>
+                                    <td>${cart.status}</td>
                                     <td>
                                         <small>
 
-                                            <a href="<c:url value='/purchase/sell/${purchases.id}'/>" class="btn btn-default btn-xs">
+                                            <a href="<c:url value='/cart/${cart.id}'/>" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                             </a>
-                                            <a href="<c:url value='/purchase/edit/${purchases.id}'/>"  class="btn btn-default btn-xs">
+                                            <a href="<c:url value='/cart/edit/${cart.id}'/>"  class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                             </a>
-                                            <a href="<c:url value='/purchase/delete/${purchases.id}'/>"  class="btn btn-default btn-xs">
+                                            <a href="<c:url value='/cart/delete/${cart.id}'/>"  class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </a>
                                         </small>

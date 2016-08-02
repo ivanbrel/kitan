@@ -27,7 +27,7 @@
                                 <th>Цвет</th>
                                 <th>Страна</th>
                                 <th>Категория</th>
-                                <%--<th>Статус</th>--%>
+                                <th>Цена</th>
                                 <th>Количество</th>
                             </tr>
                             </thead>
@@ -35,11 +35,11 @@
                             <tbody>
                                 <c:forEach items="${productsList}" var="elements">
                                     <tr>
-                                        <form:form method="POST" modelAttribute="purchase">
+                                        <form:form method="POST" modelAttribute="cart">
                                             <td id="idProduct" style="display: none"><form:input value="${elements.id}" path="products"/></td>
                                             <td>
-                                                <a href="<c:url value="/resources/img/upload/${elements.productImage.fileName}"/>" data-toggle="lightbox" data-title="${elements.nameProduct}" data-footer="${elements.price}">
-                                                    <img src="<c:url value="/resources/img/upload/${elements.productImage.fileName}"/>" class="avatar">
+                                                <a href="<c:url value="/resources/img/upload/${elements.image.fileName}"/>" data-toggle="lightbox" data-title="${elements.nameProduct}" data-footer="${elements.price}">
+                                                    <img src="<c:url value="/resources/img/upload/${elements.image.fileName}"/>" class="avatar">
                                                 </a>
                                             </td>
                                             <td><c:out value="${elements.nameProduct}"/></td>
@@ -47,10 +47,11 @@
                                             <td><c:out value="${elements.color}"/></td>
                                             <td><c:out value="${elements.countryProduct}"/></td>
                                             <td><c:out value="${elements.category}"/></td>
+                                            <td><c:out value="${elements.price}"/></td>
                                             <%--<td><c:out value="${elements.state}"/></td>--%>
                                             <td>
                                                 <p>
-                                                    <label><input type="number" id="count" class="field-divided" name="count" value="" required="required"/></label>
+                                                    <label><input type="number" id="count" class="form-control col-md-7 col-xs-12" name="count" value="" required="required" placeholder="осталось - <c:out value="${elements.quantity}"/>"/></label>
                                                 </p>
                                             </td>
                                             <td width="10" style=" border-collapse: collapse; border: 2px solid white" >
@@ -62,10 +63,12 @@
                             </tbody>
                         </table>
                         <span id="errCount" class="btn btn-success custom-width btn-xs" style="display:none"></span>
+                        <div style="float: right">
+                            <a href="${ctx}/cart/${cart.id}" class="btn btn-default">Назад</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

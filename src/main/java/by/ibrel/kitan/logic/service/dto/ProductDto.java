@@ -1,6 +1,10 @@
 package by.ibrel.kitan.logic.service.dto;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -9,112 +13,46 @@ import java.util.List;
  * Created by ibrel on 13/05/16.
  *
  */
+@EqualsAndHashCode
 public class ProductDto {
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String nameProduct;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String model;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String color;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String countryProduct;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String category;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String price;
 
     @NotNull
     @Size(min = 1)
+    @Getter @Setter
     private String barcode;
 
-    private String count;
+    @NotNull
+    @Getter @Setter
+    private String quantity;
 
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getCountryProduct() {
-        return countryProduct;
-    }
-
-    public void setCountryProduct(String countryProduct) {
-        this.countryProduct = countryProduct;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
-    }
-
-
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "nameProduct='" + nameProduct + '\'' +
-                ", model='" + model + '\'' +
-                ", color='" + color + '\'' +
-                ", countryProduct='" + countryProduct + '\'' +
-                ", price=" + price +
-                ", barcode=" + barcode +
-                '}';
-    }
 }

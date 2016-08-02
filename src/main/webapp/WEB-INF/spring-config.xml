@@ -142,12 +142,12 @@
     <mvc:view-controller path="/users/add-page" view-name="auth.user.add"/>
     <mvc:view-controller path="/client/list" view-name="client.list"/>
     <mvc:view-controller path="/client/add-page" view-name="client.add"/>
-    <mvc:view-controller path="/purchase/list" view-name="purchase.list"/>
+    <mvc:view-controller path="/cart/list" view-name="purchase.list"/>
     <mvc:view-controller path="/product/list" view-name="product.list"/>
     <mvc:view-controller path="/product/add-page" view-name="product.add"/>
     <mvc:view-controller path="/price/list" view-name="price.list"/>
     <mvc:view-controller path="/price/add-page" view-name="price.add"/>
-    <mvc:view-controller path="/purchase/show" view-name="purchase.show"/>
+    <mvc:view-controller path="/cart/show" view-name="purchase.show"/>
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
     <mvc:view-controller path="/error/405" view-name="error.405"/>

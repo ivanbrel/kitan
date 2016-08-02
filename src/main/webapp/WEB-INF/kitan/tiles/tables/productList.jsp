@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -13,22 +13,12 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Список товара </h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Settings 1</a>
-                                    </li>
-                                    <li><a href="#">Settings 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
                         <div class="clearfix"></div>
+                    </div>
+                    <div style="float: right">
+                        <a class="btn btn-success" href="${ctx}/product/add-page" >
+                            <span class="fa fa-plus-square" aria-hidden="true"></span>  Добавить товар
+                        </a>
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
@@ -52,17 +42,23 @@
                                 <c:forEach items="${product}" var="product">
                                     <tr>
                                         <td>
-                                            <a href="<c:url value="/resources/img/upload/${product.productImage.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
-                                                <img src="<c:url value="/resources/img/upload/${product.productImage.fileName}"/>" class="avatar">
+                                            <a href="<c:url value="/resources/img/upload/${product.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
+                                                <img src="<c:url value="/resources/img/upload/${product.image.fileName}"/>" class="avatar">
                                             </a>
                                         </td>
                                         <td>${product.nameProduct}</td>
                                         <td>${product.model}</td>
                                         <td>${product.color}</td>
                                         <td>${product.countryProduct}</td>
-                                        <td>${product.price}</td>
+                                        <td data-toggle="tooltip" data-placement="right"
+                                            title="
+                                            <c:forEach items="${price}" var="price">
+                                            BY: ${price.rubleBY*product.price}
+                                            RUS: ${price.rubleRUS*product.price}
+                                            Euro: ${price.euro*product.price}
+                                            </c:forEach>">${product.price}</td>
                                         <td>${product.category}</td>
-                                        <td>${product.count}</td>
+                                        <td>${product.quantity}</td>
                                         <td>
                                             <a href="<c:url value='/product/edit/${product.id}'/>" title="Edit" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

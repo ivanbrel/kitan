@@ -17,8 +17,8 @@ import java.util.UUID;
  */
 @EqualsAndHashCode
 @Entity
-@Table(name = "detail_info_purchase")
-public class InfoPurchaseProduct implements Serializable{
+@Table(name = "purchase_history")
+public class PurchaseHistory implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -29,29 +29,36 @@ public class InfoPurchaseProduct implements Serializable{
 
     @Getter @Setter
     @ManyToOne
-    @JoinColumn(name = "PURCHASE_ID")
-    private Purchase purchase;
+    @JoinColumn(name = "CLIENT_ID")
+    private Client client;
 
     @Getter @Setter
-    @OneToOne
-    @JoinColumn(name = "product_id")
+    @ManyToOne
+    @JoinColumn(name = "CART_ID")
+    private ShoppingCart shoppingCart;
+
+    @Getter @Setter
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
     @Getter @Setter
-    private Integer count;
+    @ManyToOne
+    @JoinColumn(name = "ORDERDETAILS_ID")
+    private OrderDetails orderDetails;
+
+    @Getter @Setter
+    private Integer quantity;
 
     @Getter @Setter
     private Double price;
 
     @Getter @Setter
-    private Double discount;
-
-    @Getter @Setter
-    private Integer numberPurchase;
+    private String date;
 
     @Override
     public String toString() {
-        return "InfoPurchaseProduct{" +
+        return "PurchaseHistory{" +
                 "id=" + id +
                 '}';
     }

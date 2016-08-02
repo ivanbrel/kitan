@@ -70,7 +70,7 @@ public class ClientController {
         if (result.hasErrors()){return "client.edit";}
         service.updateClient(c);
         model.addAttribute("success", "Данные клиента " + c.getId() + " изменены");
-        return "client.edit";
+        return "redirect:/client/list";
     }
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.GET)

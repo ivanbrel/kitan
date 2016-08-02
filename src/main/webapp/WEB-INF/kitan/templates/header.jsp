@@ -52,7 +52,7 @@
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/client/list">Все клиенты</a></li>
                             <li><a href="${ctx}/product/list">Весь товар</a></li>
-                            <li><a href="${ctx}/purchase/list">Все заказы</a></li>
+                            <li><a href="${ctx}/cart/list">Все заказы</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-bar-chart-o"></i>Информация <span class="fa fa-chevron-down"></span></a>

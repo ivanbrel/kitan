@@ -39,85 +39,6 @@ public class PriceController {
         return "price.list";
     }
 
-
-//
-//    //add new product
-//    @RequestMapping(value = {"/price/add"}, method = RequestMethod.POST)
-//    public String addPrice(@Valid final PriceConvertDto priceDto, final ModelMap model) {
-//
-//        LOGGER.debug("Add new client with name:" + priceDto);
-//
-//        final PriceConvert add = createPrice(priceDto);
-//        if (add==null){
-//            throw new PriceExistsException();
-//        }
-//        model.addAttribute("success");
-//        return "redirect:/price/list";
-//    }
-//
-//    private PriceConvert createPrice(PriceConvertDto priceDto) {
-//        PriceConvert add;
-//        try{
-//            add = service.addPrice(priceDto);
-//        }catch (final PriceExistsException e){
-//            return null;
-//        }
-//        return add;
-//    }
-//
-//    @RequestMapping(value = {"/price/delete/{id}"}, method = RequestMethod.GET)
-//    public String deletePrice(@PathVariable Long id) {
-//
-//        service.deletePrice(id);
-//
-//        return "redirect:/price/list";
-//    }
-//
-//    //add price in product
-//    @RequestMapping(value = {"/price/add/{id}"}, method = RequestMethod.POST)
-//    public String addToProduct(@Valid  PriceConvert price, BindingResult result, ModelMap modelMap){
-//
-//        if (result.hasErrors()){
-//            LOGGER.debug("FAIL! Data is not correct!");
-//            return "redirect:/price/list";
-//        }
-//
-//        service.addToProduct(price);
-//
-//        modelMap.addAttribute("success", "price success add");
-//        LOGGER.debug("!Price add successfuly!");
-//
-//        return "redirect:/price/list";
-//    }
-//
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//
-//        binder.registerCustomEditor(List.class,"price", new CustomCollectionEditor(List.class){
-//
-//            @Override
-//            protected Object convertElement(Object element) {
-//                Long id = Long.parseLong(element.toString());
-//                PriceConvert price = repository.findOne(id);
-//                return price;
-//            }
-//        });
-//
-//    }
-//
-//    @RequestMapping(value = {"/price/add/{id}"}, method = RequestMethod.GET)
-//    public String priceToProduct(@PathVariable("id") final Long id, ModelMap modelMap){
-//
-//        final PriceConvert price = repository.findOne(id);
-//
-//        modelMap.addAttribute("price", price);
-//
-//        List<Product> productsList = productService.listAllProduct();
-//
-//        modelMap.addAttribute("productsList", productsList);
-//        return "price.add.product";
-//    }
-
     @RequestMapping(value = { "/price/edit/{id}" }, method = RequestMethod.POST)
     public String updatePrice(@Valid PriceConvert p, final BindingResult result, final ModelMap model){
         if (result.hasErrors()){return "price.edit";}
@@ -130,9 +51,7 @@ public class PriceController {
     public String editPrice(@PathVariable Long id, ModelMap model) {
 
         final PriceConvert price = service.getPriceById(id);
-
         model.addAttribute("price", price);
-
         return "price.edit";
     }
 }

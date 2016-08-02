@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- jQuery -->
+<script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.js"></script>
+<script src="${ctx}/resources/js/select2.full.js"></script>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -53,19 +56,41 @@
                             <div class="form-group">
                                 <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="color" class="form-control col-md-7 col-xs-12" type="text" name="color">
+                                    <%--<input id="color" class="form-control col-md-7 col-xs-12" type="text" name="color">--%>
+                                        <select id="color" name="color" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                            <option value="Красный">Красный</option>
+                                            <option value="Синий">Синий</option>
+                                            <option value="Чёрный">Чёрный</option>
+                                            <option value="Зелёный">Зелёный</option>
+                                        </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="countryProduct" name="countryProduct" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    <%--<input id="countryProduct" name="countryProduct" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">--%>
+                                        <select id="countryProduct" name="countryProduct" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                            <option value="Польша">Польша</option>
+                                            <option value="Италия">Италия</option>
+                                            <option value="Китай">Китай</option>
+                                            <option value="Россия">Россия</option>
+                                        </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="category" name="category" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    <%--<input id="category" name="category" class="date-picker form-control col-md-7 col-xs-12 js-example-data-array" required="required" type="text">--%>
+                                        <select id="category" name="category" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                            <option value="Коляски">Коляски</option>
+                                            <option value="Стульчики">Стульчики</option>
+                                            <option value="Кроватки-люльки">Кроватки-люльки</option>
+                                            <option value="Качели">Качели</option>
+                                            <option value="Ходунки">Ходунки</option>
+                                            <option value="Автокресла">Автокресла</option>
+                                            <option value="Манежи">Манежи</option>
+                                            <option value="Аксессуары">Аксессуары</option>
+                                        </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -75,9 +100,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="count" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
+                                <label for="quantity" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="count" name="count" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                    <input id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
                                 </div>
                             </div>
 
@@ -114,3 +139,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+
+    $(".js-example-data-array").select2({
+        data: data
+    })
+
+</script>

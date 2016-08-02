@@ -23,6 +23,8 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Table(name = "product")
+@DynamicUpdate
+@DynamicInsert
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,35 +56,30 @@ public class Product implements Serializable {
     @Getter @Setter
     private String category;
 
-    @Getter @Setter
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
-//    @NotFound(action = NotFoundAction.IGNORE)
-    private Collection<Purchase> purchases;
+//    @Getter @Setter
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
+//    private Collection<OrderDetails> orderDetailses;
 
-    //check the status of the product, if true means free
-    @Getter @Setter
-    private boolean state;
-
-    //check the status of the product, if true means product sales
-    @Getter @Setter
-    private boolean sales;
-
-    @Getter @Setter
-    private Integer count;
+//    //check the status of the product, if true means free
+//    @Getter @Setter
+//    private boolean state;
+//
+//    //check the status of the product, if true means product sales
+//    @Getter @Setter
+//    private boolean sales;
 
     @Getter @Setter
-    @ElementCollection
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "product_newcolumn")
-    private List<String> newColumn;
+    private Integer quantity;
+
+//    @Getter @Setter
+//    @ElementCollection
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(name = "product_newcolumn")
+//    private List<String> newColumn;
 
     @Getter @Setter
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private InfoPurchaseProduct infoPurchaseProduct;
-
-    @Getter @Setter
-    @OneToOne(mappedBy = "product",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private ProductImage productImage;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Image image;
 
     @Override
     public String toString() {

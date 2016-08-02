@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static by.ibrel.kitan.logic.Const.DEFAULT_PASS;
+
 /**
  * Created by ibrel on 20.04.2016.
  *
@@ -22,8 +24,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class UserController {
-
-    private final static String DEFAULT_PASS = "password";
 
     @Autowired
     private IUserService userService;

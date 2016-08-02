@@ -38,11 +38,11 @@
                                 <th>Доллар США</th>
                                 <th>Белоруский рубль</th>
                                 <th>Руский рубль</th>
-                                <th>ЕвроL</th>
+                                <th>Евро</th>
                                 <th>Украинская гривня</th>
                                 <th>Китайская юань</th>
                                 <th>Польский злотый</th>
-                                <th width="100">Опции</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -57,15 +57,15 @@
                                     <td>${price.chinaUAN}</td>
                                     <td>${price.polandZLOT}</td>
                                     <td>
-                                        <a href="<c:url value='/price/edit/${price.id}'/>" title="Edit" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/price/edit/${price.id}'/>" title="Изменить" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                         </a>
-                                        <a href="<c:url value='/price/delete/${price.id}'/>" title="Delete" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </a>
-                                        <a href="<c:url value='/price/add/${price.id}'/>" title="Add" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
+                                        <%--<a href="<c:url value='/price/delete/${price.id}'/>" title="Delete" class="btn btn-default btn-xs">--%>
+                                            <%--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>--%>
+                                        <%--</a>--%>
+                                        <%--<a href="<c:url value='/price/add/${price.id}'/>" title="Add" class="btn btn-default btn-xs">--%>
+                                            <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>--%>
+                                        <%--</a>--%>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -10,17 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+
+import static by.ibrel.kitan.logic.Const.ROOT;
 
 @Service
 @Transactional
 public class ProductService implements IProductService {
-
-    /**
-     * synchronized methods to access the product!!!
-     * if isState == true, product available
-     * if isSales == true, product sales and unavailable
-     */
 
     @Autowired
     private ProductRepository productRepository;
@@ -41,15 +40,12 @@ public class ProductService implements IProductService {
         product.setBarcode(productDto.getBarcode());
         product.setCategory(productDto.getCategory());
         product.setPrice(Double.parseDouble(productDto.getPrice()));
-        product.setNewColumn(null);
+//        product.setNewColumn(null);
 
         //TODO check entering data !!!!
-        product.setCount(Integer.parseInt(productDto.getCount()));
+        product.setQuantity(Integer.parseInt(productDto.getQuantity()));
 
-//        product.setState(true);
-//        product.setSales(false);
-
-        return productRepository.save(product);
+        return productRepository.saveAndFlush(product);
     }
 
     @Override
@@ -63,6 +59,9 @@ public class ProductService implements IProductService {
             entity.setColor(product.getColor());
             entity.setCountryProduct(product.getCountryProduct());
             entity.setBarcode(product.getBarcode());
+            entity.setCategory(product.getCategory());
+            entity.setPrice(product.getPrice());
+            entity.setQuantity(product.getQuantity());
         }
 
         saveProduct(entity);
@@ -76,41 +75,17 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
-
-//        Product product = productRepository.findOne(id);
-//        if (product.getPrice()!=null
-//                ||product.getInfoPurchaseProduct()!=null
-//                ||product.getProductImage()!=null
-//                ||product.getPurchases()!=null) {
-//
-//            product.setPrice(null);
-//            product.setInfoPurchaseProduct(null);
-//            ProductImage productImage = imageRepository.findOne(product.getProductImage().getId());
-//            imageRepository.delete(productImage);
-//            product.setPurchases(null);
-//        }
+    public void deleteProduct(Long id) throws IOException {
+        if (productRepository.findOne(id).getImage()!=null) {
+            Files.delete(Paths.get(ROOT, productRepository.findOne(id).getImage().getFileName()));
+            productRepository.findOne(id).getImage().setProduct(null);
+        }
         productRepository.delete(id);
-    }
-
-    @Override
-    public synchronized void sellProduct(Long id) {
-        Product e = productRepository.findOne(id);
-//        if (e!=null && e.isState()){
-//           e.setSales(true);
-//        }
-        saveProduct(e);
     }
 
     @Override
     public List<Product> listAllProduct() {
         return productRepository.findAll();
-    }
-
-    @Override
-    public boolean checkStatus(Long id) {
-        Product product = productRepository.findOne(id);
-        return product.isState();
     }
 
     @Override

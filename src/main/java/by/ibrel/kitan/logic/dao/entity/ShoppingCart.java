@@ -1,33 +1,29 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import by.ibrel.kitan.logic.beans.Status;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.UUID;
 
 @EqualsAndHashCode
 @Entity
-@Table(name = "purchase")
-public class Purchase implements Serializable {
+@Table(name = "shopping_cart")
+public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PURCHASE_ID")
+    @Column(name = "CART_ID")
     @Getter @Setter
     private Long id;
 
     @Getter @Setter
-    private Integer numberPurchase;
+    private Integer numberCart;
 
     @Getter @Setter
 //    @Temporal(TemporalType.DATE)
@@ -35,7 +31,7 @@ public class Purchase implements Serializable {
 
     @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(name = "purchase_product", joinColumns = @JoinColumn(name = "PURCHASE_ID", referencedColumnName = "PURCHASE_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
+    @JoinTable(name = "catr_product", joinColumns = @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
     private Collection<Product> products;
 
     @Getter @Setter
@@ -47,11 +43,15 @@ public class Purchase implements Serializable {
     private Double priceSummary;
 
     @Getter @Setter
-    private Integer countSummary;
+    private Integer quantity;
+
+//    @Getter @Setter
+//    @OneToMany(mappedBy = "orderDetails", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+//    private Collection<PurchaseHistory> purchaseHistories;
 
     @Getter @Setter
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.REMOVE)
-    private Collection<InfoPurchaseProduct> infoPurchaseProducts;
+    @Enumerated
+    private Status status;
 
     @Override
     public String toString() {

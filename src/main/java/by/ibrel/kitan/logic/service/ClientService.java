@@ -83,6 +83,8 @@ public class ClientService implements IClientService{
             entity.setLastName(client.getLastName());
             entity.setPhone(client.getPhone());
             entity.setEmail(client.getEmail());
+            entity.setDiscountPrice(client.getDiscountPrice());
+            entity.setAccount(client.getAccount());
         }
         repository.save(entity);
     }

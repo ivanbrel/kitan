@@ -18,12 +18,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "client")
 @EqualsAndHashCode
+@ToString
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
+    @Column(name = "CLIENT_ID")
     private Long id;
 
     @Getter @Setter
@@ -44,14 +46,4 @@ public class Client implements Serializable {
     @Getter @Setter
     private Double discountPrice;
 
-    @Getter @Setter
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
-    private Collection<Purchase> purchases;
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                '}';
-    }
 }

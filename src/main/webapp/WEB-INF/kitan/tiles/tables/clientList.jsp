@@ -14,7 +14,11 @@
                         <h2>Список клиентов </h2>
 
                         <div class="clearfix"></div>
-
+                    </div>
+                    <div style="float: right">
+                        <a class="btn btn-success" href="${ctx}/client/add-page" >
+                            <span class="fa fa-plus-square" aria-hidden="true"></span>  Добавить нового клиента
+                        </a>
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
@@ -34,6 +38,7 @@
                                 <th>Имя</th>
                                 <th>EMAIL</th>
                                 <th>Телефон</th>
+                                <th>Скидка</th>
                                 <th>Счёт</th>
                                 <th width="120">Опции</th>
                             </tr>
@@ -46,6 +51,7 @@
                                         <td>${clients.firstName}</td>
                                         <td>${clients.email}</td>
                                         <td>${clients.phone}</td>
+                                        <td>${clients.discountPrice}%</td>
                                         <td>${clients.account}</td>
                                         <td>
                                             <a href="<c:url value='/client/edit/${clients.id}'/>" title="Edit" class="btn btn-default btn-xs">
@@ -54,7 +60,7 @@
                                             <a href="<c:url value='/client/delete/${clients.id}'/>" title="Delete" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </a>
-                                            <a href="<c:url value='/purchase/add/${clients.id}'/>" title="Buy" class="btn btn-default btn-xs">
+                                            <a href="<c:url value='/cart/create/${clients.id}'/>" title="Buy" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                             </a>
                                         </td>

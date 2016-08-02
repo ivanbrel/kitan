@@ -49,33 +49,39 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">color</label>
+                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="color" id="color" name="color" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">countryProduct </label>
+                                <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="countryProduct" id="countryProduct" name="countryProduct" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="barcode" class="control-label col-md-3 col-sm-3 col-xs-12">barcode </label>
+                                <label for="barcode" class="control-label col-md-3 col-sm-3 col-xs-12">Штрих-код </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="barcode" id="barcode" name="barcode" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">category </label>
+                                <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="category" id="category" name="category" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="count" class="control-label col-md-3 col-sm-3 col-xs-12">count </label>
+                                <label for="price" class="control-label col-md-3 col-sm-3 col-xs-12">Цена </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="count" id="count" name="count" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="price" id="price" name="price" class="date-picker form-control col-md-7 col-xs-12" type="number"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="quantity" id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" type="number"/>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
