@@ -59,20 +59,21 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public void save(Image entity) {
-        repository.saveAndFlush(entity);
-    }
-
-    @Override
     public void delete(Long id) {
-        if (findOne(id)!=null) {
+        if (productService.findOne(id).getImage() != null) {
             try {
-                Files.delete(Paths.get(ROOT, findOne(id).getFileName()));
+                Files.delete(Paths.get(servletContext.getRealPath(ROOT), productService.findOne(id).getImage().getFileName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            repository.delete(id);
+            productService.findOne(id).getImage().setProduct(null);
         }
+
+    }
+
+    @Override
+    public void save(Image entity) {
+        repository.saveAndFlush(entity);
     }
 
     @Override
@@ -89,4 +90,6 @@ public class ImageService implements IImageService {
     public Image findOne(Long id) {
         return repository.findOne(id);
     }
+
+
 }

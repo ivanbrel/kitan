@@ -4,6 +4,7 @@ import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
+import by.ibrel.kitan.logic.service.impl.IImageService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public class ProductService implements IProductService {
 
     @Autowired
     private IShoppingCartService cartService;
+
+    @Autowired
+    private IImageService iImageService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -135,14 +139,7 @@ public class ProductService implements IProductService {
     }
 
     private synchronized void deleteProductAndImage(Long id){
-        if (findOne(id).getImage() != null) {
-            try {
-                Files.delete(Paths.get(ROOT, findOne(id).getImage().getFileName()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            findOne(id).getImage().setProduct(null);
-        }
+        iImageService.delete(id);
         productRepository.delete(id);
         setEventDelListener(true);
     }
