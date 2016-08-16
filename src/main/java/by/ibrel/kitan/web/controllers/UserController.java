@@ -32,25 +32,27 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String listUsers(ModelMap model) {
 
-        List<User> users = userService.findAllUsers();
+        List<User> users = userService.findAll();
         model.addAttribute("users", users);
         return "auth.user.list";
     }
 
     @RequestMapping(value = {"/user/edit/{user}"}, method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String updateUser(@Valid final User user, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
             return "auth.user.edit";
         }
 
-        userService.updateUser(user);
+        userService.update(user);
 
         model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
         return "auth.user.edit";
     }
 
     @RequestMapping(value = {"/user/edit/{user}"}, method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String editUser(@PathVariable String user, ModelMap model) {
         User u = userService.findByLogin(user);
         model.addAttribute("user", u);
@@ -61,7 +63,7 @@ public class UserController {
     @RequestMapping(value = {"/user/delete/{id}"}, method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        userService.delete(id);
         return "auth.user.list";
     }
 
@@ -104,7 +106,7 @@ public class UserController {
 
         if (result.hasErrors()){return "users.edit";}
 
-        userService.updateUser(user);
+        userService.update(user);
 
         model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
 

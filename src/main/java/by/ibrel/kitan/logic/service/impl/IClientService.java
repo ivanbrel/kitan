@@ -1,29 +1,19 @@
 package by.ibrel.kitan.logic.service.impl;
 
+import by.ibrel.kitan.auth.service.impl.ICommonService;
 import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.service.dto.ClientDto;
 
-import java.util.List;
-
 /**
- * Created by ibrel on 13/05/16.
+ * @author ibrel
+ * @version 1.1 (13.05.2016)
  */
-public interface IClientService {
+public interface IClientService extends ICommonService<Client>{
 
     Client createClient(ClientDto clientDto) throws ClientExistsException;
 
-    void saveNewClient(Client client);
-
-    Client getClient(Long id);
-
     Client findByNameClient(String nameClient);
 
-    Client findById(Long id);
-
-    List<Client> findAllClient();
-
-    void updateClient(Client client);
-
-    void deleteClient(Long id);
+    Client findByAccountClient(String account);
 }

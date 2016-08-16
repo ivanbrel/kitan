@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -11,6 +12,15 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
+                    <c:choose>
+                        <c:when test="${fail}">
+                            <div class="alert alert-danger">
+                                <strong><spring:message code="error"/></strong><spring:message code="error.product.notEmpty"/>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="x_title">
                         <h2>Список товара </h2>
                         <div class="clearfix"></div>
@@ -66,9 +76,9 @@
                                             <a href="<c:url value='/product/delete/${product.id}'/>" title="Delete" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </a>
-                                            <a href="<c:url value='/product/add/column/${product.id}'/>" title="Add Column" class="btn btn-default btn-xs">
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                            </a>
+                                            <%--<a href="<c:url value='/product/add/column/${product.id}'/>" title="Add Column" class="btn btn-default btn-xs">--%>
+                                                <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>--%>
+                                            <%--</a>--%>
                                         </td>
                                     </tr>
                                 </c:forEach>

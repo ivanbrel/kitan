@@ -21,6 +21,11 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author ibrel
+ * @version 1.1 (26.06.2016)
+ */
+
 @Controller
 @RequestMapping("/")
 public class ShoppingCartController {
@@ -44,7 +49,7 @@ public class ShoppingCartController {
     @RequestMapping(value = {"/cart/list"}, method = RequestMethod.GET)
     public String listPurchases(ModelMap model) {
         LOGGER.debug("!List all purchases");
-        Collection<ShoppingCart> orderDetailses = service.allCart();
+        Collection<ShoppingCart> orderDetailses = service.findAll();
         model.addAttribute("cart", orderDetailses);
         List<PriceConvert> priceList = priceService.findAll();
         model.addAttribute("price", priceList);
@@ -74,7 +79,7 @@ public class ShoppingCartController {
 
         model.addAttribute("success", "Product success sell");
 
-        ShoppingCart p = service.getCartById(shoppingCart.getId());
+        ShoppingCart p = service.findOne(shoppingCart.getId());
         model.addAttribute("cart", p);
 
         LOGGER.debug("!Product sell successfuly!");
@@ -92,7 +97,7 @@ public class ShoppingCartController {
             @Override
             protected Object convertElement(Object element) {
                 Long id = Long.parseLong(element.toString());
-                return productService.getProduct(id);
+                return productService.findOne(id);
             }
         });
 
@@ -101,11 +106,11 @@ public class ShoppingCartController {
     @RequestMapping(value = {"/cart/sell/{id}"}, method = RequestMethod.GET)
     public String addProductToPurchase(@PathVariable final Long id, ModelMap modelMap){
 
-        final ShoppingCart shoppingCart = service.getCartById(id);
+        final ShoppingCart shoppingCart = service.findOne(id);
 
         modelMap.addAttribute("cart", shoppingCart);
 
-        List<Product> productsList = productService.listAllProduct();
+        List<Product> productsList = productService.findAll();
         modelMap.addAttribute("productsList", productsList);
 
         return "cart.add.product";
@@ -142,7 +147,7 @@ public class ShoppingCartController {
 
         service.changeStatus(idCart);
 
-        final ShoppingCart shoppingCart = service.getCartById(idCart);
+        final ShoppingCart shoppingCart = service.findOne(idCart);
 
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
@@ -157,7 +162,7 @@ public class ShoppingCartController {
             return "cart.edit";
         }
 
-        service.editCart(shoppingCart);
+        service.update(shoppingCart);
 
         model.addAttribute("success", "Данные " + shoppingCart.getId() + " изменены");
         return "redirect:/cart/list";
@@ -166,7 +171,7 @@ public class ShoppingCartController {
     @RequestMapping(value = { "/cart/edit/{id}" }, method = RequestMethod.GET)
     public String editProduct(@PathVariable Long id, ModelMap model) {
 
-        final ShoppingCart shoppingCart = service.getCartById(id);
+        final ShoppingCart shoppingCart = service.findOne(id);
         model.addAttribute("cart", shoppingCart);
         return "cart.edit";
     }
@@ -174,7 +179,7 @@ public class ShoppingCartController {
     @RequestMapping(value = {"/cart/{idCart}"}, method = RequestMethod.GET)
     public String cart(@PathVariable("idCart") Long idCart, ModelMap model){
 
-        final ShoppingCart shoppingCart = service.getCartById(idCart);
+        final ShoppingCart shoppingCart = service.findOne(idCart);
 
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
@@ -189,7 +194,7 @@ public class ShoppingCartController {
 
         service.deleteProductFromCart(cartId, historyId, productId);
 
-        final ShoppingCart shoppingCart = service.getCartById(cartId);
+        final ShoppingCart shoppingCart = service.findOne(cartId);
 
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));

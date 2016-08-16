@@ -1,6 +1,7 @@
 package by.ibrel.kitan.logic.dao.repository;
 
 import by.ibrel.kitan.logic.dao.entity.Client;
+import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -10,6 +11,16 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
+                    <c:choose>
+                        <c:when test="${fail}">
+                            <div class="alert alert-danger">
+                                <strong><spring:message code="error"/></strong><spring:message code="error.client.notEmpty"/>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
+                    <br>
                     <div class="x_title">
                         <h2>Список клиентов </h2>
 

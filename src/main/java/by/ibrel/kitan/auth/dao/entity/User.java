@@ -17,7 +17,6 @@ import java.util.UUID;
  *
  */
 
-@ToString
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -73,5 +72,13 @@ public class User implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                '}';
     }
 }

@@ -128,7 +128,8 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <input type="submit" value="Добавить" class="btn btn-success" />
-                                    <input type="reset" value="Отменить" class="btn btn-default"  />
+                                    <input type="reset" value="Очистить форму" class="btn btn-default"  />
+                                    <input type="button" value="Назад" onclick="history.back()" class="btn btn-danger"/>
                                 </div>
                             </div>
                         </form>

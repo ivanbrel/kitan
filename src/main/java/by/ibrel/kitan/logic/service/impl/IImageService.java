@@ -1,23 +1,16 @@
 package by.ibrel.kitan.logic.service.impl;
 
+import by.ibrel.kitan.auth.service.impl.ICommonService;
 import by.ibrel.kitan.logic.dao.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 /**
- * Created by ibrel on 12/07/16.
- *
+ * @author ibrel
+ * @version 1.1 (12.07.2016)
  */
-public interface IImageService {
-
-    Image getImage(Long id);
-
-    void deleteImage(Long id) throws IOException;
-
-    void updateImage(Long id);
-
-    void saveImage(Image image);
+public interface IImageService extends ICommonService<Image>{
 
     void createImage(MultipartFile fileUpload, Long id) throws IOException;
 

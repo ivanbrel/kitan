@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
 <script>var ctx = "${ctx}";</script>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
                 <form method="POST" action="login">
                     <h1>Войти</h1>
                     <c:if test="${not empty param.error}">
-                        <font color="red"> Введён неправильный логин или пароль !</font>
+                        <span style="color: red; "> <spring:message code="error.login.fail"/></span>
                     </c:if>
                     <div>
                         <input name="username" type="text" class="form-control" placeholder="Логин" required="" />

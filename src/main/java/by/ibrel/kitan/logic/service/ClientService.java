@@ -2,25 +2,32 @@ package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.dao.repository.ClientRepository;
+import by.ibrel.kitan.logic.dao.repository.ShoppingCartRepository;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.service.dto.ClientDto;
 import by.ibrel.kitan.logic.service.impl.IClientService;
+import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author ibrel
+ * @version 1.1 (13.05.2016)
+ */
+
+
 @Service
 @Transactional
 public class ClientService implements IClientService{
 
-    /**
-     *dependence problem clientRepository !
-     */
-
     @Autowired
     private ClientRepository repository;
+
+    @Autowired
+    private IShoppingCartService cartService;
 
     //API
 
@@ -42,23 +49,21 @@ public class ClientService implements IClientService{
         //TODO check value
         client.setDiscountPrice(Double.parseDouble(clientDto.getDiscount()));
 
-        return repository.save(client);
+        save(client);
+        return client;
     }
 
+    /**
+     * Check exists account
+     *
+     * @param account client account
+     * @return true if account exists
+     */
     private boolean clientExists(final String account) {
-        final Client client = repository.findByAccount(account);
+        final Client client = findByAccountClient(account);
         return client != null;
     }
 
-    @Override
-    public void saveNewClient(Client client) {
-        repository.save(client);
-    }
-
-    @Override
-    public Client getClient(Long id) {
-        return repository.findOne(id);
-    }
 
     @Override
     public Client findByNameClient(String nameClient) {
@@ -66,18 +71,26 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Client findById(Long id) {
-        return repository.findOne(id);
+    public Client findByAccountClient(String account) {
+        return repository.findByAccount(account);
     }
 
     @Override
-    public List<Client> findAllClient() {
-        return repository.findAll();
+    public void save(Client entity) {
+        repository.saveAndFlush(entity);
     }
 
     @Override
-    public void updateClient(Client client) {
-        Client entity = repository.findByAccount(client.getAccount());
+    public void delete(Long id) {
+        if (cartService.findCartWithClient(id)==null){
+            repository.delete(id);
+        }
+    }
+
+    @Override
+    public void update(Client client) {
+
+        Client entity = findByAccountClient(client.getAccount());
         if(entity!=null){
             entity.setFirstName(client.getFirstName());
             entity.setLastName(client.getLastName());
@@ -86,12 +99,16 @@ public class ClientService implements IClientService{
             entity.setDiscountPrice(client.getDiscountPrice());
             entity.setAccount(client.getAccount());
         }
-        repository.save(entity);
+        save(entity);
     }
 
     @Override
-    public void deleteClient(Long id) {
-        repository.delete(id);
+    public List<Client> findAll() {
+        return repository.findAll();
     }
 
+    @Override
+    public Client findOne(Long id) {
+        return repository.findOne(id);
+    }
 }

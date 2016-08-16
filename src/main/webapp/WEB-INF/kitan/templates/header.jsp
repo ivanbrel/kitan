@@ -33,8 +33,8 @@
                     <li><a><i class="fa fa-home"></i> Главная <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/client/list">Оформить заказ</a></li>
-                            <li><a href="index2.html">Показать остатки</a></li>
-                            <li><a href="index3.html">Вывести остатки</a></li>
+                            <li><a href="">Показать остатки</a></li>
+                            <li><a href="">Вывести остатки</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-edit"></i> Формы <span class="fa fa-chevron-down"></span></a>

@@ -3,10 +3,10 @@ package by.ibrel.kitan.auth.service;
 
 import by.ibrel.kitan.auth.dao.entity.Privilege;
 import by.ibrel.kitan.auth.dao.entity.Role;
-import by.ibrel.kitan.auth.dao.repository.PrivilegeRepository;
 import by.ibrel.kitan.auth.dao.repository.RoleRepository;
 import by.ibrel.kitan.auth.exception.RoleExistsException;
 import by.ibrel.kitan.auth.service.dto.RoleDto;
+import by.ibrel.kitan.auth.service.impl.IPrivilegeService;
 import by.ibrel.kitan.auth.service.impl.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author ibrel
+ * @version 1.1 (08.04.2016)
+ */
+
 @Service
 @Transactional
 public class RoleService implements IRoleService {
@@ -24,7 +29,9 @@ public class RoleService implements IRoleService {
     private RoleRepository repository;
 
     @Autowired
-    private PrivilegeRepository privilegeRepository;
+    private IPrivilegeService privilegeService;
+
+    //API
 
     @Override
     public Role addNewRole(final RoleDto roleDto) throws RoleExistsException {
@@ -33,9 +40,16 @@ public class RoleService implements IRoleService {
         }
         final Role role = new Role();
         role.setName(roleDto.getName());
-        return repository.save(role);
+        save(role);
+        return role;
     }
 
+    /**
+     * Check exist role
+     *
+     * @param name name role
+     * @return true - role exist
+     */
     private boolean roleExist(final String name) {
         final Role role = repository.findByName(name);
         return role!=null;
@@ -47,14 +61,25 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public List<Role> findAllRoles() {
-        return repository.findAll();
+    public void emptyRole(final Long id){
+        final Role entity = findOne(id);
+        if (entity.getPrivileges()!=null) {
+            entity.getPrivileges().clear();
+        }
     }
 
+    @Override
+    public void save(Role entity) {
+        repository.save(entity);
+    }
 
     @Override
-    public void editRole(final Role role) {
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 
+    @Override
+    public void update(Role role) {
         Role entity = findByName(role.getName());
 
         Collection<Privilege> privileges = role.getPrivileges();
@@ -63,9 +88,9 @@ public class RoleService implements IRoleService {
             Collection<Privilege> p = entity.getPrivileges();
             entity.getPrivileges().clear();
             for (Privilege privilege : role.getPrivileges()) {
-                privilege = privilegeRepository.findByName(privilege.getName());
+                privilege = privilegeService.findByName(privilege.getName());
 //                if (!p.contains(privilege)) {
-                    p.add(privilege);
+                p.add(privilege);
 //                }
             }
             entity.setPrivileges(p);
@@ -73,25 +98,17 @@ public class RoleService implements IRoleService {
             entity.getPrivileges().clear();
         }
 
-        repository.save(entity);
+        save(entity);
+
     }
 
     @Override
-    public void deleteRole(final Long id) {
-        repository.delete(id);
+    public List<Role> findAll() {
+        return repository.findAll();
     }
 
     @Override
-    public void emptyRole(final Long id){
-        final Role entity = repository.findOne(id);
-        if (entity.getPrivileges()!=null) {
-            entity.getPrivileges().clear();
-        }
-    }
-
-
-    @Override
-    public List<Privilege> getAllPrivileges(){
-        return privilegeRepository.findAll();
+    public Role findOne(Long id) {
+        return repository.findOne(id);
     }
 }

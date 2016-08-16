@@ -1,9 +1,11 @@
 package by.ibrel.kitan.logic.service;
 
+import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
 import by.ibrel.kitan.logic.service.impl.IProductService;
+import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +15,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 
 import static by.ibrel.kitan.logic.Const.ROOT;
+
+/**
+ * @author ibrel
+ * @version 1.2 (12.07.2016)
+ */
 
 @Service
 @Transactional
 public class ProductService implements IProductService {
 
+    private boolean flag;
+
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private IShoppingCartService cartService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     //API
 
     @Override
-    public Product addProduct(final ProductDto productDto){
+    public synchronized Product addProduct(final ProductDto productDto){
 
         Product product = new Product();
 
@@ -40,18 +53,60 @@ public class ProductService implements IProductService {
         product.setBarcode(productDto.getBarcode());
         product.setCategory(productDto.getCategory());
         product.setPrice(Double.parseDouble(productDto.getPrice()));
-//        product.setNewColumn(null);
 
         //TODO check entering data !!!!
         product.setQuantity(Integer.parseInt(productDto.getQuantity()));
 
-        return productRepository.saveAndFlush(product);
+        save(product);
+        return product;
     }
 
     @Override
-    public synchronized void editProduct(Product product) {
+    public synchronized void save(Product entity) {
+        productRepository.saveAndFlush(entity);
+    }
 
-        Product entity = productRepository.findOne(product.getId());
+    @Override
+    public synchronized void delete(Long id) {
+
+        Collection<ShoppingCart> shoppingCarts = cartService.findAll();
+
+        if (shoppingCarts.size()==0){
+            deleteProductAndImage(id);
+        }else {
+            for (ShoppingCart shoppingCart:shoppingCarts){
+                Collection<Product> products = shoppingCart.getProducts();
+
+                if (products.size() == 0) {
+                    deleteProductAndImage(id);
+                } else {
+                    for (Product product:products) {
+                        if (product.getId().equals(findOne(id))) {
+                            deleteProductAndImage(id);
+                        } else {
+                            setEventDelListener(false);
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    private void setEventDelListener(boolean flag) {
+        this.flag=flag;
+    }
+
+    @Override
+    public boolean getEventDelListener() {
+        return flag;
+    }
+
+    @Override
+    public synchronized void update(Product product) {
+
+        Product entity = findOne(product.getId());
 
         if (entity!=null){
             entity.setNameProduct(product.getNameProduct());
@@ -64,33 +119,31 @@ public class ProductService implements IProductService {
             entity.setQuantity(product.getQuantity());
         }
 
-        saveProduct(entity);
+        save(entity);
 
         LOGGER.debug("Product " +product.getId() +" is update");
     }
 
     @Override
-    public void saveProduct(Product product) {
-        productRepository.save(product);
-    }
-
-    @Override
-    public void deleteProduct(Long id) throws IOException {
-        if (productRepository.findOne(id).getImage()!=null) {
-            Files.delete(Paths.get(ROOT, productRepository.findOne(id).getImage().getFileName()));
-            productRepository.findOne(id).getImage().setProduct(null);
-        }
-        productRepository.delete(id);
-    }
-
-    @Override
-    public List<Product> listAllProduct() {
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public synchronized Product getProduct(Long id) {
+    public Product findOne(Long id) {
         return productRepository.findOne(id);
     }
 
+    private synchronized void deleteProductAndImage(Long id){
+        if (findOne(id).getImage() != null) {
+            try {
+                Files.delete(Paths.get(ROOT, findOne(id).getImage().getFileName()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            findOne(id).getImage().setProduct(null);
+        }
+        productRepository.delete(id);
+        setEventDelListener(true);
+    }
 }

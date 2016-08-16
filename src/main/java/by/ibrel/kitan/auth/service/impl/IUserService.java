@@ -4,29 +4,31 @@ import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
 import by.ibrel.kitan.auth.service.dto.UserDto;
 
-import java.util.List;
-
 /**
- * Created by ibrel on 08.04.2016.
+ * @author ibrel
+ * @version 1.1 (8.04.2016)
  */
-public interface IUserService  {
+public interface IUserService extends ICommonService<User>  {
 
     User registerNewUserAccount(UserDto accountDto) throws LoginExistsException;
 
-    void saveRegisteredUser(User user);
-
-    void deleteUser(Long id);
-
     User findByLogin(String login);
 
-    User getUserById(Long id);
-
+    /**
+     * Chance user password
+     *
+     * @param user object user
+     * @param password old user password
+     */
     void changeUserPassword(User user, String password);
 
+    /**
+     * Check match user password and entering password
+     *
+     * @param user object user
+     * @param password entering user password
+     * @return true if passwords match
+     */
     boolean checkIfValidOldPassword(User user, String password);
-
-    List<User> findAllUsers();
-
-    void updateUser(User user);
 
 }

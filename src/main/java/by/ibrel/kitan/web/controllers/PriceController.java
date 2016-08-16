@@ -20,8 +20,8 @@ import java.util.UUID;
 
 
 /**
- * Created by ibrel on 28/06/16.
- *
+ * @author ibrel
+ * @version 1.1 (28.06.2016)
  */
 @Controller
 public class PriceController {
@@ -42,7 +42,7 @@ public class PriceController {
     @RequestMapping(value = { "/price/edit/{id}" }, method = RequestMethod.POST)
     public String updatePrice(@Valid PriceConvert p, final BindingResult result, final ModelMap model){
         if (result.hasErrors()){return "price.edit";}
-        service.updatePrice(p);
+        service.update(p);
         model.addAttribute("success", "Данные " + p.getId() + " изменены");
         return "redirect:/price/list";
     }
@@ -50,7 +50,7 @@ public class PriceController {
     @RequestMapping(value = { "/price/edit/{id}" }, method = RequestMethod.GET)
     public String editPrice(@PathVariable Long id, ModelMap model) {
 
-        final PriceConvert price = service.getPriceById(id);
+        final PriceConvert price = service.findOne(id);
         model.addAttribute("price", price);
         return "price.edit";
     }

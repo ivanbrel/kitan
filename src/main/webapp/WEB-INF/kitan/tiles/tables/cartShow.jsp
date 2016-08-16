@@ -20,7 +20,8 @@
                             </button>
                             Добавте товар к заказу нажав на кнопку  <span class="fa fa-shopping-cart" aria-hidden="true"></span> в опциях к заказу
                         </div>
-                        <table class="table table-striped jambo_table bulk_action">
+                        <button type="button" onClick ="$('#mainTable').tableExport({type:'excel',escape:'false'});$('#chilTable').tableExport({type:'excel',escape:'false'});">EXCEL</button>
+                        <table id="mainTable" class="table table-striped jambo_table bulk_action">
                             <thead>
                             <tr>
                                 <th>Номер заказа</th>
@@ -61,9 +62,14 @@
                             </tbody>
                         </table>
 
-                        <a href="<c:url value='/cart/status/${cart.id}'/>" class="btn btn-success" style="float: right">Оформить заказ</a>
+                        <button style="float: right" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Оформить заказ</button>
+
+
                         <br>
-                        <table id="datatable-buttons" class="table">
+                        <br>
+                        <br>
+
+                        <table id="chilTable" class="table">
                                 <thead>
                                 <tr>
                                     <th>Дата</th>
@@ -73,7 +79,6 @@
                                     <th>Цена</th>
                                     <th>Клиент</th>
                                     <th>Скидка</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -103,3 +108,25 @@
     </div>
 </div>
 <!-- /page content -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Подтверждение заказа</h4>
+            </div>
+            <div class="modal-body">
+                <p>После подтверждения, заказ сменит свой статус!</p>
+            </div>
+            <div class="modal-footer">
+                <a href="<c:url value='/cart/status/${cart.id}'/>" class="btn btn-success">Подтверрдить</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+
+    </div>
+</div>

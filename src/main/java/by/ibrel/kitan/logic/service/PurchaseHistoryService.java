@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by ibrel on 28/07/16.
- *
+ * @author ibrel
+ * @version 1.2 (12.07.2016)
  */
+
 @Service
 @Transactional
 public class PurchaseHistoryService implements IPurchaseHistoryService {
@@ -29,28 +30,8 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
 //    API
 
     @Override
-    public void savePurchaseHistory(PurchaseHistory purchaseHistory) {
-        repository.saveAndFlush(purchaseHistory);
-    }
-
-    @Override
-    public void deletePurchaseHistory(Long id) {
-        repository.delete(id);
-    }
-
-    @Override
-    public PurchaseHistory getPurchaseHistory(Long id) {
-        return repository.findOne(id);
-    }
-
-    @Override
-    public List<PurchaseHistory> getAllPurchaseHistory() {
-        return repository.findAll();
-    }
-
-    @Override
     public List<PurchaseHistory> listHistory(Long cartId) {
-        List<PurchaseHistory> list = getAllPurchaseHistory();
+        List<PurchaseHistory> list = findAll();
         List<PurchaseHistory> returnList = new ArrayList<>();
         for (PurchaseHistory purchaseHistory:list){
             if (Objects.equals(purchaseHistory.getShoppingCart().getId(), cartId)){
@@ -72,7 +53,32 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
             purchaseHistory.setShoppingCart(shoppingCart);
             purchaseHistory.setClient(shoppingCart.getClient());
 
-            savePurchaseHistory(purchaseHistory);
+            save(purchaseHistory);
         }
+    }
+
+    @Override
+    public void save(PurchaseHistory entity) {
+        repository.saveAndFlush(entity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public void update(PurchaseHistory entity) {
+
+    }
+
+    @Override
+    public List<PurchaseHistory> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public PurchaseHistory findOne(Long id) {
+        return repository.findOne(id);
     }
 }

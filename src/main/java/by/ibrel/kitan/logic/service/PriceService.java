@@ -11,8 +11,8 @@ import java.util.List;
 
 
 /**
- * Created by ibrel on 28/06/16.
- *
+ * @author ibrel
+ * @version 1.2 (28.06.2016)
  */
 @Service
 @Transactional
@@ -24,17 +24,17 @@ public class PriceService implements IPriceService {
 //    API
 
     @Override
-    public PriceConvert getPriceById(Long id) {
-        return repository.findOne(id);
+    public void save(PriceConvert entity) {
+        repository.saveAndFlush(entity);
     }
 
     @Override
-    public List<PriceConvert> findAll() {
-        return repository.findAll();
+    public void delete(Long id) {
+        repository.delete(id);
     }
 
     @Override
-    public void updatePrice(PriceConvert price) {
+    public void update(PriceConvert price) {
 
         PriceConvert entity = repository.findOne(price.getId());
 
@@ -48,5 +48,16 @@ public class PriceService implements IPriceService {
         }
         repository.save(entity);
     }
+
+    @Override
+    public List<PriceConvert> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public PriceConvert findOne(Long id) {
+        return repository.findOne(id);
+    }
+
 
 }

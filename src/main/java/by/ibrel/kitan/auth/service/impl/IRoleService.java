@@ -1,26 +1,25 @@
 package by.ibrel.kitan.auth.service.impl;
 
-import by.ibrel.kitan.auth.dao.entity.Privilege;
+
 import by.ibrel.kitan.auth.dao.entity.Role;
 import by.ibrel.kitan.auth.exception.RoleExistsException;
 import by.ibrel.kitan.auth.service.dto.RoleDto;
 
+/**
+ * @author ibrel
+ * @version 1.1 (12.08.2016)
+ */
 
-import java.util.List;
-
-public interface IRoleService {
+public interface IRoleService extends ICommonService<Role>{
 
     Role addNewRole(RoleDto roleDto) throws RoleExistsException;
 
     Role findByName(String name);
 
-    List<Role> findAllRoles();
-
-    void editRole(Role role);
-
-    void deleteRole(Long id);
-
-    List<Privilege> getAllPrivileges();
-
+    /**
+     * Removes all references to objects invoking to this object
+     *
+     * @param id role id
+     */
     void emptyRole(final Long id);
 }

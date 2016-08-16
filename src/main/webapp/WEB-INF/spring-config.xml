@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="by.ibrel.kitan.web.controllers"/>
     <context:property-placeholder location="classpath:jdbc.properties" file-encoding="UTF-8"/>
+
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <import resource="classpath:kitan-dao-beans.xml"/>
     <import resource="classpath:security-config.xml"/>
-
 
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
 
@@ -77,9 +80,6 @@
     <context:component-scan base-package="by.ibrel.kitan.auth"/>
     <context:component-scan base-package="by.ibrel.kitan.web.security"/>
 
-
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
-
     <bean id="passwordMatchesValidator" class="by.ibrel.kitan.auth.validation.PasswordMatchesValidator"/>
 
     <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
@@ -91,15 +91,11 @@
 
     <bean id="userDetailsService" class="by.ibrel.kitan.web.security.MyUserDetailsService"/>
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basenames" value="messages"/>
-    </bean>
+    <!--@Transaction-->
+    <tx:annotation-driven/>
 
-    <!-- Declare the Interceptor -->
-    <bean id="localeChangeInterceptor"
-          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="locale" />
-    </bean>
+    <!--message-->
+   <import resource="classpath:messages-conf.xml"/>
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <constructor-arg value="11"/>

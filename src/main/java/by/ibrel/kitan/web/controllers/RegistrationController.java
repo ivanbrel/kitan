@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+/**
+ * @author ibrel
+ * @version 1.1 (26.06.2016)
+ */
+
 @Controller
 public class RegistrationController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());

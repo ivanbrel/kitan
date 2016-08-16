@@ -63,9 +63,9 @@
                                     <td data-toggle="tooltip" data-placement="right"
                                         title="
                                             <c:forEach items="${price}" var="price">
-                                            BY: ${price.rubleBY*product.price}
-                                            RUS: ${price.rubleRUS*product.price}
-                                            Euro: ${price.euro*product.price}
+                                            BY: ${price.rubleBY*cart.priceSummary}
+                                            RUS: ${price.rubleRUS*cart.priceSummary}
+                                            Euro: ${price.euro*cart.priceSummary}
                                             </c:forEach>">${cart.priceSummary}</td>
                                     <td>${cart.quantity}</td>
                                     <td>${cart.status}</td>

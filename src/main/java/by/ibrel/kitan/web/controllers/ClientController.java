@@ -4,10 +4,10 @@ import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
 import by.ibrel.kitan.logic.service.dto.ClientDto;
 import by.ibrel.kitan.logic.service.impl.IClientService;
+import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
+import java.util.ResourceBundle;
+
+/**
+ * @author ibrel
+ * @version 1.1 (26.06.2016)
+ */
 
 @Controller
 @RequestMapping("/")
@@ -28,10 +33,13 @@ public class ClientController {
     @Autowired
     private IClientService service;
 
+    @Autowired
+    private IShoppingCartService cartService;
+
     @RequestMapping(value = {"/client/list"}, method = RequestMethod.GET)
     public String listClients(ModelMap model) {
 
-        List<Client> clients = service.findAllClient();
+        List<Client> clients = service.findAll();
         model.addAttribute("clients", clients);
         return "client.list";
     }
@@ -43,7 +51,8 @@ public class ClientController {
 
         final Client add = createClient(clientDto);
         if (add==null){
-            throw new ClientExistsException();
+            model.addAttribute("fail", true);
+            return "client.add";
         }
         model.addAttribute("success");
         return "redirect:/client/list";
@@ -60,22 +69,28 @@ public class ClientController {
     }
 
     @RequestMapping(value = {"/client/delete/{id}"}, method = RequestMethod.GET)
-    public String deleteClient(@PathVariable Long id) {
-        service.deleteClient(id);
-        return "redirect:/client/list";
+    public String deleteClient(@PathVariable Long id,  final ModelMap model) {
+        if (cartService.findCartWithClient(id)==null){
+            service.delete(id);
+            return "redirect:/client/list";
+        }else{
+            model.addAttribute("fail", true);
+            listClients(model);
+            return "client.list";
+        }
     }
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.POST)
     public String updateClient(@Valid final Client c, final BindingResult result, final ModelMap model){
         if (result.hasErrors()){return "client.edit";}
-        service.updateClient(c);
+        service.update(c);
         model.addAttribute("success", "Данные клиента " + c.getId() + " изменены");
         return "redirect:/client/list";
     }
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.GET)
     public String editClient(@PathVariable Long id, ModelMap model) {
-        final Client client = service.findById(id);
+        final Client client = service.findOne(id);
         model.addAttribute("client", client);
         model.addAttribute("edit", true);
         return "client.edit";

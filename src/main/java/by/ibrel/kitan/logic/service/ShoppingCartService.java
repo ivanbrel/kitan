@@ -2,9 +2,6 @@ package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.beans.Status;
 import by.ibrel.kitan.logic.dao.entity.*;
-import by.ibrel.kitan.logic.dao.repository.PurchaseHistoryRepository;
-import by.ibrel.kitan.logic.dao.repository.ProductRepository;
-import by.ibrel.kitan.logic.dao.repository.ClientRepository;
 import by.ibrel.kitan.logic.dao.repository.ShoppingCartRepository;
 import by.ibrel.kitan.logic.service.impl.IClientService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
@@ -21,6 +18,10 @@ import java.util.*;
 
 import static by.ibrel.kitan.logic.Const.START_NUMBER;
 
+/**
+ * @author ibrel
+ * @version 1.2 (28.07.2016)
+ */
 
 @Service
 @Transactional
@@ -46,7 +47,7 @@ public class ShoppingCartService implements IShoppingCartService {
     public ShoppingCart createCart(final Long clientId) {
 
         ShoppingCart shoppingCart = new ShoppingCart();
-        final Client clientAdd = clientService.getClient(clientId);
+        final Client clientAdd = clientService.findOne(clientId);
 
         shoppingCart.setNumberCart(getMaxValue());
         shoppingCart.setDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
@@ -55,13 +56,13 @@ public class ShoppingCartService implements IShoppingCartService {
         shoppingCart.setQuantity(0);
         shoppingCart.setStatus(Status.CREATE);
 
-        shoppingCartRepository.save(shoppingCart);
+        save(shoppingCart);
         return shoppingCart;
     }
 
     @Override
-    public List<ShoppingCart> allCart() {
-        return shoppingCartRepository.findAll();
+    public ShoppingCart findCartWithClient(Long id) {
+        return shoppingCartRepository.findShoppingCartWithClient(id);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ShoppingCartService implements IShoppingCartService {
 
         for (Product product: shoppingCart.getProducts()){
 
-            product = productService.getProduct(product.getId());
+            product = productService.findOne(product.getId());
 
             if (quantity>0 && quantity<=product.getQuantity()) {
                 if (!p.contains(product)) {
@@ -85,7 +86,7 @@ public class ShoppingCartService implements IShoppingCartService {
                 entity.setQuantity(entity.getQuantity()+quantity);
 
                 product.setQuantity(product.getQuantity() - quantity);
-                productService.saveProduct(product);
+                productService.save(product);
 
                 productForHistory = product;
 
@@ -98,9 +99,14 @@ public class ShoppingCartService implements IShoppingCartService {
         entity.setProducts(p);
         entity.setStatus(Status.FORMING);
 
-        shoppingCartRepository.save(entity);
+        save(entity);
 
         purchaseHistoryService.createPurchaseHistory(entity,productForHistory,quantity);
+    }
+
+    @Override
+    public synchronized void save(ShoppingCart entity) {
+        shoppingCartRepository.saveAndFlush(entity);
     }
 
     @Override
@@ -110,19 +116,8 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getCartById(Long id) {
-        return shoppingCartRepository.findOne(id);
-    }
-
-    @Override
-    public void changeStatus(Long id) {
-        shoppingCartRepository.findOne(id).setStatus(Status.FORMED);
-    }
-
-    @Override
-    public void editCart(ShoppingCart shoppingCart) {
-
-        ShoppingCart entity = getCartById(shoppingCart.getId());
+    public synchronized void update(ShoppingCart shoppingCart) {
+        ShoppingCart entity = findOne(shoppingCart.getId());
         if (entity!=null){
 
         }
@@ -130,11 +125,26 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public void deleteProductFromCart(Long cartId, Long histId, Long productId) {
+    public List<ShoppingCart> findAll() {
+        return shoppingCartRepository.findAll();
+    }
 
-        ShoppingCart shoppingCart = getCartById(cartId);
-        PurchaseHistory purchaseHistory = purchaseHistoryService.getPurchaseHistory(histId);
-        Product product = productService.getProduct(productId);
+    @Override
+    public ShoppingCart findOne(Long id) {
+        return shoppingCartRepository.findOne(id);
+    }
+
+    @Override
+    public synchronized void changeStatus(Long id) {
+       findOne(id).setStatus(Status.FORMED);
+    }
+
+    @Override
+    public synchronized void deleteProductFromCart(Long cartId, Long histId, Long productId) {
+
+        ShoppingCart shoppingCart = findOne(cartId);
+        PurchaseHistory purchaseHistory = purchaseHistoryService.findOne(histId);
+        Product product = productService.findOne(productId);
 
         List<Product> products = (List<Product>) shoppingCart.getProducts();
         ListIterator<Product> iterator = products.listIterator();
@@ -155,20 +165,36 @@ public class ShoppingCartService implements IShoppingCartService {
         //set quantity for product
         product.setQuantity(product.getQuantity()+purchaseHistory.getQuantity());
         //delete history
-        purchaseHistoryService.deletePurchaseHistory(purchaseHistory.getId());
+        purchaseHistoryService.delete(purchaseHistory.getId());
     }
 
-    //get max value in table "purchase", for find max value == number purchase
+    @Override
+    public Integer findMaxValue() {
+        return shoppingCartRepository.findMaxValue();
+    }
+
+    /**
+     * get max value in table "purchase", for find max value == number purchase
+     *
+     * @return value
+     */
     protected Integer getMaxValue(){
-        if(shoppingCartRepository.findMaxValue()!= null) {
-            Integer i = shoppingCartRepository.findMaxValue();
+        if(findMaxValue()!= null) {
+            Integer i = findMaxValue();
             return ++i;
         }else {
             return START_NUMBER;
         }
     }
 
-    //calculating summary price
+    /**
+     * Calculating summary price with discount
+     *
+     * @param product object product
+     * @param quantity entering quantity products
+     * @param discount Client personal discount
+     * @return summary price
+     */
     private double SummaryPrice(Product product, final double quantity, final double discount){
         double sum = 0;
 
@@ -177,11 +203,17 @@ public class ShoppingCartService implements IShoppingCartService {
         return sum;
     }
 
+
+    /**
+     * Removed all reference on object Cart
+     *
+     * @param id shopping cart id
+     */
     private void emptyCart(final Long id){
 
-        ShoppingCart shoppingCart = shoppingCartRepository.findOne(id);
+        ShoppingCart shoppingCart = findOne(id);
 
-        List<PurchaseHistory> list = purchaseHistoryService.getAllPurchaseHistory();
+        List<PurchaseHistory> list = purchaseHistoryService.findAll();
 
         for (PurchaseHistory purchaseHistory:list){
             if (Objects.equals(purchaseHistory.getShoppingCart().getId(), id)){
@@ -190,7 +222,7 @@ public class ShoppingCartService implements IShoppingCartService {
                     //return quantity to product if status FORMING
                     purchaseHistory.getProduct().setQuantity(purchaseHistory.getQuantity()+purchaseHistory.getProduct().getQuantity());
                 }
-                purchaseHistoryService.deletePurchaseHistory(purchaseHistory.getId());
+                purchaseHistoryService.delete(purchaseHistory.getId());
             }
         }
 

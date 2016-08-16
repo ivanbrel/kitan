@@ -1,8 +1,8 @@
 package by.ibrel.kitan.auth.service;
 
 import by.ibrel.kitan.auth.service.dto.UserDto;
+import by.ibrel.kitan.auth.service.impl.IRoleService;
 import by.ibrel.kitan.auth.service.impl.IUserService;
-import by.ibrel.kitan.auth.dao.repository.RoleRepository;
 import by.ibrel.kitan.auth.dao.repository.UserRepository;
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
@@ -11,13 +11,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
- * Created by ibrel on 08.04.2016.
+ * @author ibrel
+ * @version 1.1 (08.04.2016)
  */
 
 @Service
@@ -28,7 +27,7 @@ public class UserService implements IUserService {
     private UserRepository repository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private IRoleService roleService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -46,19 +45,9 @@ public class UserService implements IUserService {
         user.setLastName(accountDto.getLastName());
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setLogin(accountDto.getLogin());
-        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
-        return repository.save(user);
-        
-    }
-
-    @Override
-    public void saveRegisteredUser(User user) {
-        repository.save(user);
-    }
-
-    @Override
-    public void deleteUser(Long id) {
-        repository.delete(id);
+        user.setRoles(Collections.singletonList(roleService.findByName("ROLE_USER")));
+        save(user);
+        return user;
     }
 
     @Override
@@ -67,14 +56,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return repository.findOne(id);
-    }
-
-    @Override
     public void changeUserPassword(User user, String password) {
         user.setPassword(passwordEncoder.encode(password));
-        repository.save(user);
+        save(user);
     }
 
     @Override
@@ -82,23 +66,44 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
-    @Override
-    public List<User> findAllUsers() {
-        return repository.findAll();
+    /**
+     * Checks exist login
+     *
+     * @param login user login
+     * @return if true, login exist
+     */
+    private boolean loginExist(final String login){
+        final User user = findByLogin(login);
+        return user != null;
     }
 
     @Override
-    public void updateUser(User user) {
-        User entity = repository.findByUser(user.getLogin());
+    public void save(User entity) {
+        repository.saveAndFlush(entity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public void update(User user) {
+        User entity = findByLogin(user.getLogin());
         if(entity!=null){
             entity.setFirstName(user.getFirstName());
             entity.setLastName(user.getLastName());
         }
-        repository.save(entity);
+        save(entity);
     }
 
-    private boolean loginExist(final String login){
-        final User user = repository.findByUser(login);
-        return user != null;
+    @Override
+    public List<User> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public User findOne(Long id) {
+        return repository.findOne(id);
     }
 }

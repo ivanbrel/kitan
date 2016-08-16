@@ -1,11 +1,13 @@
 package by.ibrel.kitan.auth.dao.entity;
 
+import by.ibrel.kitan.web.controllers.UserController;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +19,6 @@ import java.util.UUID;
  *
  */
 
-@ToString
 @Entity
 @Table(name = "privilege")
 public class Privilege implements Serializable {
@@ -71,5 +72,14 @@ public class Privilege implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Privilege{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 
 }

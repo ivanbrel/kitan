@@ -2,11 +2,12 @@ package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.logic.dao.entity.PriceConvert;
 import by.ibrel.kitan.logic.dao.entity.Product;
-import by.ibrel.kitan.logic.exception.ClientExistsException;
+import by.ibrel.kitan.logic.service.ProductService;
 import by.ibrel.kitan.logic.service.impl.IImageService;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
+import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import javax.validation.Valid;
 import java.io.IOException;;
 import java.util.*;
 
+/**
+ * @author ibrel
+ * @version 1.1 (26.06.2016)
+ */
 
 @Controller
 public class ProductController {
@@ -37,7 +43,7 @@ public class ProductController {
 
     @RequestMapping(value = {"/product/list"}, method = RequestMethod.GET)
     public String listProduct(ModelMap model) {
-        List<Product> productList = service.listAllProduct();
+        List<Product> productList = service.findAll();
         model.addAttribute("product", productList);
 
         List<PriceConvert> priceList = priceService.findAll();
@@ -47,7 +53,7 @@ public class ProductController {
 
     //add new product
     @RequestMapping(value = {"/product/add"}, method = RequestMethod.POST)
-    public String addProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload, final ModelMap model) {
+    public String addProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload, final ModelMap model) throws IOException {
         LOGGER.debug("Add new client with name:" + productDto);
 
         createProduct(productDto, fileUpload);
@@ -57,15 +63,23 @@ public class ProductController {
     }
 
     @RequestMapping(value = {"/product/delete/{id}"}, method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable Long id) throws IOException {
-        service.deleteProduct(id);
-        return "redirect:/product/list";
+    public String deleteProduct(@PathVariable Long id, ModelMap model) throws IOException {
+
+        service.delete(id);
+
+        if (service.getEventDelListener()){
+            return "redirect:/product/list";
+        }else {
+            model.addAttribute("fail", true);
+            listProduct(model);
+            return "product.list";
+        }
     }
 
     @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.POST)
     public String updateProduct(@Valid Product product, final BindingResult result, final ModelMap model){
         if (result.hasErrors()){return "product.edit";}
-        service.editProduct(product);
+        service.update(product);
         model.addAttribute("success", "Данные продукта " + product.getId() + " изменены");
         return "redirect:/product/list";
     }
@@ -73,7 +87,7 @@ public class ProductController {
     @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.GET)
     public String editProduct(@PathVariable Long id, ModelMap model) {
 
-        final Product product = service.getProduct(id);
+        final Product product = service.findOne(id);
         model.addAttribute("product", product);
         return "product.edit";
     }
@@ -103,13 +117,13 @@ public class ProductController {
 //        service.saveProduct(product);
 //    }
 
-    private void createProduct(ProductDto productDto, MultipartFile fileUpload) {
+    private void createProduct(ProductDto productDto, MultipartFile fileUpload) throws IOException {
         try{
             Product product = service.addProduct(productDto);
 //            addNewColumn(listAtrr,product.getId());
             imageService.createImage(fileUpload,product.getId());
-        }catch (final ClientExistsException | IOException e){
-            throw new ClientExistsException(e);
+        }catch (final IOException e){
+            throw new IOException(e);
         }
     }
 

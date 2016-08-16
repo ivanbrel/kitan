@@ -45,6 +45,8 @@
 <script src="${ctx}/resources/bootstrap/vendors/jszip/dist/jszip.min.js"></script>
 <script src="${ctx}/resources/bootstrap/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="${ctx}/resources/bootstrap/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="${ctx}/resources/js/tableExport.js"></script>
+<script src="${ctx}/resources/js/jquery.base64.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="${ctx}/resources/bootstrap/js/custom.min.js"></script>

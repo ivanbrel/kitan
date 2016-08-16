@@ -5,6 +5,7 @@ import by.ibrel.kitan.auth.dao.entity.Role;
 import by.ibrel.kitan.auth.exception.RoleExistsException;
 import by.ibrel.kitan.auth.exception.UserAlreadyExistException;
 import by.ibrel.kitan.auth.service.dto.RoleDto;
+import by.ibrel.kitan.auth.service.impl.IPrivilegeService;
 import by.ibrel.kitan.auth.service.impl.IRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Created by ibrel on 05/07/16.
- *
+ * @author ibrel
+ * @version 1.1 (26.06.2016)
  */
+
 @Controller
 @RequestMapping("/")
 public class RoleController {
@@ -33,12 +35,15 @@ public class RoleController {
     @Autowired
     private IRoleService service;
 
+    @Autowired
+    private IPrivilegeService privilegeService;
+
     //list all roles
     @RequestMapping(value = {"/role/list" }, method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String listRoles(final ModelMap model) {
 
-        List<Role> roles = service.findAllRoles();
+        List<Role> roles = service.findAll();
         model.addAttribute("roles", roles);
 
         return "auth.role.list";
@@ -75,7 +80,7 @@ public class RoleController {
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String deleteUser(@PathVariable final Long id) {
         service.emptyRole(id);
-        service.deleteRole(id);
+        service.delete(id);
         return "redirect:/role/list";
     }
 
@@ -84,7 +89,7 @@ public class RoleController {
     public String updateRole(final Role role, final BindingResult result, final ModelMap map){
 
         if (result.hasErrors()){return "users.roles.edit";}
-        service.editRole(role);
+        service.update(role);
         map.addAttribute("success", "Роль " + role.getName() + " изменена");
 
         return "redirect:/role/list";
@@ -98,7 +103,7 @@ public class RoleController {
         map.addAttribute("role", r);
 
 
-        List<Privilege> privileges = service.getAllPrivileges();
+        List<Privilege> privileges = privilegeService.findAll();
         map.addAttribute("privileges", privileges);
 
         return "auth.role.edit";

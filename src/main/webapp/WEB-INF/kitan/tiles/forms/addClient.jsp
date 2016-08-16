@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!-- page content -->
@@ -11,6 +13,16 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
+                        <c:choose>
+                            <c:when test="${fail}">
+                                <div class="alert alert-danger">
+                                    <strong><spring:message code="error"/></strong><spring:message code="error.client.account"/>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+                        </c:choose>
+                        <br>
                         <h2>Зарегистрировать нового клиента </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -95,7 +107,8 @@
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <input type="submit" value="Добавить" class="btn btn-success" />
-                                        <input type="reset" value="Отменить" class="btn btn-default"  />
+                                        <input type="reset" value="Очистить форму" class="btn btn-default"  />
+                                        <input type="button" value="Назад" onclick="history.back()" class="btn btn-danger"/>
                                     </div>
                                 </div>
                             </form>
