@@ -21,10 +21,9 @@ import java.util.UUID;
  */
 
 @EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "product")
-@DynamicUpdate
-@DynamicInsert
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,35 +55,30 @@ public class Product implements Serializable {
     @Getter @Setter
     private String category;
 
-//    @Getter @Setter
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
-//    private Collection<OrderDetails> orderDetailses;
-
-//    //check the status of the product, if true means free
-//    @Getter @Setter
-//    private boolean state;
-//
-//    //check the status of the product, if true means product sales
-//    @Getter @Setter
-//    private boolean sales;
-
     @Getter @Setter
     private Integer quantity;
 
-//    @Getter @Setter
-//    @ElementCollection
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @JoinTable(name = "product_newcolumn")
-//    private List<String> newColumn;
-
     @Getter @Setter
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "IMAGE_ID")
     private Image image;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                '}';
+    public Product() {
+    }
+
+    public Product(String nameProduct, String model, String color, String countryProduct, Double price, String barcode, String category, Integer quantity, Image image){
+        this.nameProduct = nameProduct;
+        this.model = model;
+        this.color = color;
+        this.countryProduct = countryProduct;
+        this.price = price;
+        this.barcode = barcode;
+        this.category = category;
+        this.quantity = quantity;
+        this.image = image;
+    }
+
+    public Double sumPrice(Integer quantity){
+        return getPrice() * quantity;
     }
 }

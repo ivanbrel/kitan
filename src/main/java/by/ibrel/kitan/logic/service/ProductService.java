@@ -7,19 +7,18 @@ import by.ibrel.kitan.logic.service.dto.ProductDto;
 import by.ibrel.kitan.logic.service.impl.IImageService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import javax.servlet.ServletContext;
 import java.util.Collection;
 import java.util.List;
 
 import static by.ibrel.kitan.logic.Const.ROOT;
+
+//TODO избавиться от контескта
 
 /**
  * @author ibrel
@@ -30,8 +29,6 @@ import static by.ibrel.kitan.logic.Const.ROOT;
 @Transactional
 public class ProductService implements IProductService {
 
-    private boolean flag;
-
     @Autowired
     private ProductRepository productRepository;
 
@@ -41,25 +38,17 @@ public class ProductService implements IProductService {
     @Autowired
     private IImageService iImageService;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private ServletContext servletContext;
 
     //API
 
     @Override
-    public synchronized Product addProduct(final ProductDto productDto){
+    public synchronized Product addProduct(final ProductDto productDto, final Long idImage){
 
-        Product product = new Product();
-
-        product.setNameProduct(productDto.getNameProduct());
-        product.setModel(productDto.getModel());
-        product.setColor(productDto.getColor());
-        product.setCountryProduct(productDto.getCountryProduct());
-        product.setBarcode(productDto.getBarcode());
-        product.setCategory(productDto.getCategory());
-        product.setPrice(Double.parseDouble(productDto.getPrice()));
-
-        //TODO check entering data !!!!
-        product.setQuantity(Integer.parseInt(productDto.getQuantity()));
+        Product product = new Product(productDto.getNameProduct(),productDto.getModel(),productDto.getColor(),
+                productDto.getCountryProduct(),productDto.priceConvert(productDto.getPrice()),productDto.getBarcode(),
+                productDto.getCategory(),productDto.quantityConvert(productDto.getQuantity()), iImageService.findOne(idImage));
 
         save(product);
         return product;
@@ -71,40 +60,32 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public synchronized void delete(Long id) {
+    public synchronized void delete(Long id){
 
         Collection<ShoppingCart> shoppingCarts = cartService.findAll();
 
-        if (shoppingCarts.size()==0){
-            deleteProductAndImage(id);
-        }else {
-            for (ShoppingCart shoppingCart:shoppingCarts){
-                Collection<Product> products = shoppingCart.getProducts();
+        if (shoppingCarts.size()!=0) {
 
-                if (products.size() == 0) {
-                    deleteProductAndImage(id);
-                } else {
-                    for (Product product:products) {
+            for (ShoppingCart shoppingCart : shoppingCarts) {
+                Collection<Product> products = shoppingCart.getProducts();
+                if (products.size()!=0) {
+                    for (Product product : products) {
                         if (product.getId().equals(findOne(id))) {
-                            deleteProductAndImage(id);
+                            product.getImage().deleteFile(servletContext.getRealPath(ROOT), product.getImage().getFileName());
+                            productRepository.delete(id);
                         } else {
-                            setEventDelListener(false);
+                            return;
                         }
                     }
+                }else {
+                    findOne(id).getImage().deleteFile(servletContext.getRealPath(ROOT),findOne(id).getImage().getFileName());
+                    productRepository.delete(id);
                 }
-
             }
+        }else {
+            findOne(id).getImage().deleteFile(servletContext.getRealPath(ROOT),findOne(id).getImage().getFileName());
+            productRepository.delete(id);
         }
-
-    }
-
-    private void setEventDelListener(boolean flag) {
-        this.flag=flag;
-    }
-
-    @Override
-    public boolean getEventDelListener() {
-        return flag;
     }
 
     @Override
@@ -124,8 +105,6 @@ public class ProductService implements IProductService {
         }
 
         save(entity);
-
-        LOGGER.debug("Product " +product.getId() +" is update");
     }
 
     @Override
@@ -138,9 +117,4 @@ public class ProductService implements IProductService {
         return productRepository.findOne(id);
     }
 
-    private synchronized void deleteProductAndImage(Long id){
-        iImageService.delete(id);
-        productRepository.delete(id);
-        setEventDelListener(true);
-    }
 }

@@ -3,6 +3,8 @@ package by.ibrel.kitan.logic.service;
 import by.ibrel.kitan.logic.beans.Status;
 import by.ibrel.kitan.logic.dao.entity.*;
 import by.ibrel.kitan.logic.dao.repository.ShoppingCartRepository;
+import by.ibrel.kitan.logic.exception.ProductCanNotBeDeleted;
+import by.ibrel.kitan.logic.exception.PurchaseQuantityLimitException;
 import by.ibrel.kitan.logic.service.impl.IClientService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.impl.IPurchaseHistoryService;
@@ -10,6 +12,7 @@ import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +23,12 @@ import static by.ibrel.kitan.logic.Const.START_NUMBER;
 
 /**
  * @author ibrel
- * @version 1.2 (28.07.2016)
+ * @version 1.3 (28.07.2016)
  */
 
 @Service
 @Transactional
 public class ShoppingCartService implements IShoppingCartService {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
@@ -46,16 +47,8 @@ public class ShoppingCartService implements IShoppingCartService {
     @Override
     public ShoppingCart createCart(final Long clientId) {
 
-        ShoppingCart shoppingCart = new ShoppingCart();
-        final Client clientAdd = clientService.findOne(clientId);
-
-        shoppingCart.setNumberCart(getMaxValue());
-        shoppingCart.setDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-        shoppingCart.setClient(clientAdd);
-        shoppingCart.setPriceSummary(0.0);
-        shoppingCart.setQuantity(0);
-        shoppingCart.setStatus(Status.CREATE);
-
+        final Client client = clientService.findOne(clientId);
+        ShoppingCart shoppingCart = new ShoppingCart(findMaxValue(),client);
         save(shoppingCart);
         return shoppingCart;
     }
@@ -66,23 +59,21 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public synchronized void sellProduct(final ShoppingCart shoppingCart, final Integer quantity) throws Exception {
+    public synchronized void sellProduct(final ShoppingCart shoppingCart, final Integer quantity) throws PurchaseQuantityLimitException {
 
         ShoppingCart entity = shoppingCartRepository.findOne(shoppingCart.getId());
 
-        Collection<Product> p = entity.getProducts();
-
-        Product productForHistory = null;
+        Product productForHistory = new Product();
 
         for (Product product: shoppingCart.getProducts()){
 
             product = productService.findOne(product.getId());
 
             if (quantity>0 && quantity<=product.getQuantity()) {
-                if (!p.contains(product)) {
-                    p.add(product);
+                if (!entity.getProducts().contains(product)) {
+                    entity.addToProducts(product);
                 }
-                entity.setPriceSummary(entity.getPriceSummary()+SummaryPrice(product,quantity, entity.getClient().getDiscountPrice()));
+                entity.setPriceSummary(entity.getPriceSummary()+shoppingCart.summaryPrice(product,quantity, entity.getClient().getDiscountPrice()));
                 entity.setQuantity(entity.getQuantity()+quantity);
 
                 product.setQuantity(product.getQuantity() - quantity);
@@ -91,13 +82,12 @@ public class ShoppingCartService implements IShoppingCartService {
                 productForHistory = product;
 
             }else {
-                System.err.println("Purchase quantity > product quantity and > 0");
-                //TODO info client that quantity <0
+                throw new PurchaseQuantityLimitException();
             }
         }
 
-        entity.setProducts(p);
-        entity.setStatus(Status.FORMING);
+        entity.addToProducts(productForHistory);
+        entity.changeStatusForming(entity);
 
         save(entity);
 
@@ -119,7 +109,7 @@ public class ShoppingCartService implements IShoppingCartService {
     public synchronized void update(ShoppingCart shoppingCart) {
         ShoppingCart entity = findOne(shoppingCart.getId());
         if (entity!=null){
-
+            //TODO дописать
         }
         shoppingCartRepository.saveAndFlush(entity);
     }
@@ -132,11 +122,6 @@ public class ShoppingCartService implements IShoppingCartService {
     @Override
     public ShoppingCart findOne(Long id) {
         return shoppingCartRepository.findOne(id);
-    }
-
-    @Override
-    public synchronized void changeStatus(Long id) {
-       findOne(id).setStatus(Status.FORMED);
     }
 
     @Override
@@ -174,37 +159,6 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     /**
-     * get max value in table "purchase", for find max value == number purchase
-     *
-     * @return value
-     */
-    protected Integer getMaxValue(){
-        if(findMaxValue()!= null) {
-            Integer i = findMaxValue();
-            return ++i;
-        }else {
-            return START_NUMBER;
-        }
-    }
-
-    /**
-     * Calculating summary price with discount
-     *
-     * @param product object product
-     * @param quantity entering quantity products
-     * @param discount Client personal discount
-     * @return summary price
-     */
-    private double SummaryPrice(Product product, final double quantity, final double discount){
-        double sum = 0;
-
-        //discount
-        sum += ((product.getPrice())-(product.getPrice()*discount/100))*quantity;
-        return sum;
-    }
-
-
-    /**
      * Removed all reference on object Cart
      *
      * @param id shopping cart id
@@ -213,9 +167,7 @@ public class ShoppingCartService implements IShoppingCartService {
 
         ShoppingCart shoppingCart = findOne(id);
 
-        List<PurchaseHistory> list = purchaseHistoryService.findAll();
-
-        for (PurchaseHistory purchaseHistory:list){
+        for (PurchaseHistory purchaseHistory : purchaseHistoryService.findAll()){
             if (Objects.equals(purchaseHistory.getShoppingCart().getId(), id)){
                 if(shoppingCart.getStatus()==Status.FORMING){
 

@@ -1,33 +1,32 @@
 package by.ibrel.kitan.logic.dao.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;;
 
+
 /**
- * Created by ibrel on 12/07/16.
  *
+ *
+ * @author ibrel
+ * @version 1.3 (12.07.2016)
  */
 
 @Entity
 @Table(name = "image")
-@DynamicUpdate
-@DynamicInsert
 public class Image extends AbstractFile implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Getter @Setter
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
+    public Image(){
+    }
 
-    public Image() {
-        super();
+    public Image(String imageName){
+        super(imageName);
+    }
+
+    public Image(String path, MultipartFile fileUpload){
+        super(path,fileUpload);
     }
 }

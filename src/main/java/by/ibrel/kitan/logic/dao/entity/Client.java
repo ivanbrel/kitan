@@ -43,4 +43,16 @@ public class Client implements Serializable {
     @Getter @Setter
     private Double discountPrice;
 
+    public Client() {
+    }
+
+    public Client(String firstName, String lastName, String email, String phone, String account, Double discountPrice) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.account = account;
+        this.discountPrice = discountPrice;
+    }
+
 }

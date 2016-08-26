@@ -3,21 +3,16 @@ package by.ibrel.kitan.logic.service;
 import by.ibrel.kitan.logic.dao.entity.Image;
 import by.ibrel.kitan.logic.dao.repository.ImageRepository;
 import by.ibrel.kitan.logic.service.impl.IImageService;
-import by.ibrel.kitan.logic.service.impl.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
-import static by.ibrel.kitan.logic.Const.ROOT;
+
 
 /**
  * @author ibrel
@@ -29,46 +24,24 @@ import static by.ibrel.kitan.logic.Const.ROOT;
 public class ImageService implements IImageService {
 
     @Autowired
-    private ServletContext servletContext;
-
-    @Autowired
     private ImageRepository repository;
-
-    @Autowired
-    private IProductService productService;
 
     //API
 
     @Override
-    public void createImage(MultipartFile fileUpload, Long id) throws IOException {
+    public Long createImage(MultipartFile fileUpload, String path) throws IOException {
 
         if (!Objects.equals(fileUpload.getOriginalFilename(), "") && fileUpload != null) {
-
-            // Creating the directory to store file
-            String rootPath = servletContext.getRealPath(ROOT);
-            File dir = new File(rootPath + File.separator);
-            if (!dir.exists())
-                dir.mkdir();
-
-            Image image = new Image();
-            image.setFileName(id+"_"+fileUpload.getOriginalFilename());
-            image.setProduct(productService.findOne(id));
-            Files.copy(fileUpload.getInputStream(), Paths.get(dir.getPath(), id+"_"+fileUpload.getOriginalFilename()));
+            Image image = new Image(path,fileUpload);
             save(image);
+            return image.getId();
         }
+        return null;
     }
 
     @Override
     public void delete(Long id) {
-        if (productService.findOne(id).getImage() != null) {
-            try {
-                Files.delete(Paths.get(servletContext.getRealPath(ROOT), productService.findOne(id).getImage().getFileName()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            productService.findOne(id).getImage().setProduct(null);
-        }
-
+        repository.delete(id);
     }
 
     @Override
@@ -78,7 +51,7 @@ public class ImageService implements IImageService {
 
     @Override
     public void update(Image entity) {
-        //TODO
+        //TODO create update image
     }
 
     @Override

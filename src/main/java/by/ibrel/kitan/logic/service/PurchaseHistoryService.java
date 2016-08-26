@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,9 +30,9 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
 
     @Override
     public List<PurchaseHistory> listHistory(Long cartId) {
-        List<PurchaseHistory> list = findAll();
+
         List<PurchaseHistory> returnList = new ArrayList<>();
-        for (PurchaseHistory purchaseHistory:list){
+        for (PurchaseHistory purchaseHistory:findAll()){
             if (Objects.equals(purchaseHistory.getShoppingCart().getId(), cartId)){
                 returnList.add(purchaseHistory);
             }
@@ -42,18 +41,10 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
     }
 
     @Override
-    public void createPurchaseHistory(ShoppingCart shoppingCart, Product product, Integer count) {
+    public void createPurchaseHistory(ShoppingCart shoppingCart, Product product, Integer quantity) {
         if (product!=null) {
-
-            PurchaseHistory purchaseHistory = new PurchaseHistory();
-            purchaseHistory.setDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-            purchaseHistory.setProduct(product);
-            purchaseHistory.setQuantity(count);
-            purchaseHistory.setPrice(product.getPrice()*count);
-            purchaseHistory.setShoppingCart(shoppingCart);
-            purchaseHistory.setClient(shoppingCart.getClient());
-
-            save(purchaseHistory);
+            save(new PurchaseHistory(shoppingCart.getClient(),shoppingCart,product,
+                    quantity,product.sumPrice(quantity)));
         }
     }
 
@@ -69,7 +60,7 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
 
     @Override
     public void update(PurchaseHistory entity) {
-
+        //TODO
     }
 
     @Override

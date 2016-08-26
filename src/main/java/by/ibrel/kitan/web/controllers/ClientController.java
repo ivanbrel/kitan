@@ -2,6 +2,7 @@ package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.exception.ClientExistsException;
+import by.ibrel.kitan.logic.exception.ProductCanNotBeDeleted;
 import by.ibrel.kitan.logic.service.dto.ClientDto;
 import by.ibrel.kitan.logic.service.impl.IClientService;
 import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
@@ -70,12 +71,13 @@ public class ClientController {
 
     @RequestMapping(value = {"/client/delete/{id}"}, method = RequestMethod.GET)
     public String deleteClient(@PathVariable Long id,  final ModelMap model) {
-        if (cartService.findCartWithClient(id)==null){
+        try{
             service.delete(id);
             return "redirect:/client/list";
-        }else{
+        }catch (Exception e){
             model.addAttribute("fail", true);
             listClients(model);
+            LOGGER.debug(e.getMessage());
             return "client.list";
         }
     }

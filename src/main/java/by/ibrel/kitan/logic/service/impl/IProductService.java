@@ -10,13 +10,6 @@ import by.ibrel.kitan.logic.service.dto.ProductDto;
  */
 public interface IProductService extends ICommonService<Product>{
 
-    Product addProduct(ProductDto productDto);
-
-    /**
-     * Set flag true when product deleted
-     *
-     * @return flag == true
-     */
-    boolean getEventDelListener();
+    Product addProduct(ProductDto productDto, Long idImage);
 
 }

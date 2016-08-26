@@ -12,6 +12,6 @@ import java.io.IOException;
  */
 public interface IImageService extends ICommonService<Image>{
 
-    void createImage(MultipartFile fileUpload, Long id) throws IOException;
+    Long createImage(MultipartFile fileUpload, String path) throws IOException;
 
 }

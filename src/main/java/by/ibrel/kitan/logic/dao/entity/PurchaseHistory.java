@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ import java.util.UUID;
  *
  */
 @EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "purchase_history")
 public class PurchaseHistory implements Serializable{
@@ -54,12 +57,22 @@ public class PurchaseHistory implements Serializable{
     private Double price;
 
     @Getter @Setter
-    private String date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
-    @Override
-    public String toString() {
-        return "PurchaseHistory{" +
-                "id=" + id +
-                '}';
+
+    public PurchaseHistory() {
     }
+
+    public PurchaseHistory(Client client, ShoppingCart shoppingCart, Product product, Integer quantity, Double price) {
+        this.client = client;
+        this.shoppingCart = shoppingCart;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        orderDetails = orderDetails;
+        date = new Date();
+    }
+
+
 }

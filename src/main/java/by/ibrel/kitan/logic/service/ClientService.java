@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @author ibrel
- * @version 1.1 (13.05.2016)
+ * @version 1.2 (13.05.2016)
  */
 
 
@@ -26,9 +26,6 @@ public class ClientService implements IClientService{
     @Autowired
     private ClientRepository repository;
 
-    @Autowired
-    private IShoppingCartService cartService;
-
     //API
 
     @Override
@@ -38,17 +35,8 @@ public class ClientService implements IClientService{
             + clientDto.getAccount() + " already exists");
         }
 
-        final Client client = new Client();
-
-        client.setFirstName(clientDto.getFirstName());
-        client.setLastName(clientDto.getLastName());
-        client.setEmail(clientDto.getEmail());
-        client.setPhone(clientDto.getPhone());
-        client.setAccount(clientDto.getAccount());
-
-        //TODO check value
-        client.setDiscountPrice(Double.parseDouble(clientDto.getDiscount()));
-
+        final Client client = new Client(clientDto.getFirstName(),clientDto.getLastName(),clientDto.getEmail(),clientDto.getPhone(),
+                clientDto.getAccount(),(clientDto.discountPriceConvert(clientDto.getDiscount())));
         save(client);
         return client;
     }
@@ -60,10 +48,8 @@ public class ClientService implements IClientService{
      * @return true if account exists
      */
     private boolean clientExists(final String account) {
-        final Client client = findByAccountClient(account);
-        return client != null;
+        return findByAccountClient(account) != null;
     }
-
 
     @Override
     public Client findByNameClient(String nameClient) {
@@ -82,9 +68,7 @@ public class ClientService implements IClientService{
 
     @Override
     public void delete(Long id) {
-        if (cartService.findCartWithClient(id)==null){
-            repository.delete(id);
-        }
+        repository.delete(id);
     }
 
     @Override

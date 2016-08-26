@@ -9,12 +9,16 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by ibrel on 07.04.2016.
  *
+ *
+ * @author ibrel
+ * @version 1.3 (07.04.2016)
  */
 
 @Entity
@@ -46,6 +50,18 @@ public class User implements Serializable {
     private Collection<Role> roles;
 
     public User() {
+    }
+
+    public User(String firstName, String lastName, String login, String password){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+        this.roles = new ArrayList<>();
+    }
+
+    public void addRole(Role role){
+        roles.add(role);
     }
 
     @Override

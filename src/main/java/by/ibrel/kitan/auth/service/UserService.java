@@ -6,6 +6,7 @@ import by.ibrel.kitan.auth.service.impl.IUserService;
 import by.ibrel.kitan.auth.dao.repository.UserRepository;
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
+import by.ibrel.kitan.logic.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,13 +40,8 @@ public class UserService implements IUserService {
         if (loginExist(accountDto.getLogin())){
             throw new LoginExistsException("There is an account with that login: " + accountDto.getLogin());
         }
-        final User user = new User();
-
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-        user.setLogin(accountDto.getLogin());
-        user.setRoles(Collections.singletonList(roleService.findByName("ROLE_USER")));
+        User user = new User(accountDto.getFirstName(),accountDto.getLastName(),accountDto.getLogin(),passwordEncoder.encode(accountDto.getPassword()));
+        user.addRole(roleService.findByName(Const.DEFAULT_ROLE));
         save(user);
         return user;
     }
@@ -73,8 +69,7 @@ public class UserService implements IUserService {
      * @return if true, login exist
      */
     private boolean loginExist(final String login){
-        final User user = findByLogin(login);
-        return user != null;
+        return findByLogin(login) != null;
     }
 
     @Override

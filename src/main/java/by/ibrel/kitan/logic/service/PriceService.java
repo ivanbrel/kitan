@@ -1,6 +1,6 @@
 package by.ibrel.kitan.logic.service;
 
-import by.ibrel.kitan.logic.dao.entity.PriceConvert;
+import by.ibrel.kitan.logic.dao.entity.Price;
 import by.ibrel.kitan.logic.dao.repository.PriceRepository;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class PriceService implements IPriceService {
 //    API
 
     @Override
-    public void save(PriceConvert entity) {
+    public void save(Price entity) {
         repository.saveAndFlush(entity);
     }
 
@@ -34,9 +34,9 @@ public class PriceService implements IPriceService {
     }
 
     @Override
-    public void update(PriceConvert price) {
+    public void update(Price price) {
 
-        PriceConvert entity = repository.findOne(price.getId());
+        Price entity = repository.findOne(price.getId());
 
         if (entity!=null) {
             entity.setRubleBY(price.getRubleBY());
@@ -50,12 +50,12 @@ public class PriceService implements IPriceService {
     }
 
     @Override
-    public List<PriceConvert> findAll() {
+    public List<Price> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public PriceConvert findOne(Long id) {
+    public Price findOne(Long id) {
         return repository.findOne(id);
     }
 

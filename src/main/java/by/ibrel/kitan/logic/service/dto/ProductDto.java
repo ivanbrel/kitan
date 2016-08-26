@@ -1,19 +1,18 @@
 package by.ibrel.kitan.logic.service.dto;
 
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 /**
  * Created by ibrel on 13/05/16.
  *
  */
-@EqualsAndHashCode
+@ToString
 public class ProductDto {
 
     @NotNull
@@ -55,4 +54,11 @@ public class ProductDto {
     @Getter @Setter
     private String quantity;
 
+    public Double priceConvert(String value){
+        return Double.parseDouble(value);
+    }
+
+    public Integer quantityConvert(String value){
+        return Integer.parseInt(value);
+    }
 }
