@@ -5,6 +5,7 @@ import by.ibrel.kitan.auth.dao.repository.UserRepository;
 import by.ibrel.kitan.auth.dao.entity.Privilege;
 import by.ibrel.kitan.auth.dao.entity.Role;
 import by.ibrel.kitan.auth.dao.entity.User;
+import by.ibrel.kitan.auth.service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserService userService;
 
     @Autowired
     private LoginAttemptService loginAttemptService;
@@ -39,20 +40,20 @@ public class MyUserDetailsService implements UserDetailsService {
     // API
 
     @Override
-    public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         final String ip = getClientIP();
-        if (loginAttemptService.isBlocked(ip)) {
+        if (loginAttemptService.isBlocked(ip)){
             throw new RuntimeException("blocked");
         }
-
         try {
-            final User user = userRepository.findByUser(login);
-            if (user == null) {
-                throw new UsernameNotFoundException("No user found with username: " + login);
+            final User user = userService.findByLogin(username);
+            if (username == null) {
+                throw new UsernameNotFoundException("No user found with username: " + username);
             }
 
-            return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), true, true, true, true, getAuthorities(user.getRoles()));
-        } catch (final Exception e) {
+            return new UserWeb(user.getLogin(), user.getPassword(),true,true,true,true,getAuthorities(user.getRoles()), user);
+        }catch (final Exception e){
             throw new RuntimeException(e);
         }
     }

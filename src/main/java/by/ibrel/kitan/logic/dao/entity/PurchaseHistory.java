@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -45,32 +46,40 @@ public class PurchaseHistory implements Serializable{
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-    @Getter @Setter
-    @ManyToOne
-    @JoinColumn(name = "ORDERDETAILS_ID")
-    private OrderDetails orderDetails;
+//    @Getter @Setter
+//    @ManyToOne
+//    @JoinColumn(name = "ORDERDETAILS_ID")
+//    private OrderDetails orderDetails;
 
     @Getter @Setter
     private Integer quantity;
 
     @Getter @Setter
-    private Double price;
+    private BigDecimal price;
 
     @Getter @Setter
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Getter @Setter
+    private BigDecimal priceWithDiscount;
+
+    @Getter @Setter
+    private String seller;
+
 
     public PurchaseHistory() {
     }
 
-    public PurchaseHistory(Client client, ShoppingCart shoppingCart, Product product, Integer quantity, Double price) {
+    public PurchaseHistory(Client client, ShoppingCart shoppingCart, Product product, Integer quantity, BigDecimal price, BigDecimal priceWithDiscount, String seller) {
         this.client = client;
         this.shoppingCart = shoppingCart;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
-        orderDetails = orderDetails;
+        this.priceWithDiscount = priceWithDiscount;
+        this.seller = seller;
+        //orderDetails = orderDetails;
         date = new Date();
     }
 

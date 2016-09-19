@@ -3,6 +3,7 @@ package by.ibrel.kitan.auth.service.impl;
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
 import by.ibrel.kitan.auth.service.dto.UserDto;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author ibrel
@@ -30,5 +31,7 @@ public interface IUserService extends ICommonService<User>  {
      * @return true if passwords match
      */
     boolean checkIfValidOldPassword(User user, String password);
+
+    void update(User user,  MultipartFile fileUpload);
 
 }

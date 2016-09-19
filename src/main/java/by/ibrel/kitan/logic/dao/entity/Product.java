@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +48,7 @@ public class Product implements Serializable {
     private String countryProduct;
 
     @Getter @Setter
-    private Double price;
+    private BigDecimal price;
 
     @Getter @Setter
     private String barcode;
@@ -66,7 +67,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String nameProduct, String model, String color, String countryProduct, Double price, String barcode, String category, Integer quantity, Image image){
+    public Product(String nameProduct, String model, String color, String countryProduct, BigDecimal price, String barcode, String category, Integer quantity, Image image){
         this.nameProduct = nameProduct;
         this.model = model;
         this.color = color;
@@ -78,7 +79,12 @@ public class Product implements Serializable {
         this.image = image;
     }
 
-    public Double sumPrice(Integer quantity){
-        return getPrice() * quantity;
+    public void incQuantity(Integer incQuantity){
+        this.quantity = getQuantity()+incQuantity;
+    }
+
+    public void decQuantity(Integer decQuantity){
+        if (getQuantity()>=decQuantity)
+            this.quantity = getQuantity() - decQuantity;
     }
 }

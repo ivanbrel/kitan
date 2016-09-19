@@ -52,8 +52,8 @@
                                 <c:forEach items="${product}" var="product">
                                     <tr>
                                         <td>
-                                            <a href="<c:url value="/resources/img/upload/${product.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
-                                                <img src="<c:url value="/resources/img/upload/${product.image.fileName}"/>" class="avatar">
+                                            <a href="<c:url value="/resources/img/upload/product/${product.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
+                                                <img src="<c:url value="/resources/img/upload/product/${product.image.fileName}"/>" class="avatar">
                                             </a>
                                         </td>
                                         <td>${product.nameProduct}</td>

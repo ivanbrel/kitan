@@ -5,6 +5,7 @@ import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.dao.entity.PurchaseHistory;
 import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,5 +20,5 @@ public interface IPurchaseHistoryService extends ICommonService<PurchaseHistory>
      */
     List<PurchaseHistory> listHistory(Long cartId);
 
-    void createPurchaseHistory(ShoppingCart shoppingCart, final Product product, final Integer count);
+    void createPurchaseHistory(ShoppingCart shoppingCart, final Product product, final Integer count, BigDecimal priceWithDiscount, String seller);
 }

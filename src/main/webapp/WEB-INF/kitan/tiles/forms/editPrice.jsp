@@ -39,44 +39,44 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="dollarUSA">Доллар США </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="dollarUSA" type="text" id="dollarUSA" name="dollarUSA" class="form-control col-md-7 col-xs-12"/>
+                                    <form:input path="dollarUSA" type="number" id="dollarUSA" name="dollarUSA" class="form-control col-md-7 col-xs-12" step="any"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rubleBY">BY рубли </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="rubleBY" type="text" id="rubleBY" name="rubleBY" class="form-control col-md-7 col-xs-12"/>
+                                    <form:input path="rubleBY" type="number" id="rubleBY" name="rubleBY" class="form-control col-md-7 col-xs-12" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rubleRUS">RUS рубли </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="rubleRUS" id="rubleRUS" class="form-control col-md-7 col-xs-12" type="text" name="rubleRUS"/>
+                                    <form:input path="rubleRUS" id="rubleRUS" class="form-control col-md-7 col-xs-12" type="number" name="rubleRUS" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="euro" class="control-label col-md-3 col-sm-3 col-xs-12">EURO </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="euro" id="euro" name="euro" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="euro" id="euro" name="euro" class="date-picker form-control col-md-7 col-xs-12" type="number" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="grivUA" class="control-label col-md-3 col-sm-3 col-xs-12">Гривня </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="grivUA" id="grivUA" name="grivUA" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="grivUA" id="grivUA" name="grivUA" class="date-picker form-control col-md-7 col-xs-12" type="number" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="chinaUAN" class="control-label col-md-3 col-sm-3 col-xs-12">CHINA </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="chinaUAN" id="chinaUAN" name="chinaUAN" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="chinaUAN" id="chinaUAN" name="chinaUAN" class="date-picker form-control col-md-7 col-xs-12" type="number" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="polandZLOT" class="control-label col-md-3 col-sm-3 col-xs-12">Poland </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="polandZLOT" id="polandZLOT" name="polandZLOT" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="polandZLOT" id="polandZLOT" name="polandZLOT" class="date-picker form-control col-md-7 col-xs-12" type="number" step="any"/>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>

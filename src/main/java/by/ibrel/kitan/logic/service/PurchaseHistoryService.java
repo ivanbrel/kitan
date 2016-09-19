@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,10 +42,10 @@ public class PurchaseHistoryService implements IPurchaseHistoryService {
     }
 
     @Override
-    public void createPurchaseHistory(ShoppingCart shoppingCart, Product product, Integer quantity) {
+    public void createPurchaseHistory(ShoppingCart shoppingCart, Product product, Integer quantity, BigDecimal priceWithDiscount, String seller) {
         if (product!=null) {
             save(new PurchaseHistory(shoppingCart.getClient(),shoppingCart,product,
-                    quantity,product.sumPrice(quantity)));
+                    quantity,product.getPrice().multiply(BigDecimal.valueOf(quantity)), priceWithDiscount,seller));
         }
     }
 

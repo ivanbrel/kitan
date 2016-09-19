@@ -1,11 +1,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<sec:authentication var="avatar" property="principal.user.image.fileName"/>
 
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="${ctx}/index.jsp" class="site_title"><span>KITAN project</span></a>
+            <a href="${ctx}/index.jsp" class="site_title">
+                <span>KITAN project</span>
+            </a>
         </div>
 
         <div class="clearfix"></div>
@@ -17,7 +20,7 @@
             </div>
             <div class="profile_info">
                 <span>Добро пожаловать,</span>
-                <h2><sec:authentication property="principal.username"/></h2>
+                <h2><sec:authentication property="principal.user.firstName"/></h2>
                 <br/><br/>
             </div>
         </div>
@@ -105,7 +108,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="${ctx}/resources/img/logo.png" alt=""><sec:authentication property="principal.username"/>
+                        <img src="${ctx}/resources/img/upload/avatar/${avatar}" alt=""><sec:authentication property="principal.user.firstName"/>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

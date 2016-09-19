@@ -14,4 +14,6 @@ public interface IImageService extends ICommonService<Image>{
 
     Long createImage(MultipartFile fileUpload, String path) throws IOException;
 
+    void updateImage(Image image, MultipartFile fileUpload, String path);
+
 }

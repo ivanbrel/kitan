@@ -44,7 +44,23 @@ public class ClientDto {
     @Getter@Setter
     private String discount;
 
-    public Double discountPriceConvert(String value){
-        return Double.parseDouble(value);
-    }
+    @NotNull
+    @Size(min = 1)
+    @Getter@Setter
+    private String country;
+
+    @NotNull
+    @Size(min = 1)
+    @Getter@Setter
+    private String town;
+
+    @NotNull
+    @Size(min = 1)
+    @Getter@Setter
+    private String street;
+
+    @NotNull
+    @Size(min = 1)
+    @Getter@Setter
+    private Integer postCode;
 }

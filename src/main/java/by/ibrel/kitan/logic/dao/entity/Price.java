@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -26,25 +27,39 @@ public class Price implements Serializable{
     private Long id;
 
     @Getter @Setter
-    private Double rubleBY;
+    private BigDecimal rubleBY;
 
     @Getter @Setter
-    private Double rubleRUS;
+    private BigDecimal  rubleRUS;
 
     @Getter @Setter
-    private Double euro;
+    private BigDecimal  euro;
 
     @Getter @Setter
-    private Double grivUA;
+    private BigDecimal  grivUA;
 
     @Getter @Setter
-    private Double chinaUAN;
+    private BigDecimal  chinaUAN;
 
     @Getter @Setter
-    private Double polandZLOT;
+    private BigDecimal  polandZLOT;
 
     @Getter @Setter
-    private Double dollarUSA;
+    private BigDecimal  dollarUSA;
+
+    public Price() {
+    }
+
+    public Price(BigDecimal rubleBy, BigDecimal rubleRus, BigDecimal euro, BigDecimal grivUa, BigDecimal chinaUan, BigDecimal polandZlot, BigDecimal dollarUsa){
+        this.rubleBY = rubleBy;
+        this.rubleRUS = rubleRus;
+        this.euro = euro;
+        this.grivUA = grivUa;
+        this.chinaUAN = chinaUan;
+        this.polandZLOT = polandZlot;
+        this.dollarUSA = dollarUsa;
+
+    }
 
     @Override
     public String toString() {

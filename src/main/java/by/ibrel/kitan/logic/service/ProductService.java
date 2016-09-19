@@ -1,5 +1,6 @@
 package by.ibrel.kitan.logic.service;
 
+import by.ibrel.kitan.logic.dao.entity.Image;
 import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.dao.entity.Product;
@@ -11,18 +12,22 @@ import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
-import static by.ibrel.kitan.logic.Const.ROOT;
+import static by.ibrel.kitan.logic.Const.PRODUCT_PATH;
+import static by.ibrel.kitan.logic.Const.USER_PATH;
 
 //TODO избавиться от контескта
 
 /**
  * @author ibrel
  * @version 1.2 (12.07.2016)
+ *
  */
 
 @Service
@@ -46,9 +51,18 @@ public class ProductService implements IProductService {
     @Override
     public synchronized Product addProduct(final ProductDto productDto, final Long idImage){
 
-        Product product = new Product(productDto.getNameProduct(),productDto.getModel(),productDto.getColor(),
-                productDto.getCountryProduct(),productDto.priceConvert(productDto.getPrice()),productDto.getBarcode(),
-                productDto.getCategory(),productDto.quantityConvert(productDto.getQuantity()), iImageService.findOne(idImage));
+        Image image;
+
+        if (idImage==null){
+            image = new Image();
+            iImageService.save(image);
+        }else {
+            image = iImageService.findOne(idImage);
+        }
+
+        Product product = new Product(productDto.getNameProduct(), productDto.getModel(), productDto.getColor(),
+                productDto.getCountryProduct(), new BigDecimal(productDto.getPrice()), productDto.getBarcode(),
+                productDto.getCategory(), productDto.quantityConvert(productDto.getQuantity()), image);
 
         save(product);
         return product;
@@ -70,21 +84,18 @@ public class ProductService implements IProductService {
                 Collection<Product> products = shoppingCart.getProducts();
                 if (products.size()!=0) {
                     for (Product product : products) {
-                        if (product.getId().equals(findOne(id))) {
-                            product.getImage().deleteFile(servletContext.getRealPath(ROOT), product.getImage().getFileName());
-                            productRepository.delete(id);
+                        if (product.getId().equals(findOne(id).getId())) {
+                            deleteProductAndImage(id);
                         } else {
-                            return;
+                            deleteProductAndImage(id);
                         }
                     }
                 }else {
-                    findOne(id).getImage().deleteFile(servletContext.getRealPath(ROOT),findOne(id).getImage().getFileName());
-                    productRepository.delete(id);
+                    deleteProductAndImage(id);
                 }
             }
         }else {
-            findOne(id).getImage().deleteFile(servletContext.getRealPath(ROOT),findOne(id).getImage().getFileName());
-            productRepository.delete(id);
+            deleteProductAndImage(id);
         }
     }
 
@@ -107,6 +118,16 @@ public class ProductService implements IProductService {
         save(entity);
     }
 
+    public synchronized void update(Product product, MultipartFile fileUpload){
+        Product entity = findOne(product.getId());
+
+        update(product);
+        iImageService.updateImage(entity.getImage(),fileUpload, PRODUCT_PATH);
+
+        save(entity);
+
+    }
+
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
@@ -117,4 +138,9 @@ public class ProductService implements IProductService {
         return productRepository.findOne(id);
     }
 
+    //temp
+    private void deleteProductAndImage(Long id){
+        findOne(id).getImage().deleteFile(servletContext.getRealPath(PRODUCT_PATH),findOne(id).getImage().getFileName());
+        productRepository.delete(id);
+    }
 }

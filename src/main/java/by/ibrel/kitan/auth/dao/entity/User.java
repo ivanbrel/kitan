@@ -1,5 +1,6 @@
 package by.ibrel.kitan.auth.dao.entity;
 
+import by.ibrel.kitan.logic.dao.entity.Image;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -41,23 +42,38 @@ public class User implements Serializable {
     private String login;
 
     @Getter @Setter
+    private String email;
+
+    @Getter @Setter
+    private Integer phone;
+
+    @Getter @Setter
     @Column(length = 60)
     private String password;
 
     @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @Getter @Setter
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "IMAGE_ID")
+    private Image image;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String login, String password){
+    public User(String firstName, String lastName, String login, String email, Integer phone, String password, Image image){
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
+        this.email = email;
+        this.phone = phone;
         this.password = password;
         this.roles = new ArrayList<>();
+        this.image = image;
     }
 
     public void addRole(Role role){

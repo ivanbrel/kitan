@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
 
 /**
  * Created by ibrel on 13/05/16.
@@ -38,20 +40,26 @@ public class Client implements Serializable {
     private String phone;
 
     @Getter @Setter
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "ADDRESS_ID")
+    private Address address;
+
+    @Getter @Setter
     private String account;
 
     @Getter @Setter
-    private Double discountPrice;
+    private BigDecimal discountPrice;
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String email, String phone, String account, Double discountPrice) {
+    public Client(String firstName, String lastName, String email, String phone, String account, Address address, BigDecimal discountPrice) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.account = account;
+        this.address = address;
         this.discountPrice = discountPrice;
     }
 

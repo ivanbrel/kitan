@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
-import static by.ibrel.kitan.logic.Const.ROOT;
+import static by.ibrel.kitan.logic.Const.PRODUCT_PATH;
 
 /**
  * @author ibrel
@@ -29,6 +29,7 @@ import static by.ibrel.kitan.logic.Const.ROOT;
  */
 
 @Controller
+@RequestMapping("/")
 public class ProductController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -42,6 +43,9 @@ public class ProductController {
     @Autowired
     private IPriceService priceService;
 
+    @Autowired
+    private ServletContext servletContext;
+
     @RequestMapping(value = {"/product/list"}, method = RequestMethod.GET)
     public String listProduct(ModelMap model) {
         List<Product> productList = service.findAll();
@@ -53,13 +57,11 @@ public class ProductController {
     }
 
     @RequestMapping(value = {"/product/add"}, method = RequestMethod.POST)
-    public String createProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload, final ModelMap model,
-                             final ServletContext servletContext) throws IOException {
+    public String createProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload, final ModelMap model) throws IOException {
 
-        createProduct(productDto, fileUpload, servletContext.getRealPath(ROOT));
+        createProduct(productDto, fileUpload, servletContext.getRealPath(PRODUCT_PATH));
         LOGGER.debug("Create new product with name:" + productDto);
-        model.addAttribute("success");
-        return "redirect:/product/list";
+        return listProduct(model);
     }
 
     @RequestMapping(value = {"/product/delete/{id}"}, method = RequestMethod.GET)
@@ -70,23 +72,18 @@ public class ProductController {
         }catch (Exception e){
             model.addAttribute("fail", true);
             listProduct(model);
-            return "product.list";
+            return listProduct(model);
         }
-
-        return "redirect:/product/list";
+        return listProduct(model);
     }
 
     @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.POST)
-    public String updateProduct(@Valid Product product, final BindingResult result, final ModelMap model){
+    public String updateProduct(@Valid Product product, final BindingResult result, final ModelMap model,
+                                @ModelAttribute("fileUpload") MultipartFile fileUpload, @PathVariable("id") Long id){
 
-        if (result.hasErrors()){
-            return "product.edit";
-        }
-        service.update(product);
-
-        model.addAttribute("success", "Данные продукта " + product.getId() + " изменены");
-
-        return "redirect:/product/list";
+        if (result.hasErrors()){return "product.edit";}
+        service.update(product, fileUpload);
+        return editProduct(id,model);
     }
 
     @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.GET)

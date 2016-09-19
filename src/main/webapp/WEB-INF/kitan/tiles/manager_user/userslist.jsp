@@ -34,9 +34,12 @@
                         <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
                             <tr>
+                                <th></th>
+                                <th>Логин</th>
                                 <th>Имя</th>
                                 <th>Фамилия</th>
-                                <th>Логин</th>
+                                <th>Email</th>
+                                <th>Телефон</th>
                                 <th>Роль</th>
                                 <th width="100">Опции</th>
                             </tr>
@@ -45,10 +48,21 @@
                             <tbody>
                             <c:forEach items="${users}" var="user">
                                 <tr>
-                                    <td><small>${user.firstName}</small></td>
-                                    <td><small>${user.lastName}</small></td>
-                                    <td><small>${user.login}</small></td>
-                                    <td><small>${user.roles}</small></td>
+                                    <td>
+                                        <a href="<c:url value="/resources/img/upload/avatar/${user.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
+                                            <img src="<c:url value="/resources/img/upload/avatar/${user.image.fileName}"/>" class="avatar">
+                                        </a>
+                                    </td>
+                                    <td>${user.login}</td>
+                                    <td>${user.firstName}</td>
+                                    <td>${user.lastName}</td>
+                                    <td>${user.email}</td>
+                                    <td>${user.phone}</td>
+                                    <td>
+                                        <c:forEach items="${user.roles}" var="roles">
+                                            ${roles.name}
+                                        </c:forEach>
+                                    </td>
                                     <td>
                                         <a href="<c:url value='/user/edit/${user.login}'/>" title="Edit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

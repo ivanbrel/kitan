@@ -4,6 +4,8 @@ import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.service.impl.IUserService;
 import by.ibrel.kitan.auth.exception.InvalidOldPasswordException;
 import by.ibrel.kitan.web.util.GenericResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
 
 import static by.ibrel.kitan.logic.Const.DEFAULT_PASS;
+import static by.ibrel.kitan.logic.Const.PRODUCT_PATH;
 
 /**
  * Created by ibrel on 20.04.2016.
@@ -24,6 +28,8 @@ import static by.ibrel.kitan.logic.Const.DEFAULT_PASS;
 @Controller
 @RequestMapping("/")
 public class UserController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private IUserService userService;
@@ -39,13 +45,13 @@ public class UserController {
 
     @RequestMapping(value = {"/user/edit/{user}"}, method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String updateUser(@Valid final User user, BindingResult result, ModelMap model) {
+    public String updateUser(@Valid final User user, @Valid final String login, BindingResult result, ModelMap model, @ModelAttribute("fileUpload") MultipartFile fileUpload) {
 
         if (result.hasErrors()) {
             return "auth.user.edit";
         }
 
-        userService.update(user);
+        userService.update(user,fileUpload);
 
         model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
         return "auth.user.edit";
@@ -102,15 +108,16 @@ public class UserController {
 
     //for common user
     @RequestMapping(value = { "/user/edit" }, method = RequestMethod.POST)
-    public String updateCommonUser(@Valid final User user, final BindingResult result, final ModelMap model){
+    public String updateCommonUser(@Valid final User user, final BindingResult result,
+                                   final ModelMap model, @ModelAttribute("fileUpload") MultipartFile fileUpload){
 
-        if (result.hasErrors()){return "users.edit";}
+        if (result.hasErrors()) {
+            LOGGER.debug(result.toString());
+        }
 
-        userService.update(user);
+        userService.update(user,fileUpload);
 
-        model.addAttribute("success", "Данные пользователя " + user.getLogin() + " изменены");
-
-        return "auth.user.edit";
+        return editCommonUser(model);
     }
 
 }

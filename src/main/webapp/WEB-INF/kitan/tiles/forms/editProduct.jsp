@@ -30,12 +30,28 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
+                    <%--pic product--%>
+                    <div style="margin: auto; width: 200px; padding-bottom: 20px" >
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <!-- Current avatar -->
+                                <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/product/${product.image.fileName}" alt="Avatar" title="${product.nameProduct} ${product.model}">
+                            </div>
+                        </div>
+                    </div>
                     <div class="x_content">
 
                         <!-- start id-form -->
 
-                        <form:form modelAttribute="product" id="form3" class="form-horizontal form-label-left" method="POST">
+                        <form:form modelAttribute="product" id="form3" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
 
+
+                            <div class="form-group" style="display: none">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id">id </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="id" type="text" id="id" name="id" class="form-control col-md-7 col-xs-12"/>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameProduct">Наименование продукта </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -84,6 +100,14 @@
                                     <form:input path="quantity" id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" type="number"/>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Изображение </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="file-3" name="fileUpload" type="file" multiple=false required="required">
+                                        <%--<input name="fileUpload" type="file" class="file" multiple>--%>
+                                </div>
+                            </div>
+
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -99,5 +123,7 @@
         </div>
     </div>
 </div>
+
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
 
 

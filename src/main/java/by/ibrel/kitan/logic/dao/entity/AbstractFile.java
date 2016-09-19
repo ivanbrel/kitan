@@ -2,7 +2,6 @@ package by.ibrel.kitan.logic.dao.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -10,17 +9,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
 import static by.ibrel.kitan.logic.Const.RANDOM_SEGMENT;
-import static by.ibrel.kitan.logic.Const.ROOT;
+
 
 /**
  * Created by ibrel on 12/07/16.
  *
- * Abstract class for picture
+ * Abstract class for file
  */
 @MappedSuperclass
 abstract class AbstractFile implements Serializable{
@@ -47,11 +45,8 @@ abstract class AbstractFile implements Serializable{
     }
 
     private String createFile(String path, MultipartFile fileUpload) {
-        Random random = new Random();
 
-        String prefix = random.nextInt(RANDOM_SEGMENT)+random.nextInt(RANDOM_SEGMENT) + "_";
-
-        String nameFile = prefix + fileUpload.getOriginalFilename();
+        String nameFile = new Random().nextInt(RANDOM_SEGMENT) + "_" + fileUpload.getOriginalFilename();
 
         try {
             Files.copy(fileUpload.getInputStream(), Paths.get(createPath(path).getPath(),nameFile));
@@ -75,5 +70,9 @@ abstract class AbstractFile implements Serializable{
         if (!dir.exists())
             dir.mkdir();
         return dir;
+    }
+
+    public String getCreateFile(String path, MultipartFile fileUpload){
+        return createFile(path,fileUpload);
     }
 }

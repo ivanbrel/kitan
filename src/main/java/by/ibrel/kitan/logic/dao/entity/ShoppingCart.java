@@ -1,13 +1,16 @@
 package by.ibrel.kitan.logic.dao.entity;
 
+import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.logic.beans.Status;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.Contract;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -45,24 +48,30 @@ public class ShoppingCart implements Serializable {
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    @Getter @Setter
-    private Double priceSummary;
+    @Getter
+    private BigDecimal priceSummary;
 
-    @Getter @Setter
+    @Getter
     private Integer quantity;
 
     @Getter @Setter
     @Enumerated
     private Status status;
 
+    @Getter @Setter
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
     public ShoppingCart() {
     }
 
-    public ShoppingCart(Integer numberCart, Client client) {
+    public ShoppingCart(Integer numberCart, Client client, User user) {
         this.numberCart = numberCart(numberCart);
         this.client = client;
-        this.priceSummary = INIT_DOUBLE;
+        this.priceSummary = BigDecimal.ZERO;
         this.quantity = INIT_INT;
+        this.user = user;
         date = new Date();
         products = new ArrayList<>();
         status = Status.CREATE;
@@ -73,6 +82,7 @@ public class ShoppingCart implements Serializable {
      *
      * @return value
      */
+    @Contract(pure = true)
     private Integer numberCart(Integer value){
         if(value!= null) {
             Integer i = value;
@@ -89,17 +99,16 @@ public class ShoppingCart implements Serializable {
     /**
      * Calculating summary price with discount
      *
-     * @param product object product
+     * @param price price product
      * @param quantity entering quantity products
      * @param discount Client personal discount
      * @return summary price
      */
-    public double summaryPrice(Product product, final double quantity, final double discount){
-        double sum = INIT_DOUBLE;
-
+    public BigDecimal summaryPrice(BigDecimal price, BigDecimal discount, Integer quantity){
+        //BigDecimal sum = BigDecimal.ZERO;
         //discount
-        sum += ((product.getPrice())-(product.getPrice()*discount/100))*quantity;
-        return sum;
+        //sum += ((product.getPrice())-(product.getPrice()*discount/100))*quantity;
+        return (price.subtract(discount.multiply(price).divide(BigDecimal.valueOf(100),3))).multiply(BigDecimal.valueOf(quantity));
     }
 
     public void changeStatusFormed(ShoppingCart shoppingCart) {
@@ -109,5 +118,24 @@ public class ShoppingCart implements Serializable {
     public void changeStatusForming(ShoppingCart shoppingCart) {
         shoppingCart.setStatus(Status.FORMING);
     }
+
+    public void incSum(BigDecimal incSum){
+        this.priceSummary = getPriceSummary().add(incSum);
+    }
+
+    public void decSum(BigDecimal decSum){
+        if (getPriceSummary().compareTo(decSum)>=0)
+        this.priceSummary = getPriceSummary().subtract(decSum);
+    }
+
+    public void incQuantity(Integer incQuantity){
+        this.quantity = getQuantity()+incQuantity;
+    }
+
+    public void decQuantity(Integer decQuantity){
+        if (getQuantity()>=decQuantity)
+            this.quantity = getQuantity()-decQuantity;
+    }
+
 }
 

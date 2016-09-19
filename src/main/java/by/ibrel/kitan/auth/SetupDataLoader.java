@@ -6,6 +6,8 @@ import by.ibrel.kitan.auth.dao.repository.UserRepository;
 import by.ibrel.kitan.auth.dao.entity.Privilege;
 import by.ibrel.kitan.auth.dao.entity.Role;
 import by.ibrel.kitan.auth.dao.entity.User;
+import by.ibrel.kitan.logic.dao.entity.Image;
+import by.ibrel.kitan.logic.service.impl.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -41,6 +43,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IImageService iImageService;
 
     // API
 
@@ -102,12 +107,18 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         final Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         User user = userRepository.findByUser(name);
         if (user==null){
+
+            Image image = new Image();
+            iImageService.save(image);
+
             user = new User();
             user.setFirstName("Admin");
             user.setLastName("Admin");
             user.setLogin("admin");
             user.setPassword(passwordEncoder.encode("admin"));
             user.setRoles(Arrays.asList(adminRole));
+            user.setImage(image);
+
             userRepository.save(user);
         }
         return user;

@@ -1,6 +1,7 @@
 package by.ibrel.kitan.logic.service.impl;
 
 
+import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.service.impl.ICommonService;
 import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.exception.ProductCanNotBeDeleted;
@@ -12,7 +13,7 @@ import by.ibrel.kitan.logic.exception.PurchaseQuantityLimitException;
  */
 public interface IShoppingCartService extends ICommonService<ShoppingCart>{
 
-    ShoppingCart createCart(Long clientId);
+    ShoppingCart createCart(Long clientId, User user);
 
     ShoppingCart findCartWithClient(Long id);
 
@@ -23,7 +24,7 @@ public interface IShoppingCartService extends ICommonService<ShoppingCart>{
      * @param quantity entering quantity
      * @throws Exception check on valid entering quantity (>0)
      */
-    void sellProduct(ShoppingCart shoppingCart, Integer quantity) throws Exception, PurchaseQuantityLimitException;
+    void sellProduct(ShoppingCart shoppingCart, Integer quantity, String seller) throws Exception, PurchaseQuantityLimitException;
 
     /**
      * Delete product from cart and if status "forming" return quantity to product

@@ -1,5 +1,6 @@
 package by.ibrel.kitan.logic.service;
 
+import by.ibrel.kitan.logic.dao.entity.Address;
 import by.ibrel.kitan.logic.dao.entity.Client;
 import by.ibrel.kitan.logic.dao.repository.ClientRepository;
 import by.ibrel.kitan.logic.dao.repository.ShoppingCartRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -30,13 +32,16 @@ public class ClientService implements IClientService{
 
     @Override
     public Client createClient(ClientDto clientDto) throws ClientExistsException {
+
         if(clientExists(clientDto.getAccount())){
             throw new ClientExistsException("Client with last name " + clientDto.getLastName() + " and number account "
             + clientDto.getAccount() + " already exists");
         }
 
+        final Address address = new Address(clientDto.getCountry(),clientDto.getTown(),clientDto.getStreet(),clientDto.getPostCode());
+
         final Client client = new Client(clientDto.getFirstName(),clientDto.getLastName(),clientDto.getEmail(),clientDto.getPhone(),
-                clientDto.getAccount(),(clientDto.discountPriceConvert(clientDto.getDiscount())));
+                clientDto.getAccount(), address, new BigDecimal(clientDto.getDiscount()));
         save(client);
         return client;
     }
@@ -82,6 +87,7 @@ public class ClientService implements IClientService{
             entity.setEmail(client.getEmail());
             entity.setDiscountPrice(client.getDiscountPrice());
             entity.setAccount(client.getAccount());
+            entity.setAddress(client.getAddress());
         }
         save(entity);
     }

@@ -1,5 +1,7 @@
 package by.ibrel.kitan.web.controllers;
 
+import by.ibrel.kitan.auth.dao.entity.User;
+import by.ibrel.kitan.auth.service.impl.IUserService;
 import by.ibrel.kitan.logic.dao.entity.Price;
 import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.entity.Product;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -40,6 +43,9 @@ public class ShoppingCartController {
     private IShoppingCartService service;
 
     @Autowired
+    private IUserService userService;
+
+    @Autowired
     private IProductService productService;
 
     @Autowired
@@ -55,7 +61,7 @@ public class ShoppingCartController {
 
     @RequestMapping(value = {"/cart/list"}, method = RequestMethod.GET)
     public String listPurchases(ModelMap model) {
-        LOGGER.debug("!List all purchases");
+        LOGGER.debug("List all purchases");
         Collection<ShoppingCart> orderDetailses = service.findAll();
         model.addAttribute("cart", orderDetailses);
         List<Price> priceList = priceService.findAll();
@@ -66,11 +72,13 @@ public class ShoppingCartController {
     //add new purchase
     @RequestMapping(value = {"/cart/create/{clientId}"}, method = RequestMethod.GET)
     public String createPurchase(@PathVariable Long clientId, final ModelMap model){
-        LOGGER.debug("!Add new purchase for client with ID - " + clientId);
 
-        ShoppingCart shoppingCart = service.createCart(clientId);
+        final User user = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        ShoppingCart shoppingCart = service.createCart(clientId, user);
+
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
+        LOGGER.debug("Add new purchase for client with ID - " + clientId);
         return "cart.show";
     }
 
@@ -78,12 +86,14 @@ public class ShoppingCartController {
     @RequestMapping(value = {"/cart/sell/{id}"}, method = RequestMethod.POST)
     public String sellProduct(@Valid ShoppingCart shoppingCart, @Valid Integer count, BindingResult result, ModelMap model) throws Exception {
 
+        final User user = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
         if (result.hasErrors()){
             LOGGER.debug(message.getMessage("error.incorrectdata",null,Locale.getDefault()));
             return "redirect:/cart/list";
         }
         try {
-            service.sellProduct(shoppingCart, count);
+            service.sellProduct(shoppingCart, count, user.getLastName());
         }catch (PurchaseQuantityLimitException e) {
             model.addAttribute("fail",true);
 
@@ -99,7 +109,7 @@ public class ShoppingCartController {
         ShoppingCart p = service.findOne(shoppingCart.getId());
         model.addAttribute("cart", p);
 
-        LOGGER.debug("!Product sell successfuly!");
+        LOGGER.debug("Product sell successfully!");
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
 
         return "cart.show";
@@ -138,26 +148,6 @@ public class ShoppingCartController {
         return "redirect:/cart/list";
     }
 
-//    //check count purchase
-//    @RequestMapping(value = "/checkCount", method = RequestMethod.POST)
-//    public @ResponseBody boolean handlerRequest(final HttpServletRequest request) throws Exception {
-//
-//        Product product = null;
-//        Integer count = 0;
-//        try {
-//            count = Integer.parseInt(request.getParameter("count"));
-//            //product = productRepository.findOne(Long.getLong(request.getParameter("idProduct")));
-//        }catch (Exception e){
-//            throw new Exception(e);
-//        }
-//
-//        boolean flag = true;
-//
-//        if (10<count) flag = false;
-//
-//        return flag;
-//    }
-
     @RequestMapping(value = {"/cart/status/{idCart}"}, method = RequestMethod.GET)
     public String changeStatus(@PathVariable("idCart") Long idCart, ModelMap model){
 
@@ -167,7 +157,7 @@ public class ShoppingCartController {
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
 
-        return "cart.show";
+        return cartReport(idCart,model);
     }
 
     @RequestMapping(value = { "/cart/edit/{id}" }, method = RequestMethod.POST)
@@ -219,5 +209,13 @@ public class ShoppingCartController {
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
 
         return "cart.show";
+    }
+
+    @RequestMapping(value = {"/cart/report/{idCart}"}, method = RequestMethod.GET)
+    public String cartReport(@PathVariable("idCart") Long idCart, ModelMap model){
+        ShoppingCart shoppingCart = service.findOne(idCart);
+        model.addAttribute("cart", shoppingCart);
+        model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
+        return "cart.report";
     }
 }

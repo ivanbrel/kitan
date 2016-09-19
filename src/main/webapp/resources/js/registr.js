@@ -100,7 +100,7 @@ function register(event){
                 //    }
                 //});
                 //n.show();
-                window.location.href = ctx + "/login_";
+                window.location.href = ctx + "/index.jsp";
             }
 
         })

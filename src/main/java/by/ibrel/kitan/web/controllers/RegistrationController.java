@@ -5,17 +5,28 @@ import by.ibrel.kitan.auth.service.impl.IUserService;
 import by.ibrel.kitan.auth.service.dto.UserDto;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
 import by.ibrel.kitan.auth.exception.UserAlreadyExistException;
+import by.ibrel.kitan.logic.service.impl.IImageService;
 import by.ibrel.kitan.web.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.io.IOException;
+
+import static by.ibrel.kitan.logic.Const.USER_PATH;
 
 /**
  * @author ibrel
@@ -29,6 +40,10 @@ public class RegistrationController {
     @Autowired
     private IUserService userService;
 
+    @Qualifier("authProvider")
+    @Autowired
+    private AuthenticationProvider provider;
+
     public RegistrationController() {
         super();
     }
@@ -37,13 +52,16 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
-    public GenericResponse registerUser(@Valid final UserDto userDto){
+    public GenericResponse registerUser(@Valid final UserDto userDto, HttpServletRequest request){
         LOGGER.debug("Registering user account with information: {}" + userDto);
 
         final User registered = createUserAccount(userDto);
         if (registered==null){
             throw new UserAlreadyExistException();
         }
+
+        doAutoLogin(registered.getLogin(),userDto.getPassword(),request);
+
         return new GenericResponse("success");
     }
 
@@ -52,7 +70,7 @@ public class RegistrationController {
         User registered = null;
         try{
             registered = userService.registerNewUserAccount(userDto);
-        }catch (final LoginExistsException e){
+        }catch (LoginExistsException e){
             return null;
         }
         return registered;
@@ -73,5 +91,21 @@ public class RegistrationController {
         if (user==null) flag = true;
 
         return flag;
+    }
+
+    private void doAutoLogin(String username, String password, HttpServletRequest request) {
+
+        try {
+            // Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+            token.setDetails(new WebAuthenticationDetails(request));
+            Authentication authentication = provider.authenticate(token);
+            LOGGER.debug("Logging in with [{}]", authentication.getPrincipal());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (Exception e) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+            LOGGER.error("Failure in autoLogin", e);
+        }
+
     }
 }

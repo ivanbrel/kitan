@@ -1,5 +1,6 @@
 package by.ibrel.kitan.logic.service;
 
+import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.logic.beans.Status;
 import by.ibrel.kitan.logic.dao.entity.*;
 import by.ibrel.kitan.logic.dao.repository.ShoppingCartRepository;
@@ -16,6 +17,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -45,10 +48,10 @@ public class ShoppingCartService implements IShoppingCartService {
     //API
 
     @Override
-    public ShoppingCart createCart(final Long clientId) {
+    public ShoppingCart createCart(final Long clientId, final User user) {
 
         final Client client = clientService.findOne(clientId);
-        ShoppingCart shoppingCart = new ShoppingCart(findMaxValue(),client);
+        ShoppingCart shoppingCart = new ShoppingCart(findMaxValue(), client, user);
         save(shoppingCart);
         return shoppingCart;
     }
@@ -59,39 +62,37 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public synchronized void sellProduct(final ShoppingCart shoppingCart, final Integer quantity) throws PurchaseQuantityLimitException {
+    public synchronized void sellProduct(final ShoppingCart shoppingCart, final Integer quantity, String seller) throws PurchaseQuantityLimitException {
 
+        BigDecimal priceWithDiscount = BigDecimal.ZERO;
         ShoppingCart entity = shoppingCartRepository.findOne(shoppingCart.getId());
-
         Product productForHistory = new Product();
 
-        for (Product product: shoppingCart.getProducts()){
-
+        for (Product product : shoppingCart.getProducts()) {
             product = productService.findOne(product.getId());
-
-            if (quantity>0 && quantity<=product.getQuantity()) {
+            if (quantity > 0 && quantity <= product.getQuantity()) {
                 if (!entity.getProducts().contains(product)) {
                     entity.addToProducts(product);
                 }
-                entity.setPriceSummary(entity.getPriceSummary()+shoppingCart.summaryPrice(product,quantity, entity.getClient().getDiscountPrice()));
-                entity.setQuantity(entity.getQuantity()+quantity);
 
-                product.setQuantity(product.getQuantity() - quantity);
+                priceWithDiscount = shoppingCart.summaryPrice(product.getPrice(), entity.getClient().getDiscountPrice(), quantity);
+                entity.incSum(priceWithDiscount);
+                entity.incQuantity(quantity);
+                product.decQuantity(quantity);
                 productService.save(product);
-
                 productForHistory = product;
 
-            }else {
+            } else {
                 throw new PurchaseQuantityLimitException();
             }
         }
 
-        entity.addToProducts(productForHistory);
+        if (!entity.getProducts().contains(productForHistory))
+            entity.addToProducts(productForHistory);
+
         entity.changeStatusForming(entity);
-
         save(entity);
-
-        purchaseHistoryService.createPurchaseHistory(entity,productForHistory,quantity);
+        purchaseHistoryService.createPurchaseHistory(entity, productForHistory, quantity, priceWithDiscount, seller);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class ShoppingCartService implements IShoppingCartService {
     @Override
     public synchronized void update(ShoppingCart shoppingCart) {
         ShoppingCart entity = findOne(shoppingCart.getId());
-        if (entity!=null){
+        if (entity != null) {
             //TODO дописать
         }
         shoppingCartRepository.saveAndFlush(entity);
@@ -134,21 +135,22 @@ public class ShoppingCartService implements IShoppingCartService {
         List<Product> products = (List<Product>) shoppingCart.getProducts();
         ListIterator<Product> iterator = products.listIterator();
 
-      while (iterator.hasNext()){
-          if (iterator.next().getId().equals(productId)){
-              iterator.remove();
-          }
-      }
-        //TODO это полный зашквар, вынести всё в методы!
+        //TODO check on exists another product
+//        while (iterator.hasNext()) {
+//            if (iterator.next().getId().equals(productId)) {
+//                iterator.remove();
+//            }
+//        }
+
         //set quantity for cart
-        shoppingCart.setQuantity(shoppingCart.getQuantity()-purchaseHistory.getQuantity());
+        shoppingCart.decQuantity(purchaseHistory.getQuantity());
+
         //set price for cart
-        shoppingCart.setPriceSummary(shoppingCart.getPriceSummary()-
-                (purchaseHistory.getQuantity()*
-                        (purchaseHistory.getProduct().getPrice()-((purchaseHistory.getProduct().getPrice()*
-                                purchaseHistory.getClient().getDiscountPrice())/100))));
+        shoppingCart.decSum(purchaseHistory.getPriceWithDiscount());
+
         //set quantity for product
-        product.setQuantity(product.getQuantity()+purchaseHistory.getQuantity());
+        product.incQuantity(purchaseHistory.getQuantity());
+
         //delete history
         purchaseHistoryService.delete(purchaseHistory.getId());
     }
@@ -163,22 +165,22 @@ public class ShoppingCartService implements IShoppingCartService {
      *
      * @param id shopping cart id
      */
-    private void emptyCart(final Long id){
+    private void emptyCart(final Long id) {
 
         ShoppingCart shoppingCart = findOne(id);
 
-        for (PurchaseHistory purchaseHistory : purchaseHistoryService.findAll()){
-            if (Objects.equals(purchaseHistory.getShoppingCart().getId(), id)){
-                if(shoppingCart.getStatus()==Status.FORMING){
+        for (PurchaseHistory purchaseHistory : purchaseHistoryService.findAll()) {
+            if (Objects.equals(purchaseHistory.getShoppingCart().getId(), id)) {
+                if (shoppingCart.getStatus() == Status.FORMING) {
 
                     //return quantity to product if status FORMING
-                    purchaseHistory.getProduct().setQuantity(purchaseHistory.getQuantity()+purchaseHistory.getProduct().getQuantity());
+                    purchaseHistory.getProduct().incQuantity(purchaseHistory.getQuantity());
                 }
                 purchaseHistoryService.delete(purchaseHistory.getId());
             }
         }
 
-        if (shoppingCart!=null){
+        if (shoppingCart != null) {
             shoppingCart.getProducts().clear();
         }
     }

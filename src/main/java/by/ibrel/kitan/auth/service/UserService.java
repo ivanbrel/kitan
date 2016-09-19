@@ -7,13 +7,21 @@ import by.ibrel.kitan.auth.dao.repository.UserRepository;
 import by.ibrel.kitan.auth.dao.entity.User;
 import by.ibrel.kitan.auth.exception.LoginExistsException;
 import by.ibrel.kitan.logic.Const;
+import by.ibrel.kitan.logic.dao.entity.Image;
+import by.ibrel.kitan.logic.service.impl.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+
+import static by.ibrel.kitan.logic.Const.PRODUCT_PATH;
+import static by.ibrel.kitan.logic.Const.USER_PATH;
 
 /**
  * @author ibrel
@@ -33,14 +41,22 @@ public class UserService implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private IImageService iImageService;
+
     //API
 
     @Override
     public User registerNewUserAccount(UserDto accountDto) throws LoginExistsException {
+
+        Image image = new Image();
+        iImageService.save(image);
+
         if (loginExist(accountDto.getLogin())){
             throw new LoginExistsException("There is an account with that login: " + accountDto.getLogin());
         }
-        User user = new User(accountDto.getFirstName(),accountDto.getLastName(),accountDto.getLogin(),passwordEncoder.encode(accountDto.getPassword()));
+        User user = new User(accountDto.getFirstName(),accountDto.getLastName(),accountDto.getLogin(),
+                accountDto.getEmail(),accountDto.getPhone(),passwordEncoder.encode(accountDto.getPassword()),image);
         user.addRole(roleService.findByName(Const.DEFAULT_ROLE));
         save(user);
         return user;
@@ -88,6 +104,19 @@ public class UserService implements IUserService {
         if(entity!=null){
             entity.setFirstName(user.getFirstName());
             entity.setLastName(user.getLastName());
+            entity.setEmail(user.getEmail());
+            entity.setPhone(user.getPhone());
+        }
+        save(entity);
+    }
+
+    public void update(User user,  MultipartFile fileUpload){
+
+        User entity = findByLogin(user.getLogin());
+        if(entity!=null) {
+            update(user);
+            if (fileUpload!=null)
+                iImageService.updateImage(entity.getImage(),fileUpload, USER_PATH);
         }
         save(entity);
     }
