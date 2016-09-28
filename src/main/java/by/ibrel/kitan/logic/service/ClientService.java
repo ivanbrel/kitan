@@ -38,10 +38,11 @@ public class ClientService implements IClientService{
             + clientDto.getAccount() + " already exists");
         }
 
-        final Address address = new Address(clientDto.getCountry(),clientDto.getTown(),clientDto.getStreet(),clientDto.getPostCode());
+//        final Address address = new Address(clientDto.getCountry(),clientDto.getTown(),clientDto.getStreet(),clientDto.getPostCode());
+
 
         final Client client = new Client(clientDto.getFirstName(),clientDto.getLastName(),clientDto.getEmail(),clientDto.getPhone(),
-                clientDto.getAccount(), address, new BigDecimal(clientDto.getDiscount()));
+                clientDto.getAccount(), null, new BigDecimal(clientDto.getDiscount()));
         save(client);
         return client;
     }

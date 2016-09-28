@@ -2,6 +2,7 @@ package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.dao.entity.Price;
 import by.ibrel.kitan.logic.dao.repository.PriceRepository;
+import by.ibrel.kitan.logic.service.dto.PriceDto;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,4 +61,14 @@ public class PriceService implements IPriceService {
     }
 
 
+    @Override
+    public Price addPrice(PriceDto priceDto) {
+        Price price = null;
+        if (findAll().size()==0) {
+            price = new Price(priceDto.getRubleBY(), priceDto.getRubleRUS(), priceDto.getEuro(),
+                    priceDto.getGrivUA(), priceDto.getChinaUAN(), priceDto.getPolandZLOT());
+            save(price);
+        }
+        return price;
+    }
 }

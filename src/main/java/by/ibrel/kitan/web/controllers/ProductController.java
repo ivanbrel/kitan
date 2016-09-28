@@ -2,8 +2,10 @@ package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.logic.dao.entity.Price;
 import by.ibrel.kitan.logic.dao.entity.Product;
+import by.ibrel.kitan.logic.dao.entity.ProductCategory;
 import by.ibrel.kitan.logic.service.impl.IImageService;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
+import by.ibrel.kitan.logic.service.impl.IProductCategoryService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
 import org.slf4j.Logger;
@@ -34,17 +36,24 @@ public class ProductController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     private IProductService service;
-
-    @Autowired
     private IImageService imageService;
-
-    @Autowired
     private IPriceService priceService;
+    private ServletContext servletContext;
+    private IProductCategoryService productCategoryService;
+
+    public ProductController() {
+    }
 
     @Autowired
-    private ServletContext servletContext;
+    public ProductController(IProductService service, IImageService imageService, IPriceService priceService,
+                             ServletContext servletContext, IProductCategoryService productCategoryService) {
+        this.service = service;
+        this.imageService = imageService;
+        this.priceService = priceService;
+        this.servletContext = servletContext;
+        this.productCategoryService = productCategoryService;
+    }
 
     @RequestMapping(value = {"/product/list"}, method = RequestMethod.GET)
     public String listProduct(ModelMap model) {
@@ -82,15 +91,20 @@ public class ProductController {
                                 @ModelAttribute("fileUpload") MultipartFile fileUpload, @PathVariable("id") Long id){
 
         if (result.hasErrors()){return "product.edit";}
-        service.update(product, fileUpload);
-        return editProduct(id,model);
+        if (fileUpload.getSize()==0){
+            service.update(product);
+        }else {
+            service.update(product, fileUpload);
+        }
+        return initFormProduct(id,model);
     }
 
     @RequestMapping(value = { "/product/edit/{id}" }, method = RequestMethod.GET)
-    public String editProduct(@PathVariable Long id, ModelMap model) {
+    public String initFormProduct(@PathVariable Long id, ModelMap model) {
 
         final Product product = service.findOne(id);
         model.addAttribute("product", product);
+        model.addAttribute("listCategory", productCategoryService.findAll());
         return "product.edit";
     }
 

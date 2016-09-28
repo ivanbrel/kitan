@@ -126,6 +126,26 @@
 
     </bean>
 
+    <!--convert-->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean" >
+        <property name="converters">
+            <set>
+                <bean class="by.ibrel.kitan.logic.service.converters.StringToProductCategoryConverter"/>
+                <bean class="by.ibrel.kitan.logic.service.converters.StringToProductConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="by.ibrel.kitan.logic.service.converters.CustomWebBindingInitializer"/>
+        </property>
+    </bean>
+
+
+
     <mvc:view-controller path="/login_" view-name="auth.login"/>
     <mvc:view-controller path="/home" view-name="main.home"/>
     <mvc:view-controller path="/contacts" view-name="main.contacts"/>
@@ -144,6 +164,8 @@
     <mvc:view-controller path="/price/list" view-name="price.list"/>
     <mvc:view-controller path="/price/add-page" view-name="price.add"/>
     <mvc:view-controller path="/cart/show" view-name="purchase.show"/>
+    <mvc:view-controller path="/product/catalog" view-name="product.category.list"/>
+
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
     <mvc:view-controller path="/error/405" view-name="error.405"/>

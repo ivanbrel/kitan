@@ -1,5 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <sec:authentication var="avatar" property="principal.user.image.fileName"/>
 
@@ -7,7 +8,7 @@
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
             <a href="${ctx}/index.jsp" class="site_title">
-                <span>KITAN project</span>
+                <span><spring:message code="info.project.name"/></span>
             </a>
         </div>
 
@@ -19,7 +20,7 @@
                 <img src="${ctx}/resources/img/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>Добро пожаловать,</span>
+                <span><spring:message code="info.word.user.hello"/></span>
                 <h2><sec:authentication property="principal.user.firstName"/></h2>
                 <br/><br/>
             </div>
@@ -31,24 +32,25 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>Панель управления</h3>
+                <h3><spring:message code="info.word.controlpanel"/></h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Главная <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-home"></i> <spring:message code="info.word.home"/> <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/client/list">Оформить заказ</a></li>
-                            <li><a href="">Показать остатки</a></li>
-                            <li><a href="">Вывести остатки</a></li>
+                            <li><a href="${ctx}/client/list"><spring:message code="info.word.createorder"/></a></li>
+                            <%--<li><a href="">Показать остатки</a></li>--%>
+                            <%--<li><a href="">Вывести остатки</a></li>--%>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-edit"></i> Формы <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-edit"></i> <spring:message code="info.word.add"/> <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/client/add-page">Добавить нового клиента</a></li>
-                            <li><a href="${ctx}/product/add-page">Добавить новый продукт</a></li>
+                            <li><a href="${ctx}/client/add-page"><spring:message code="info.word.buyer"/></a></li>
+                            <li><a href="${ctx}/product/add-page"><spring:message code="info.word.product"/></a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-desktop"></i> Исходные данные <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.management"/><span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/price/list">Управление курсом</a></li>
+                            <li><a href="${ctx}/price/list"><spring:message code="info.word.ratedetermination"/> </a></li>
+                            <li><a href="${ctx}/product/category/list"><spring:message code="info.word.categorProducts"/> </a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-table"></i> Таблицы <span class="fa fa-chevron-down"></span></a>
@@ -61,7 +63,7 @@
                     <li><a><i class="fa fa-bar-chart-o"></i>Информация <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/about">О программе</a></li>
-                            <li><a href="${ctx}/contacts">Контакты</a></li>
+                            <li><a href="${ctx}/contacts"><spring:message code="info.word.contacts"/></a></li>
                             <li><a href="${ctx}/help">Помощь</a></li>
                             <li><a href="${ctx}/ref">Ссылки</a></li>
                         </ul>

@@ -85,7 +85,10 @@
                             <div class="form-group">
                                 <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="category" id="category" name="category" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                        <%--<form:select path="category" items="${listCategory}"/>--%>
+                                            <form:select path="category">
+                                                <form:options items="${listCategory}" />
+                                            </form:select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -103,7 +106,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Изображение </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="file-3" name="fileUpload" type="file" multiple=false required="required">
+                                    <input id="file-3" name="fileUpload" type="file" multiple=false>
                                         <%--<input name="fileUpload" type="file" class="file" multiple>--%>
                                 </div>
                             </div>

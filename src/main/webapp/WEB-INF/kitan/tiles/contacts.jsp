@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Контакты</h3>
+                <h3><spring:message code="info.word.contacts"/> </h3>
             </div>
 
         </div>
@@ -23,14 +24,14 @@
                             <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                                 <div class="well profile_view">
                                     <div class="col-sm-12">
-                                        <h4 class="brief"><i>Разработчик</i></h4>
+                                        <h4 class="brief"><i><spring:message code="info.word.developer"/></i></h4>
                                         <div class="left col-xs-7">
-                                            <h2>Иван Брель</h2>
+                                            <h2><spring:message code="info.developer"/></h2>
                                             <%--<p><strong>About: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>--%>
                                             <ul class="list-unstyled">
-                                                <li><i class="fa fa-building"></i> Адрес: г. Гомель ул. Кирова 134/30 </li>
-                                                <li><i class="fa fa-phone"></i> Телефон #: +375(29) 836-81-50</li>
-                                                <li><i class="fa fa-male"></i> Email : ibrel7n@gmail.com</li>
+                                                <li><i class="fa fa-building"></i> <spring:message code="info.word.address"/> : <spring:message code="info.developer.address"/> </li>
+                                                <li><i class="fa fa-phone"></i> <spring:message code="info.word.phone"/> #: <spring:message code="info.developer.phone"/> </li>
+                                                <li><i class="fa fa-male"></i> <spring:message code="info.word.email"/> : <spring:message code="info.developer.email"/> </li>
                                             </ul>
                                         </div>
                                         <div class="right col-xs-5 text-center">

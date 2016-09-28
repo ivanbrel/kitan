@@ -1,6 +1,7 @@
 package by.ibrel.kitan.web.controllers;
 
 import by.ibrel.kitan.logic.dao.entity.Price;
+import by.ibrel.kitan.logic.service.dto.PriceDto;
 import by.ibrel.kitan.logic.service.impl.IPriceService;
 
 import org.slf4j.Logger;
@@ -52,5 +53,12 @@ public class PriceController {
         final Price price = service.findOne(id);
         model.addAttribute("price", price);
         return "price.edit";
+    }
+
+    @RequestMapping(value = {"/price/add"}, method = RequestMethod.POST)
+    public String addPrice(@Valid final PriceDto priceDto, ModelMap modelMap){
+        service.addPrice(priceDto);
+        LOGGER.debug("Add new price");
+        return listPrice(modelMap);
     }
 }

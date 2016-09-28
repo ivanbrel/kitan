@@ -67,7 +67,7 @@
                                             RUS: ${price.rubleRUS*product.price}
                                             Euro: ${price.euro*product.price}
                                             </c:forEach>">${product.price}</td>
-                                        <td>${product.category}</td>
+                                        <td>${product.category.name}</td>
                                         <td>${product.quantity}</td>
                                         <td>
                                             <a href="<c:url value='/product/edit/${product.id}'/>" title="Edit" class="btn btn-default btn-xs">

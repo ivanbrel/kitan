@@ -33,19 +33,24 @@ import static by.ibrel.kitan.logic.Const.START_NUMBER;
 @Transactional
 public class ShoppingCartService implements IShoppingCartService {
 
-    @Autowired
     private ShoppingCartRepository shoppingCartRepository;
-
-    @Autowired
     private IClientService clientService;
-
-    @Autowired
     private IProductService productService;
-
-    @Autowired
     private IPurchaseHistoryService purchaseHistoryService;
 
     //API
+
+
+    public ShoppingCartService() {
+    }
+
+    @Autowired
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, IClientService clientService, IProductService productService, IPurchaseHistoryService purchaseHistoryService) {
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.clientService = clientService;
+        this.productService = productService;
+        this.purchaseHistoryService = purchaseHistoryService;
+    }
 
     @Override
     public ShoppingCart createCart(final Long clientId, final User user) {
@@ -132,8 +137,8 @@ public class ShoppingCartService implements IShoppingCartService {
         PurchaseHistory purchaseHistory = purchaseHistoryService.findOne(histId);
         Product product = productService.findOne(productId);
 
-        List<Product> products = (List<Product>) shoppingCart.getProducts();
-        ListIterator<Product> iterator = products.listIterator();
+//        List<Product> products = (List<Product>) shoppingCart.getProducts();
+//        ListIterator<Product> iterator = products.listIterator();
 
         //TODO check on exists another product
 //        while (iterator.hasNext()) {

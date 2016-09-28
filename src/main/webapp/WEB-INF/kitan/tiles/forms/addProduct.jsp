@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- jQuery -->
 <script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.js"></script>
@@ -80,16 +81,11 @@
                             <div class="form-group">
                                 <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <%--<input id="category" name="category" class="date-picker form-control col-md-7 col-xs-12 js-example-data-array" required="required" type="text">--%>
                                         <select id="category" name="category" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                            <option value="Коляски">Коляски</option>
-                                            <option value="Стульчики">Стульчики</option>
-                                            <option value="Кроватки-люльки">Кроватки-люльки</option>
-                                            <option value="Качели">Качели</option>
-                                            <option value="Ходунки">Ходунки</option>
-                                            <option value="Автокресла">Автокресла</option>
-                                            <option value="Манежи">Манежи</option>
-                                            <option value="Аксессуары">Аксессуары</option>
+                                            <option value="${null}">Выберите категорию товара</option>
+                                            <c:forEach items="${list}" var="list">
+                                                <option value="${list.name}">${list.name}</option>
+                                            </c:forEach>
                                         </select>
                                 </div>
                             </div>

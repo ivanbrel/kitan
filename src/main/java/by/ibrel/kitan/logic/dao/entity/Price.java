@@ -17,6 +17,7 @@ import java.util.Objects;
  */
 @EqualsAndHashCode
 @Entity
+@ToString
 @Table(name = "price")
 public class Price implements Serializable{
 
@@ -44,27 +45,21 @@ public class Price implements Serializable{
     @Getter @Setter
     private BigDecimal  polandZLOT;
 
-    @Getter @Setter
+    @Getter
     private BigDecimal  dollarUSA;
 
     public Price() {
     }
 
-    public Price(BigDecimal rubleBy, BigDecimal rubleRus, BigDecimal euro, BigDecimal grivUa, BigDecimal chinaUan, BigDecimal polandZlot, BigDecimal dollarUsa){
+    public Price(BigDecimal rubleBy, BigDecimal rubleRus, BigDecimal euro, BigDecimal grivUa, BigDecimal chinaUan, BigDecimal polandZlot){
         this.rubleBY = rubleBy;
         this.rubleRUS = rubleRus;
         this.euro = euro;
         this.grivUA = grivUa;
         this.chinaUAN = chinaUan;
         this.polandZLOT = polandZlot;
-        this.dollarUSA = dollarUsa;
+        this.dollarUSA = BigDecimal.ONE;
 
     }
 
-    @Override
-    public String toString() {
-        return "Price{" +
-                "id=" + id +
-                '}';
-    }
 }

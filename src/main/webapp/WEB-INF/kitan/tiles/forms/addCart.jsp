@@ -46,7 +46,7 @@
                                             <td><c:out value="${elements.model}"/></td>
                                             <td><c:out value="${elements.color}"/></td>
                                             <td><c:out value="${elements.countryProduct}"/></td>
-                                            <td><c:out value="${elements.category}"/></td>
+                                            <td><c:out value="${elements.category.name}"/></td>
                                             <td><c:out value="${elements.price}"/></td>
                                             <%--<td><c:out value="${elements.state}"/></td>--%>
                                             <td>

@@ -1,11 +1,13 @@
 package by.ibrel.kitan.logic.service;
 
 import by.ibrel.kitan.logic.dao.entity.Image;
+import by.ibrel.kitan.logic.dao.entity.ProductCategory;
 import by.ibrel.kitan.logic.dao.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.repository.ProductRepository;
 import by.ibrel.kitan.logic.dao.entity.Product;
 import by.ibrel.kitan.logic.service.dto.ProductDto;
 import by.ibrel.kitan.logic.service.impl.IImageService;
+import by.ibrel.kitan.logic.service.impl.IProductCategoryService;
 import by.ibrel.kitan.logic.service.impl.IProductService;
 import by.ibrel.kitan.logic.service.impl.IShoppingCartService;
 
@@ -44,9 +46,25 @@ public class ProductService implements IProductService {
     private IImageService iImageService;
 
     @Autowired
+    private IProductCategoryService productCategoryService;
+
+    @Autowired
     private ServletContext servletContext;
 
     //API
+
+
+//    public ProductService() {
+//    }
+//
+//    @Autowired
+//    public ProductService(ProductRepository productRepository, IShoppingCartService cartService, IImageService iImageService, IProductCategoryService productCategoryService, ServletContext servletContext) {
+//        this.productRepository = productRepository;
+//        this.cartService = cartService;
+//        this.iImageService = iImageService;
+//        this.productCategoryService = productCategoryService;
+//        this.servletContext = servletContext;
+//    }
 
     @Override
     public synchronized Product addProduct(final ProductDto productDto, final Long idImage){
@@ -62,7 +80,7 @@ public class ProductService implements IProductService {
 
         Product product = new Product(productDto.getNameProduct(), productDto.getModel(), productDto.getColor(),
                 productDto.getCountryProduct(), new BigDecimal(productDto.getPrice()), productDto.getBarcode(),
-                productDto.getCategory(), productDto.quantityConvert(productDto.getQuantity()), image);
+                productCategoryService.findByName(productDto.getCategory()), productDto.quantityConvert(productDto.getQuantity()), image);
 
         save(product);
         return product;

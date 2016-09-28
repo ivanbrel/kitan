@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.context.MessageSource;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -113,20 +114,6 @@ public class ShoppingCartController {
         model.addAttribute("history", purchaseHistoryService.listHistory(shoppingCart.getId()));
 
         return "cart.show";
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-
-        binder.registerCustomEditor(List.class,"products", new CustomCollectionEditor(List.class){
-
-            @Override
-            protected Object convertElement(Object element) {
-                Long id = Long.parseLong(element.toString());
-                return productService.findOne(id);
-            }
-        });
-
     }
 
     @RequestMapping(value = {"/cart/sell/{id}"}, method = RequestMethod.GET)

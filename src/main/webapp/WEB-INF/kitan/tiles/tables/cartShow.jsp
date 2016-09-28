@@ -91,7 +91,7 @@
                                         </a>
                                     </td>
                                     <td>${history.date}</td>
-                                    <td>${history.product.category}</td>
+                                    <td>${history.product.category.name}</td>
                                     <td>${history.product.nameProduct}</td>
                                     <td>${history.product.model}</td>
                                     <td>${history.product.color}</td>
