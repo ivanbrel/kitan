@@ -1,7 +1,7 @@
 package by.ibrel.kitan.logic.service.converters;
 
-import by.ibrel.kitan.logic.dao.entity.Product;
-import by.ibrel.kitan.logic.service.impl.IProductService;
+import by.ibrel.kitan.logic.dao.logic.entity.Product;
+import by.ibrel.kitan.logic.service.logic.impl.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
@@ -10,6 +10,7 @@ import org.springframework.core.convert.converter.Converter;
  * @version 1.0 (28/09/16)
  */
 public class StringToProductConverter implements Converter<String,Product> {
+
 
     private IProductService productService;
 

@@ -1,11 +1,11 @@
 package by.ibrel.kitan.web.security;
 
 
-import by.ibrel.kitan.auth.dao.repository.UserRepository;
-import by.ibrel.kitan.auth.dao.entity.Privilege;
-import by.ibrel.kitan.auth.dao.entity.Role;
-import by.ibrel.kitan.auth.dao.entity.User;
-import by.ibrel.kitan.auth.service.impl.IUserService;
+import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
+import by.ibrel.kitan.logic.dao.auth.entity.Role;
+import by.ibrel.kitan.logic.dao.auth.entity.User;
+import by.ibrel.kitan.logic.service.auth.UserService;
+import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -56,7 +56,7 @@
                             </thead>
 
                             <tbody>
-                                <c:forEach items="${clients}" var="clients">
+                                <c:forEach items="${list}" var="clients">
                                     <tr>
                                         <td>${clients.lastName}</td>
                                         <td>${clients.firstName}</td>

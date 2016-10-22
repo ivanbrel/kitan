@@ -48,7 +48,7 @@
                             </thead>
 
                             <tbody>
-                            <c:forEach items="${price}" var="price">
+                            <c:forEach items="${list}" var="price">
                                 <tr>
                                     <td>${price.dollarUSA}</td>
                                     <td>${price.rubleBY}</td>

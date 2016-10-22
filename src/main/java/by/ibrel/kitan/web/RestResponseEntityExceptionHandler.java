@@ -1,7 +1,7 @@
 package by.ibrel.kitan.web;
 
-import by.ibrel.kitan.auth.exception.InvalidOldPasswordException;
-import by.ibrel.kitan.auth.exception.UserNotFoundException;
+import by.ibrel.kitan.logic.exception.auth.InvalidOldPasswordException;
+import by.ibrel.kitan.logic.exception.auth.UserNotFoundException;
 import by.ibrel.kitan.web.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

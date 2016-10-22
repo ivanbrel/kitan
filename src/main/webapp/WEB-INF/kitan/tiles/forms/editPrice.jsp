@@ -34,9 +34,9 @@
 
                         <!-- start id-form -->
 
-                        <form:form modelAttribute="price" id="form2" class="form-horizontal form-label-left" method="POST">
+                        <form:form modelAttribute="entity" id="form2" class="form-horizontal form-label-left" method="POST">
 
-                            <div class="form-group">
+                            <div class="form-group" style="display: none">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="dollarUSA">Доллар США </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="dollarUSA" type="number" id="dollarUSA" name="dollarUSA" class="form-control col-md-7 col-xs-12" step="any"/>

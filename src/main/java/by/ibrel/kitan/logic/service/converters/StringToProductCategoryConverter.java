@@ -1,7 +1,7 @@
 package by.ibrel.kitan.logic.service.converters;
 
-import by.ibrel.kitan.logic.dao.entity.ProductCategory;
-import by.ibrel.kitan.logic.service.impl.IProductCategoryService;
+import by.ibrel.kitan.logic.dao.logic.entity.ProductCategory;
+import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 

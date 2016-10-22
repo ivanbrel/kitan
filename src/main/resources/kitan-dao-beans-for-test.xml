@@ -28,12 +28,12 @@
         </property>
         <property name="packagesToScan">
             <list>
-                <value>by.ibrel.kitan.logic.dao.entity</value>
+                <value>by.ibrel.kitan.logic.dao.logic.entity</value>
             </list>
         </property>
     </bean>
 
-    <jpa:repositories base-package="by.ibrel.kitan.logic.dao.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
+    <jpa:repositories base-package="by.ibrel.kitan.logic.dao.logic.repository" entity-manager-factory-ref="kitan-entityManagerFactory" transaction-manager-ref="kitan-transactionManager"/>
 
     <bean id="kitan-transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <constructor-arg ref="kitan-entityManagerFactory" />
@@ -51,7 +51,7 @@
         <!--spring based scanning for entity classes-->
         <property name="packagesToScan">
             <list>
-                <value>by.ibrel.kitan.logic.dao.entity</value>
+                <value>by.ibrel.kitan.logic.dao.logic.entity</value>
             </list>
         </property>
         <property name="jpaProperties">

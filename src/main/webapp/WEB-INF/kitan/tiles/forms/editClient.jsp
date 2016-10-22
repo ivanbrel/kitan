@@ -34,7 +34,7 @@
 
                         <!-- start id-form -->
 
-                        <form:form modelAttribute="client" id="form" class="form-horizontal form-label-left" method="post">
+                        <form:form modelAttribute="entity" id="form" class="form-horizontal form-label-left" method="post">
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Фамилия <span class="required">*</span>

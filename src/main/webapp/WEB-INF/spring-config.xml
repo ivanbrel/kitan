@@ -77,10 +77,9 @@
     <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
     <context:component-scan base-package="by.ibrel.kitan.logic"/>
-    <context:component-scan base-package="by.ibrel.kitan.auth"/>
     <context:component-scan base-package="by.ibrel.kitan.web.security"/>
 
-    <bean id="passwordMatchesValidator" class="by.ibrel.kitan.auth.validation.PasswordMatchesValidator"/>
+    <bean id="passwordMatchesValidator" class="by.ibrel.kitan.logic.validation.PasswordMatchesValidator"/>
 
     <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="userDetailsService"/>
