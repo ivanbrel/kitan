@@ -39,10 +39,10 @@
                                 <th>Доллар США</th>
                                 <th>Белоруский рубль</th>
                                 <th>Руский рубль</th>
-                                <th>Евро</th>
-                                <th>Украинская гривня</th>
-                                <th>Китайская юань</th>
-                                <th>Польский злотый</th>
+                                <%--<th>Евро</th>--%>
+                                <%--<th>Украинская гривня</th>--%>
+                                <%--<th>Китайская юань</th>--%>
+                                <%--<th>Польский злотый</th>--%>
                                 <th></th>
                             </tr>
                             </thead>
@@ -53,10 +53,10 @@
                                     <td>${price.dollarUSA}</td>
                                     <td>${price.rubleBY}</td>
                                     <td>${price.rubleRUS}</td>
-                                    <td>${price.euro}</td>
-                                    <td>${price.grivUA}</td>
-                                    <td>${price.chinaUAN}</td>
-                                    <td>${price.polandZLOT}</td>
+                                    <%--<td>${price.euro}</td>--%>
+                                    <%--<td>${price.grivUA}</td>--%>
+                                    <%--<td>${price.chinaUAN}</td>--%>
+                                    <%--<td>${price.polandZLOT}</td>--%>
                                     <td>
                                         <a href="<c:url value='/price/edit/${price.id}'/>" title="Изменить" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -103,30 +103,30 @@
                             <input type="number" step="any" id="rubleRUS" name="rubleRUS" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="euro">Евро</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="number" step="any" id="euro" name="euro" class="form-control col-md-7 col-xs-12">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="grivUA">Украинская гривня</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="number" step="any" id="grivUA" name="grivUA" class="form-control col-md-7 col-xs-12">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chinaUAN">Китайская юань</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="number" step="any" id="chinaUAN" name="chinaUAN" class="form-control col-md-7 col-xs-12">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="polandZLOT">Польский злотый</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="number" step="any" id="polandZLOT" name="polandZLOT" class="form-control col-md-7 col-xs-12">
-                        </div>
-                    </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="euro">Евро</label>--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                            <%--<input type="number" step="any" id="euro" name="euro" class="form-control col-md-7 col-xs-12">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="grivUA">Украинская гривня</label>--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                            <%--<input type="number" step="any" id="grivUA" name="grivUA" class="form-control col-md-7 col-xs-12">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="chinaUAN">Китайская юань</label>--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                            <%--<input type="number" step="any" id="chinaUAN" name="chinaUAN" class="form-control col-md-7 col-xs-12">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="polandZLOT">Польский злотый</label>--%>
+                        <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                            <%--<input type="number" step="any" id="polandZLOT" name="polandZLOT" class="form-control col-md-7 col-xs-12">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">

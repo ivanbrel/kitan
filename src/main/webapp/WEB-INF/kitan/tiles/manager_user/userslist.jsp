@@ -46,7 +46,7 @@
                             </thead>
 
                             <tbody>
-                            <c:forEach items="${users}" var="user">
+                            <c:forEach items="${list}" var="user">
                                 <tr>
                                     <td>
                                         <a href="<c:url value="/resources/img/upload/avatar/${user.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">

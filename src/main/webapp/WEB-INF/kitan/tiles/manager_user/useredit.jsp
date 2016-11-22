@@ -7,7 +7,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Пользователь ${user.login}</h3>
+                <h3>Пользователь ${entity.login}</h3>
 
             </div>
         </div>
@@ -40,7 +40,7 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
-                                    <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/avatar/${user.image.fileName}" alt="Avatar" title="Change the avatar">
+                                    <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/avatar/${entity.image.fileName}" alt="Avatar" title="Change the avatar">
                                 </div>
                             </div>
 
@@ -69,29 +69,29 @@
 
                                         <!-- /.col -->
                                         <div class="col-xs-6">
-                                            <p class="lead">${user.firstName} ${user.lastName}</p>
+                                            <p class="lead">${entity.firstName} ${entity.lastName}</p>
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <tbody>
                                                     <tr>
                                                         <th style="width:50%">Логин:</th>
-                                                        <td>${user.login}</td>
+                                                        <td>${entity.login}</td>
                                                     </tr>
                                                     <tr>
                                                         <th style="width:50%">Фамилия:</th>
-                                                        <td>${user.lastName}</td>
+                                                        <td>${entity.lastName}</td>
                                                     </tr>
                                                     <tr>
                                                         <th style="width:50%">Имя:</th>
-                                                        <td>${user.firstName}</td>
+                                                        <td>${entity.firstName}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Email</th>
-                                                        <td>${user.email}</td>
+                                                        <td>${entity.email}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Телефон:</th>
-                                                        <td>${user.phone}</td>
+                                                        <td>${entity.phone}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -106,7 +106,7 @@
                                         <div class="x_content">
 
                                             <!-- start id-form -->
-                                            <form:form modelAttribute="user" id="form" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+                                            <form:form modelAttribute="entity" id="form" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
                                                 <div class="form-group" style="display: none">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="login">login <span class="required">*</span>
                                                     </label>

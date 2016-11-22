@@ -1,12 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
-import by.ibrel.kitan.logic.dao.logic.entity.Price;
 import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.service.logic.impl.*;
-import by.ibrel.kitan.logic.service.logic.ImageService;
-import by.ibrel.kitan.logic.service.logic.PriceService;
-import by.ibrel.kitan.logic.service.logic.ProductCategoryService;
-import by.ibrel.kitan.logic.service.logic.ProductService;
 import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;
@@ -22,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Collection;
 
 
 import static by.ibrel.kitan.Const.*;
@@ -93,6 +87,6 @@ public class ProductController extends AbstractController<Product>{
 
     @RequestMapping(value = {PRODUCT_EDIT_URL + "/{id}" }, method = RequestMethod.GET)
     public String initFormProduct(@PathVariable Long id, ModelMap model) {
-        return initForm(id,model, productCategoryService.findAll(),PRICE_EDIT_PAGE);
+        return initForm(id,model, productCategoryService.findAll(),PRODUCT_EDIT_PAGE);
     }
 }

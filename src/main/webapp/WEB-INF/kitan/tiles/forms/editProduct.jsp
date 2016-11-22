@@ -35,7 +35,7 @@
                         <div class="profile_img">
                             <div id="crop-avatar">
                                 <!-- Current avatar -->
-                                <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/product/${product.image.fileName}" alt="Avatar" title="${product.nameProduct} ${product.model}">
+                                <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/product/${entity.image.fileName}" alt="Avatar" title="${product.nameProduct} ${product.model}">
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
 
                         <!-- start id-form -->
 
-                        <form:form modelAttribute="product" id="form3" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
+                        <form:form modelAttribute="entity" id="form3" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
 
 
                             <div class="form-group" style="display: none">
@@ -87,7 +87,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                         <%--<form:select path="category" items="${listCategory}"/>--%>
                                             <form:select path="category">
-                                                <form:options items="${listCategory}" />
+                                                <form:options items="${lists}" />
                                             </form:select>
                                 </div>
                             </div>
