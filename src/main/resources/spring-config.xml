@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -11,15 +11,22 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <context:component-scan base-package="by.ibrel.kitan.web.controllers"/>
+    <jpa:repositories base-package="by.ibrel.kitan.logic.dao.logic.repository" entity-manager-factory-ref="getEntityManagerFactoryBean" transaction-manager-ref="transactionManager"/>
+
+    <jpa:repositories base-package="by.ibrel.kitan.logic.dao.auth.repository" entity-manager-factory-ref="getEntityManagerFactoryBean" transaction-manager-ref="transactionManager"/>
+
+
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+    <context:component-scan base-package="by.ibrel.kitan"/>
     <context:property-placeholder location="classpath:jdbc.properties" file-encoding="UTF-8"/>
-
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-    <import resource="classpath:kitan-dao-beans.xml"/>
     <import resource="classpath:security-config.xml"/>
+    <!--message-->
+    <import resource="classpath:messages-conf.xml"/>
 
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
 
@@ -76,9 +83,6 @@
 
     <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <context:component-scan base-package="by.ibrel.kitan.logic"/>
-    <context:component-scan base-package="by.ibrel.kitan.web.security"/>
-
     <bean id="passwordMatchesValidator" class="by.ibrel.kitan.logic.validation.PasswordMatchesValidator"/>
 
     <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
@@ -89,12 +93,6 @@
     <bean id="myAuthenticationSuccessHandler" class="by.ibrel.kitan.web.security.MySimpleUrlAuthenticationSuccessHandler"/>
 
     <bean id="userDetailsService" class="by.ibrel.kitan.web.security.MyUserDetailsService"/>
-
-    <!--@Transaction-->
-    <tx:annotation-driven/>
-
-    <!--message-->
-   <import resource="classpath:messages-conf.xml"/>
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <constructor-arg value="11"/>
@@ -111,7 +109,7 @@
     <!-- Uses a database table to maintain a set of persistent login data -->
     <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
         <property name="createTableOnStartup" value="false" />
-        <property name="dataSource" ref="kitan-ds" />
+        <property name="dataSource" ref="dataSource" />
     </bean>
 
 
@@ -160,11 +158,12 @@
     <mvc:view-controller path="/cart/list" view-name="purchase.list"/>
     <mvc:view-controller path="/product/list" view-name="product.list"/>
     <mvc:view-controller path="/product/add-page" view-name="product.add"/>
-    <mvc:view-controller path="/price/list" view-name="price.list"/>
-    <mvc:view-controller path="/price/add-page" view-name="price.add"/>
     <mvc:view-controller path="/cart/show" view-name="purchase.show"/>
-    <mvc:view-controller path="/product/catalog" view-name="product.category.list"/>
 
+    <mvc:view-controller path="/configuration/price/list" view-name="price.list"/>
+    <mvc:view-controller path="/configuration/price/add-page" view-name="price.add"/>
+    <mvc:view-controller path="/configuration/product-category/list" view-name="product.category.list"/>
+    <mvc:view-controller path="/configuration/product-color/list" view-name="product.color.list"/>
 
     <mvc:view-controller path="/error/404" view-name="error.404"/>
     <mvc:view-controller path="/error/405" view-name="error.405"/>

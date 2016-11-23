@@ -43,7 +43,7 @@ public class ProductDto implements Serializable{
 
     @NotNull
     @Size(min = 1)
-    private String barcode;
+    private String brand;
 
     @NotNull
     private String quantity;

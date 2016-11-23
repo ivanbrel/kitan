@@ -58,15 +58,15 @@
                                     </c:forEach>
                                     <%----%>
                                     </td>
-                                    <td>${cart.client.lastName}</td>
+                                    <td>${cart.client.name}</td>
                                     <%--<td>${cart.priceSummary}</td>--%>
                                     <td data-toggle="tooltip" data-placement="right"
                                         title="
                                             <c:forEach items="${price}" var="price">
                                             BY: ${price.rubleBY*cart.priceSummary}
                                             RUS: ${price.rubleRUS*cart.priceSummary}
-                                            Euro: ${price.euro*cart.priceSummary}
-                                            </c:forEach>">${cart.priceSummary}</td>
+                                            </c:forEach>">${cart.priceSummary}
+                                    </td>
                                     <td>${cart.quantity}</td>
                                     <td>${cart.status}</td>
                                     <td>

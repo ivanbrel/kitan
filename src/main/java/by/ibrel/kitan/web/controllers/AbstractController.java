@@ -1,9 +1,6 @@
 package by.ibrel.kitan.web.controllers;
 
-import by.ibrel.kitan.logic.service.AbstractService;
 import by.ibrel.kitan.logic.service.ICommonService;
-import com.google.common.collect.Lists;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 
@@ -15,7 +12,7 @@ import java.util.List;
  * @author ibrel
  * @version 1.0 (06/10/16)
  */
-@Controller
+
 public abstract class AbstractController <T extends Serializable> implements Serializable,ICommonController<T>{
 
     private ICommonService<T> abstractService;
@@ -42,8 +39,7 @@ public abstract class AbstractController <T extends Serializable> implements Ser
 
     public String initForm(final Long id, ModelMap modelMap, List<?> lists, String returnPage){
 
-        final T entity = abstractService.findOne(id);
-        modelMap.addAttribute("entity",entity);
+        modelMap.addAttribute("entity",abstractService.findOne(id));
         modelMap.addAttribute("lists",lists);
         return returnPage;
     }

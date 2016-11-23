@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/kitan">
+    <Resource auth="Container" driverClassName="org.mysql.Driver" maxIdle="10"
+        maxTotal="20" maxWaitMillis="-1" name="jdbc/kitanDB" password="root" type="javax.sql.DataSource"
+        url="jdbc:mysql://" username="root" />
+</Context>

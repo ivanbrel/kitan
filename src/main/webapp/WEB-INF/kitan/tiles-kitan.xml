@@ -142,6 +142,16 @@
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/editProductCategory.jsp"/>
     </definition>
 
+    <!--product color-->
+    <definition name="product.color.list" extends="kitan.main">
+        <put-attribute name="titleKey" value="Цавет"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/tables/productColorList.jsp"/>
+    </definition>
+    <definition name="product.color.edit" extends="kitan.main">
+        <put-attribute name="titleKey" value="Изменить цвет"/>
+        <put-attribute name="content" value="/WEB-INF/kitan/tiles/forms/editColorProduct.jsp"/>
+    </definition>
+
     <!--error page-->
     <definition extends="kitan.error" name="error.403">
         <put-attribute name="content" value="/WEB-INF/kitan/tiles/errors/403.jsp"/>

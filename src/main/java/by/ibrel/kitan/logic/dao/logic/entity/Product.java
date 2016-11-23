@@ -35,13 +35,15 @@ public class Product implements Serializable {
 
     private String model;
 
-    private String color;
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "COLOR_ID")
+    private ColorProduct color;
 
     private String countryProduct;
 
     private BigDecimal price;
 
-    private String barcode;
+    private String brand;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "CATEGORY_ID")
@@ -56,13 +58,14 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String nameProduct, String model, String color, String countryProduct, BigDecimal price, String barcode, ProductCategory category, Integer quantity, Image image){
+    public Product(String nameProduct, String model, ColorProduct color, String countryProduct, BigDecimal price, String brand,
+                   ProductCategory category, Integer quantity, Image image){
         this.nameProduct = nameProduct;
         this.model = model;
         this.color = color;
         this.countryProduct = countryProduct;
         this.price = price;
-        this.barcode = barcode;
+        this.brand = brand;
         this.category = category;
         this.quantity = quantity;
         this.image = image;

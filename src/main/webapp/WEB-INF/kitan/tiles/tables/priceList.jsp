@@ -58,7 +58,7 @@
                                     <%--<td>${price.chinaUAN}</td>--%>
                                     <%--<td>${price.polandZLOT}</td>--%>
                                     <td>
-                                        <a href="<c:url value='/price/edit/${price.id}'/>" title="Изменить" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/configuration/price/edit/${price.id}'/>" title="Изменить" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                         </a>
                                         <%--<a href="<c:url value='/price/delete/${price.id}'/>" title="Delete" class="btn btn-default btn-xs">--%>
@@ -84,7 +84,7 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/price/add" method="POST">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/configuration/price/add" method="POST">
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>

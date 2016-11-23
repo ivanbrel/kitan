@@ -37,7 +37,7 @@
                                     </tr>
                                     <tr>
                                         <th>Клиент</th>
-                                        <td>${cart.client.lastName}</td>
+                                        <td>${cart.client.name}</td>
                                     </tr>
                                     <tr>
                                         <th>Персональная скидка</th>

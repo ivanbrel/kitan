@@ -37,46 +37,55 @@
                         <form:form modelAttribute="entity" id="form" class="form-horizontal form-label-left" method="post">
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Фамилия <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">ФИО/Наименование организации <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="lastName" type="text" id="lastName" name="lastName" required="required" class="form-control col-md-7 col-xs-12"/>
+                                    <form:input path="name" type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">Имя <span class="required">*</span>
-                                </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameSiteOrShop">Название (сайт или магазин)</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="firstName" type="text" id="firstName" name="firstName" required="required" class="form-control col-md-7 col-xs-12"/>
+                                    <form:input path="nameSiteOrShop" type="text" id="nameSiteOrShop" name="nameSiteOrShop" class="form-control col-md-7 col-xs-12"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12">Email </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <form:input path="email" id="email" class="form-control col-md-7 col-xs-12" type="email" name="email"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Телефон <span class="required">*</span>
-                                </label>
+                                <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Контакты </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="phone" id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number"/>
+                                    <form:input path="phone" id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" type="number"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="discountPrice" class="control-label col-md-3 col-sm-3 col-xs-12">Персональная скидка <span class="required">*</span>
-                                </label>
+                                <label for="workMode" class="control-label col-md-3 col-sm-3 col-xs-12">Режим работы </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="discountPrice" id="discountPrice" name="discountPrice" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number"/>
+                                    <form:input path="workMode" id="workMode" name="workMode" class="date-picker form-control col-md-7 col-xs-12"  type="text"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="account" class="control-label col-md-3 col-sm-3 col-xs-12">Счёт клиента <span class="required">*</span>
-                                </label>
+                                <label for="discountPrice" class="control-label col-md-3 col-sm-3 col-xs-12">Персональная скидка</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="account" id="account" name="account" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number"/>
+                                    <form:input path="discountPrice" id="discountPrice" name="discountPrice" class="date-picker form-control col-md-7 col-xs-12" type="number"/>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="note" class="control-label col-md-3 col-sm-3 col-xs-12">Примечание</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <form:input path="note" id="note" name="note" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                </div>
+                            </div>
+
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

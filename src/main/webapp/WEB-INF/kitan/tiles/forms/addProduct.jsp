@@ -57,13 +57,12 @@
                             <div class="form-group">
                                 <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <%--<input id="color" class="form-control col-md-7 col-xs-12" type="text" name="color">--%>
-                                        <select id="color" name="color" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                            <option value="Красный">Красный</option>
-                                            <option value="Синий">Синий</option>
-                                            <option value="Чёрный">Чёрный</option>
-                                            <option value="Зелёный">Зелёный</option>
-                                        </select>
+                                    <select id="color" name="color" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                        <option value="${null}">Выберите цвет</option>
+                                        <c:forEach items="${listColor}" var="list">
+                                            <option value="${list.name}">${list.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -79,11 +78,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand">Бренд (Торговая марка)</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="brand" name="brand" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select id="category" name="category" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                             <option value="${null}">Выберите категорию товара</option>
-                                            <c:forEach items="${list}" var="list">
+                                            <c:forEach items="${listCategory}" var="list">
                                                 <option value="${list.name}">${list.name}</option>
                                             </c:forEach>
                                         </select>
@@ -92,13 +97,13 @@
                             <div class="form-group">
                                 <label for="price" class="control-label col-md-3 col-sm-3 col-xs-12">Цена </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="price" name="price" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number" step="any">
+                                    <input id="price" name="price" class="date-picker form-control col-md-7 col-xs-12" type="number" step="any">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="quantity" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                    <input id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" type="number">
                                 </div>
                             </div>
 
@@ -115,7 +120,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Изображение </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="file-3" name="fileUpload" type="file" multiple=false required="required">
+                                    <input id="file-3" name="fileUpload" type="file" multiple=false >
                                     <%--<input name="fileUpload" type="file" class="file" multiple>--%>
                                 </div>
                             </div>

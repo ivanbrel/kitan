@@ -41,6 +41,7 @@
                                 <th>Модель</th>
                                 <th>Цвет</th>
                                 <th>Страна</th>
+                                <th>Бренд</th>
                                 <th>Цена</th>
                                 <th>Категория</th>
                                 <th>Количество</th>
@@ -58,8 +59,9 @@
                                         </td>
                                         <td>${product.nameProduct}</td>
                                         <td>${product.model}</td>
-                                        <td>${product.color}</td>
+                                        <td>${product.color.name}</td>
                                         <td>${product.countryProduct}</td>
+                                        <td>${product.brand}</td>
                                         <td data-toggle="tooltip" data-placement="right"
                                             title="
                                             <c:forEach items="${price}" var="price">

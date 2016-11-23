@@ -49,8 +49,9 @@
                     </li>
                     <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.management"/><span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/price/list"><spring:message code="info.word.ratedetermination"/> </a></li>
-                            <li><a href="${ctx}/product/category/list"><spring:message code="info.word.categorProducts"/> </a></li>
+                            <li><a href="${ctx}/configuration/price/list"><spring:message code="info.word.ratedetermination"/> </a></li>
+                            <li><a href="${ctx}/configuration/product-category/list"><spring:message code="info.word.categoryProducts"/> </a></li>
+                            <li><a href="${ctx}/configuration/product-color/list"><spring:message code="info.word.colorProducts"/> </a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-table"></i> Таблицы <span class="fa fa-chevron-down"></span></a>

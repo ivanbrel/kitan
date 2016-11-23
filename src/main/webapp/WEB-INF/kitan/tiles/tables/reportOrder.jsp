@@ -63,10 +63,9 @@
                                 <div class="col-sm-4 invoice-col">
                                     Покупатель
                                     <address>
-                                        <strong>${cart.client.firstName} ${cart.client.lastName}</strong>
-                                        <br>Адрес: ${cart.client.address}
+                                        <strong>${cart.client.name}</strong>
                                         <br>Телефон: ${cart.client.phone}
-                                        <br>Email: j${cart.client.email}
+                                        <br>Email: ${cart.client.email}
                                     </address>
                                 </div>
                                 <!-- /.col -->

@@ -2,6 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="forms" uri="http://www.springframework.org/tags/form" %>
+
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="${ctx}/resources/js/updateAndCheckPassword.js"></script>
+
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -106,12 +111,12 @@
                                         <div class="x_content">
 
                                             <!-- start id-form -->
-                                            <form:form modelAttribute="entity" id="form" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+                                            <forms:form modelAttribute="entity" id="formEditUser" class="form-horizontal form-label-left" method="post" >
                                                 <div class="form-group" style="display: none">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="login">login <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <form:input path="login" type="text" id="login" name="login" required="required" class="form-control col-md-7 col-xs-12"/>
+                                                        <forms:input path="login" type="text" id="login" name="login" required="required" class="form-control col-md-7 col-xs-12"/>
                                                     </div>
                                                 </div>
 
@@ -119,28 +124,28 @@
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Фамилия <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <form:input path="lastName" type="text" id="lastName" name="lastName" required="required" class="form-control col-md-7 col-xs-12"/>
+                                                        <forms:input path="lastName" type="text" id="lastName" name="lastName" required="required" class="form-control col-md-7 col-xs-12"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">Имя <span class="required">*</span></label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <form:input path="firstName" type="text" id="firstName" name="firstName" required="required" class="form-control col-md-7 col-xs-12"/>
+                                                        <forms:input path="firstName" type="text" id="firstName" name="firstName" required="required" class="form-control col-md-7 col-xs-12"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <form:input path="email" type="email" id="email" name="email" class="form-control col-md-7 col-xs-12"/>
+                                                        <forms:input path="email" type="email" id="email" name="email" class="form-control col-md-7 col-xs-12"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Телефон
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <form:input path="phone" type="phone" id="phone" name="phone" class="form-control col-md-7 col-xs-12"/>
+                                                        <forms:input path="phone" type="phone" id="phone" name="phone" class="form-control col-md-7 col-xs-12"/>
                                                     </div>
                                                 </div>
 
@@ -157,7 +162,7 @@
                                                         <input type="button" value="Отменить" class="btn btn-default"  onclick="history.back()"/>
                                                     </div>
                                                 </div>
-                                            </form:form>
+                                            </forms:form>
 
                                         </div>
                                         <!-- end user edit -->
@@ -212,7 +217,3 @@
     </div>
 </div>
 <!-- /page content -->
-
-
-<script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${ctx}/resources/js/updateAndCheckPassword.js"></script>

@@ -18,57 +18,43 @@ import java.math.BigDecimal;
 @Table(name = "client")
 @EqualsAndHashCode
 @ToString
+@Getter@Setter
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
     @Column(name = "CLIENT_ID")
     private Long id;
-
-    @Getter @Setter
-    private String firstName;
-
-    @Getter @Setter
-    private String lastName;
-
-    @Getter @Setter
+    private String name;
+    private String nameSiteOrShop;
     private String email;
-
-    @Getter @Setter
     private String phone;
-
-    @Getter @Setter
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "ADDRESS_ID")
-    private Address address;
-
-    @Getter @Setter
-    private String account;
-
-    @Getter @Setter
+    private String workMode;
     private BigDecimal discountPrice;
+    private String note;
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String email, String phone, String account, Address address, BigDecimal discountPrice) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Client(String name, String nameSiteOrShop, String email, String phone, String workMode,
+                  BigDecimal discountPrice, String note) {
+        this.name = name;
+        this.nameSiteOrShop = nameSiteOrShop;
         this.email = email;
         this.phone = phone;
-        this.account = account;
-        this.address = address;
+        this.workMode = workMode;
         this.discountPrice = discountPrice;
+        this.note = note;
     }
 
     public Client(ClientDto clientDto){
-        this.firstName = clientDto.getFirstName();
-        this.lastName = clientDto.getLastName();
+        this.name = clientDto.getName();
+        this.nameSiteOrShop = clientDto.getNameSiteOrShop();
         this.email = clientDto.getEmail();
         this.phone = clientDto.getPhone();
-        this.account = clientDto.getAccount();
-        this.discountPrice = clientDto.getDiscount();
+        this.workMode = clientDto.getWorkMode();
+        this.discountPrice = clientDto.getDiscountPrice();
+        this.note = clientDto.getNote();
     }
 }

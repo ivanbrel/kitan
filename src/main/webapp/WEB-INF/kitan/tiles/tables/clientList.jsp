@@ -45,12 +45,13 @@
                         <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
                             <thead>
                             <tr>
-                                <th>Фамилия</th>
-                                <th>Имя</th>
+                                <th>ФИО/Наименование организации</th>
+                                <th>Название (сайт или магазин)</th>
                                 <th>EMAIL</th>
-                                <th>Телефон</th>
-                                <th>Скидка</th>
-                                <th>Счёт</th>
+                                <th>Контакты</th>
+                                <th>Режим работы</th>
+                                <th>Перссональная скидка</th>
+                                <th>Примечание</th>
                                 <th width="120">Опции</th>
                             </tr>
                             </thead>
@@ -58,12 +59,13 @@
                             <tbody>
                                 <c:forEach items="${list}" var="clients">
                                     <tr>
-                                        <td>${clients.lastName}</td>
-                                        <td>${clients.firstName}</td>
+                                        <td>${clients.name}</td>
+                                        <td>${clients.nameSiteOrShop}</td>
                                         <td>${clients.email}</td>
                                         <td>${clients.phone}</td>
+                                        <td>${clients.workMode}</td>
                                         <td>${clients.discountPrice}%</td>
-                                        <td>${clients.account}</td>
+                                        <td>${clients.note}</td>
                                         <td>
                                             <a href="<c:url value='/client/edit/${clients.id}'/>" title="Edit" class="btn btn-default btn-xs">
                                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

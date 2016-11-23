@@ -77,9 +77,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="barcode" class="control-label col-md-3 col-sm-3 col-xs-12">Штрих-код </label>
+                                <label for="brand" class="control-label col-md-3 col-sm-3 col-xs-12">Бренд (Торговая марка) </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="barcode" id="barcode" name="barcode" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+                                    <form:input path="brand" id="brand" name="brand" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">

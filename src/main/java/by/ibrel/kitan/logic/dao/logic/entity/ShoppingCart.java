@@ -111,6 +111,13 @@ public class ShoppingCart implements Serializable {
         return (price.subtract(discount.multiply(price).divide(BigDecimal.valueOf(100),3))).multiply(BigDecimal.valueOf(quantity));
     }
 
+    public BigDecimal summaryPriceWithoutDiscount(BigDecimal price, Integer quantity){
+        //BigDecimal sum = BigDecimal.ZERO;
+        //discount
+        //sum += ((product.getPrice())-(product.getPrice()*discount/100))*quantity;
+        return (price.multiply(BigDecimal.valueOf(quantity)));
+    }
+
     public void changeStatusFormed(ShoppingCart shoppingCart) {
         shoppingCart.setStatus(Status.FORMED);
     }

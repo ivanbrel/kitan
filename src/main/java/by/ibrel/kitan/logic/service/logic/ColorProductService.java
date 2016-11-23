@@ -2,7 +2,7 @@ package by.ibrel.kitan.logic.service.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.ColorProduct;
 import by.ibrel.kitan.logic.dao.logic.repository.ColorProductRepository;
-import by.ibrel.kitan.logic.exception.logic.ColorProductExceptons;
+import by.ibrel.kitan.logic.exception.logic.ColorProductExceptions;
 import by.ibrel.kitan.logic.service.AbstractService;
 import by.ibrel.kitan.logic.service.logic.dto.ColorProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.IColorProductService;
@@ -25,13 +25,18 @@ public class ColorProductService extends AbstractService<ColorProduct> implement
     }
 
     @Override
+    //TODO хуй знает как ты мог так написать ! исправить
     public ColorProduct create(Object o) {
 
         final ColorProductDto colorProductDto = (ColorProductDto) o;
 
-        if (!exists(colorProductDto.getNameColorProduct()))
-            throw new ColorProductExceptons();
-
+        if (exists(colorProductDto.getNameColorProduct())) {
+            try {
+                throw new ColorProductExceptions("Color exists");
+            } catch (ColorProductExceptions c) {
+                c.printStackTrace();
+            }
+        }
 
         ColorProduct colorProduct = new ColorProduct(colorProductDto);
         save(colorProduct);

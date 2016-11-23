@@ -27,7 +27,7 @@ import static by.ibrel.kitan.Const.*;
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/product")
 public class ProductController extends AbstractController<Product>{
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -37,12 +37,14 @@ public class ProductController extends AbstractController<Product>{
     private IPriceService priceService;
     private ServletContext servletContext;
     private IProductCategoryService productCategoryService;
+    private IColorProductService colorProductService;
     private IShoppingCartService shoppingCartService;
 
     @Autowired
     public ProductController(final IProductService productService, final IImageService imageService,
                              final IPriceService priceService, final ServletContext servletContext,
-                             final IProductCategoryService productCategoryService, final IShoppingCartService shoppingCartService) {
+                             final IProductCategoryService productCategoryService, final IShoppingCartService shoppingCartService,
+                             final IColorProductService colorProductService) {
         super(productService);
         this.productService = productService;
         this.imageService = imageService;
@@ -50,29 +52,37 @@ public class ProductController extends AbstractController<Product>{
         this.servletContext = servletContext;
         this.productCategoryService = productCategoryService;
         this.shoppingCartService = shoppingCartService;
+        this.colorProductService = colorProductService;
     }
 
-    @RequestMapping(value = {PRODUCT_LIST_URL}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
     public String listProduct(ModelMap model) {
         model.addAttribute("list",priceService.findAll());
         model.addAttribute("price", priceService.findAll());
         return listEntity(model,PRODUCT_LIST_PAGE);
     }
 
-    @RequestMapping(value = {PRODUCT_ADD_URL}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/add-page"}, method = RequestMethod.GET)
+    public String listProductCategoryForAddProduct(ModelMap modelMap){
+        modelMap.addAttribute("listCategory", productCategoryService.findAll());
+        modelMap.addAttribute("listColor", colorProductService.findAll());
+        return "product.add";
+    }
+
+    @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
     public String createProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload,
                                 final ModelMap model) throws IOException {
         productService.create(productDto, imageService.createImage(fileUpload,servletContext.getRealPath(PRODUCT_PATH)));
         return listProduct(model);
     }
 
-    @RequestMapping(value = {PRODUCT_DELETE_URL + "/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
     public String deleteProduct(@PathVariable Long id, ModelMap model) throws IOException {
         productService.delete(id,shoppingCartService.findAll());
         return listProduct(model);
     }
 
-    @RequestMapping(value = { PRODUCT_EDIT_URL + "/{id}" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/edit/{id}" }, method = RequestMethod.POST)
     public String updateProduct(@Valid Product product, final BindingResult result, final ModelMap model,
                                 @ModelAttribute("fileUpload") MultipartFile fileUpload, @PathVariable("id") Long id){
 
@@ -85,7 +95,7 @@ public class ProductController extends AbstractController<Product>{
         return initFormProduct(id,model);
     }
 
-    @RequestMapping(value = {PRODUCT_EDIT_URL + "/{id}" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/edit/{id}" }, method = RequestMethod.GET)
     public String initFormProduct(@PathVariable Long id, ModelMap model) {
         return initForm(id,model, productCategoryService.findAll(),PRODUCT_EDIT_PAGE);
     }

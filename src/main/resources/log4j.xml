@@ -71,7 +71,7 @@
     </logger>
 
     <root>
-        <priority value="DEBUG"/>
+        <priority value="WARN"/>
         <appender-ref ref="A_CONSOLE_ERROR"/>
         <appender-ref ref="A_CONSOLE"/>
     </root>

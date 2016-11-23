@@ -1,6 +1,7 @@
 package by.ibrel.kitan.logic.service.logic.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -8,7 +9,7 @@ import lombok.ToString;
  * @version 1.0 (23/11/16)
  */
 @ToString
-@Getter
+@Getter@Setter
 public class ColorProductDto {
 
     private String nameColorProduct;

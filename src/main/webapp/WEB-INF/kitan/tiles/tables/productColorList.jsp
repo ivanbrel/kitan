@@ -17,7 +17,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Категории товара </h2>
+                        <h2>Цвета </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -37,14 +37,14 @@
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
-                            В данной таблице представлены категории для товара </p>
+                            В данной таблице представлены цвета для товара </p>
 
-                        <button style="float: right" type="button" class="btn btn-round btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить категорию</button>
+                        <button style="float: right" type="button" class="btn btn-round btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить цвет</button>
                         <table  class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>Имя категории</th>
-                                <th>Описание категории</th>
+                                <th>Наименование цвета</th>
+                                <th>Описание цвета</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -55,10 +55,10 @@
                                     <td>${list.name}</td>
                                     <td>${list.description}</td>
                                     <td>
-                                        <a href="<c:url value='/configuration/product-category/edit/${list.id}'/>" title="Изменить" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/configuration/product-color/edit/${list.id}'/>" title="Изменить" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                         </a>
-                                        <a href="<c:url value='/configuration/product-category/delete/${list.id}'/>" title="Удалить" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/configuration/product-color/delete/${list.id}'/>" title="Удалить" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </a>
                                             <%--<a href="<c:url value='/price/add/${price.id}'/>" title="Add" class="btn btn-default btn-xs">--%>
@@ -81,37 +81,37 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/configuration/product-category/add" method="POST">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/configuration/product-color/add" method="POST">
 
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Форма добавления новой категории</h4>
-            </div>
-            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Форма добавления нового цвета</h4>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameCategory">Название <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameColorProduct">Наименование цвета <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="nameCategory" name="nameCategory" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="nameColorProduct" name="nameColorProduct" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="descriptionCategory">Описание
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="descriptionColorProduct">Описание цвета
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="descriptionCategory" name="descriptionCategory" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="descriptionColorProduct" name="descriptionColorProduct" class="form-control col-md-7 col-xs-12">
                         </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <input type="submit" value="Добавить" class="btn btn-success" />
-                        <input type="reset" value="Очистить форму" class="btn btn-default"  />
-                        <%--<input type="button" value="Назад" onclick="history.back()" class="btn btn-danger"/>--%>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <input type="submit" value="Добавить" class="btn btn-success" />
+                            <input type="reset" value="Очистить форму" class="btn btn-default"  />
+                            <%--<input type="button" value="Назад" onclick="history.back()" class="btn btn-danger"/>--%>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
 

@@ -30,28 +30,18 @@ public class ClientService extends AbstractService<Client> implements IClientSer
     //API
 
     public Client findByNameClient(String nameClient) {
-        return repository.findByLastName(nameClient);
-    }
-
-
-    public Client findByAccountClient(String account) {
-        return repository.findByAccount(account);
+        return repository.findByName(nameClient);
     }
 
     @Override
     @Transactional
     public Client create(Object o) {
         ClientDto clientDto = (ClientDto) o;
-        if(clientExists(clientDto.getAccount())){
-            throw new ClientExistsException("Client with last name " + clientDto.getLastName() + " and number account "
-                    + clientDto.getAccount() + " already exists");
+        if(clientExists(clientDto.getName())){
+            throw new ClientExistsException("Client with name " + clientDto.getName() + " already exists");
         }
 
-//        final Address address = new Address(clientDto.getCountry(),clientDto.getTown(),clientDto.getStreet(),clientDto.getPostCode());
-
-
-        final Client client = new Client(clientDto.getFirstName(),clientDto.getLastName(),clientDto.getEmail(),clientDto.getPhone(),
-                clientDto.getAccount(), null, clientDto.getDiscount());
+        final Client client = new Client(clientDto);
         save(client);
         return client;
     }
@@ -59,10 +49,10 @@ public class ClientService extends AbstractService<Client> implements IClientSer
     /**
      * Check exists account
      *
-     * @param account client account
+     * @param name client account
      * @return true if account exists
      */
-    private boolean clientExists(final String account) {
-        return findByAccountClient(account) != null;
+    private boolean clientExists(final String name) {
+        return findByNameClient(name) != null;
     }
 }

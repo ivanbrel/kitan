@@ -10,6 +10,4 @@ import by.ibrel.kitan.logic.service.ICommonService;
 public interface IClientService extends ICommonService<Client> {
 
     Client findByNameClient(String nameClient);
-
-    Client findByAccountClient(String account);
 }

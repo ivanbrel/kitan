@@ -58,7 +58,7 @@ public class ShoppingCartService extends AbstractService<ShoppingCart> implement
     @Transactional
     public synchronized void sellProduct(final ShoppingCart shoppingCart, final Integer quantity, String seller) throws PurchaseQuantityLimitException {
 
-        BigDecimal priceWithDiscount = BigDecimal.ZERO;
+        BigDecimal price = BigDecimal.ZERO;
         ShoppingCart entity = shoppingCartRepository.findOne(shoppingCart.getId());
         Product productForHistory = new Product();
 
@@ -69,8 +69,15 @@ public class ShoppingCartService extends AbstractService<ShoppingCart> implement
                     entity.addToProducts(product);
                 }
 
-                priceWithDiscount = shoppingCart.summaryPrice(product.getPrice(), entity.getClient().getDiscountPrice(), quantity);
-                entity.incSum(priceWithDiscount);
+                if(entity.getClient().getDiscountPrice()!=null){
+                    //with discount
+                    price = shoppingCart.summaryPrice(product.getPrice(), entity.getClient().getDiscountPrice(), quantity);
+                    entity.incSum(price);
+                }else{
+                    //without discount
+                    price = shoppingCart.summaryPriceWithoutDiscount(product.getPrice(), quantity);
+                    entity.incSum(price);
+                }
                 entity.incQuantity(quantity);
                 product.decQuantity(quantity);
                 productService.save(product);
@@ -86,7 +93,7 @@ public class ShoppingCartService extends AbstractService<ShoppingCart> implement
 
         entity.changeStatusForming(entity);
         save(entity);
-        purchaseHistoryService.create(entity, productForHistory, quantity, priceWithDiscount, seller);
+        purchaseHistoryService.create(entity, productForHistory, quantity, price, seller);
     }
 
     @Override

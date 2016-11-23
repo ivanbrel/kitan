@@ -5,4 +5,20 @@
 16. админку !!!
 19. удаление товара.
 20. online update principal for avatar
-21. avatar registration
+21. if exists return error
+22. change price (BYN,RUS)
+
+db config java
+fix photo load and add def photo new user
+change client, add color entity(full)
+
+
+
+<Resource name="jdbc/kitanDB"
+				  auth="Container"
+				  type="javax.sql.DataSource"
+				  username="root"
+				  password="ibrel"
+				  driverClassName="com.mysql.jdbc.Driver"
+				  url="jdbc:mysql://localhost:3306/kitan"
+				  />

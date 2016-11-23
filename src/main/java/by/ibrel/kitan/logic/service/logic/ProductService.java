@@ -1,15 +1,15 @@
 package by.ibrel.kitan.logic.service.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
+import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.dao.logic.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.logic.repository.ProductRepository;
-import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.service.AbstractService;
+import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
+import by.ibrel.kitan.logic.service.logic.impl.IColorProductService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;
 import by.ibrel.kitan.logic.service.logic.impl.IProductService;
-import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 import static by.ibrel.kitan.Const.PRODUCT_PATH;
 
@@ -36,18 +35,21 @@ public class ProductService extends AbstractService<Product> implements IProduct
     private ProductRepository productRepository;
     private IImageService iImageService;
     private IProductCategoryService productCategoryService;
+    private IColorProductService colorProductService;
     private ServletContext servletContext;
 
     //API
 
     @Autowired
     public ProductService(final ProductRepository productRepository, final IImageService iImageService,
-                          final IProductCategoryService productCategoryService, final ServletContext servletContext) {
+                          final IProductCategoryService productCategoryService, final ServletContext servletContext,
+                          final IColorProductService colorProductService) {
         super(productRepository);
         this.productRepository = productRepository;
         this.iImageService = iImageService;
         this.productCategoryService = productCategoryService;
         this.servletContext = servletContext;
+        this.colorProductService = colorProductService;
     }
 
 
@@ -64,8 +66,8 @@ public class ProductService extends AbstractService<Product> implements IProduct
             image = iImageService.findOne(idImage);
         }
 
-        Product product = new Product(productDto.getNameProduct(), productDto.getModel(), productDto.getColor(),
-                productDto.getCountryProduct(), new BigDecimal(productDto.getPrice()), productDto.getBarcode(),
+        Product product = new Product(productDto.getNameProduct(), productDto.getModel(), colorProductService.findByName(productDto.getColor()),
+                productDto.getCountryProduct(), new BigDecimal(productDto.getPrice()), productDto.getBrand(),
                 productCategoryService.findByName(productDto.getCategory()), productDto.quantityConvert(productDto.getQuantity()), image);
 
         save(product);
@@ -108,7 +110,7 @@ public class ProductService extends AbstractService<Product> implements IProduct
             entity.setModel(product.getModel());
             entity.setColor(product.getColor());
             entity.setCountryProduct(product.getCountryProduct());
-            entity.setBarcode(product.getBarcode());
+            entity.setBrand(product.getBrand());
             entity.setCategory(product.getCategory());
             entity.setPrice(product.getPrice());
             entity.setQuantity(product.getQuantity());

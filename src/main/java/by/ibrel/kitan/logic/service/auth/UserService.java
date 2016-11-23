@@ -1,15 +1,14 @@
 package by.ibrel.kitan.logic.service.auth;
 
-import by.ibrel.kitan.logic.service.auth.dto.UserDto;
-import by.ibrel.kitan.logic.dao.auth.repository.UserRepository;
-import by.ibrel.kitan.logic.dao.auth.entity.User;
-import by.ibrel.kitan.logic.exception.auth.LoginExistsException;
 import by.ibrel.kitan.Const;
+import by.ibrel.kitan.logic.dao.auth.entity.User;
+import by.ibrel.kitan.logic.dao.auth.repository.UserRepository;
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
+import by.ibrel.kitan.logic.exception.auth.LoginExistsException;
 import by.ibrel.kitan.logic.service.AbstractService;
+import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
-import by.ibrel.kitan.logic.service.logic.ImageService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,7 +98,7 @@ public class UserService extends AbstractService<User> implements IUserService{
 
         UserDto userDto = (UserDto) o;
 
-        Image image = new Image();
+        Image image = new Image("user.png");
         iImageService.save(image);
 
         if (loginExist(userDto.getLogin())){

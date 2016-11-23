@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,43 +15,12 @@ import java.math.BigDecimal;
 @Getter@Setter
 public class ClientDto implements Serializable{
 
-    @NotNull
-    @Size(min = 1)
-    private String firstName;
-
-    @NotNull
-    @Size(min = 1)
-    private String lastName;
-
-    @NotNull
-    @Size(min = 1)
+    private String name;
+    private String nameSiteOrShop;
     private String email;
-
-    @NotNull
-    @Size(min = 1)
     private String phone;
+    private String workMode;
+    private BigDecimal discountPrice;
+    private String note;
 
-    @NotNull
-    @Size(min = 1)
-    private String account;
-
-    @NotNull
-    @Size(min = 1)
-    private BigDecimal discount;
-
-    @NotNull
-    @Size(min = 1)
-    private String country;
-
-    @NotNull
-    @Size(min = 1)
-    private String town;
-
-    @NotNull
-    @Size(min = 1)
-    private String street;
-
-    @NotNull
-    @Size(min = 1)
-    private Integer postCode;
 }

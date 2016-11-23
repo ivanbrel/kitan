@@ -51,58 +51,56 @@
                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="${ctx}/client/add" method="POST">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Фамилия <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">ФИО/Наименование организаци <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="lastName" name="lastName" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">Имя <span class="required">*</span>
-                                    </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nameSiteOrShop">Название (сайт или магазин)</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="firstName" name="firstName" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="nameSiteOrShop" name="nameSiteOrShop" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12">Email </label>
+                                    <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12 ">Email </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input id="email" class="form-control col-md-7 col-xs-12" type="email" name="email">
                                     </div>
                                 </div>
-                                <%--<div class="form-group">--%>
-                                    <%--<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>--%>
-                                    <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
-                                        <%--<div id="gender" class="btn-group" data-toggle="buttons">--%>
-                                            <%--<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                                                <%--<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;--%>
-                                            <%--</label>--%>
-                                            <%--<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">--%>
-                                                <%--<input type="radio" name="gender" value="female"> Female--%>
-                                            <%--</label>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
+
                                 <div class="form-group">
-                                    <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Телефон <span class="required">*</span>
-                                    </label>
+                                    <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">Телефон</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                        <input id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" type="number">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="account" class="control-label col-md-3 col-sm-3 col-xs-12">Счёт клиента <span class="required">*</span>
-                                    </label>
+                                    <label for="workMode" class="control-label col-md-3 col-sm-3 col-xs-12">Режим работы</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="account" name="account" class="date-picker form-control col-md-7 col-xs-12" required="required" type="number">
+                                        <input id="workMode" name="workMode" class="date-picker form-control col-md-7 col-xs-12" type="text">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="discount" class="control-label col-md-3 col-sm-3 col-xs-12">Персональная скидка</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input id="discount" name="discount" class="date-picker form-control col-md-7 col-xs-12"  type="number">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="note" class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <%--<input id="note" name="note" class="date-picker form-control col-md-7 col-xs-12"  type="text">--%>
+                                        <textarea id="note" name="note" class="form-control" rows="3" placeholder="дополнительная информация" style="margin: 0px -0.625px 0px 0px; width: 460px; height: 74px;"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
