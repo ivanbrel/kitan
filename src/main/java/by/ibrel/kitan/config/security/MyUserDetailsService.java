@@ -1,10 +1,9 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 
 import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.dao.auth.entity.User;
-import by.ibrel.kitan.logic.service.auth.UserService;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Service("userDetailsService")
+@Service
 @Transactional
-public class MyUserDetailsService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService{
 
     @Autowired
     private IUserService userService;
@@ -37,12 +36,10 @@ public class MyUserDetailsService implements UserDetailsService {
         super();
     }
 
-    // API
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        final String ip = getClientIP();
+        final String ip = getClientIp();
         if (loginAttemptService.isBlocked(ip)){
             throw new RuntimeException("blocked");
         }
@@ -57,8 +54,6 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new RuntimeException(e);
         }
     }
-
-    // UTIL
 
     public final Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
         return getGrantedAuthorities(getPrivileges(roles));
@@ -84,9 +79,9 @@ public class MyUserDetailsService implements UserDetailsService {
         return authorities;
     }
 
-    private String getClientIP() {
+    private String getClientIp() {
         final String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader == null) {
+        if (xfHeader ==null){
             return request.getRemoteAddr();
         }
         return xfHeader.split(",")[0];

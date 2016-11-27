@@ -1,4 +1,4 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

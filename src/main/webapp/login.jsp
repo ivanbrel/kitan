@@ -39,7 +39,7 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form method="POST" action="login">
+                <form method="POST" action="${ctx}/login_">
                     <h1>Войти</h1>
                     <c:if test="${not empty param.error}">
                         <span style="color: red; "> <spring:message code="error.login.fail"/></span>

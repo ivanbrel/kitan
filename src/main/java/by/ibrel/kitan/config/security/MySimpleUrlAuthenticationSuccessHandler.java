@@ -1,4 +1,4 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
-@Component("myAuthenticationSuccessHandler")
+@Component
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

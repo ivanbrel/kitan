@@ -13,7 +13,7 @@ $(document).ready(function () {
         }else {
             $("#passwordError").show().html("").hide();
         }
-        $.post(ctx + "/update/password", {password:$("#passwordId").val(), oldPassword: $("#oldPassword").val()}, function (data) {
+        $.post(ctx + "/user/update-password", {password:$("#passwordId").val(), oldPassword: $("#oldPassword").val()}, function (data) {
                 $("#passwordError").show().html([["Пароли не совпадают!"]]).hide();
             if(data.message == "success") {
                 $("#passwordSucc").show().html([["Пароль изменён!"]]);

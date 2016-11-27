@@ -11,49 +11,30 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <jpa:repositories base-package="by.ibrel.kitan.logic.dao.logic.repository" entity-manager-factory-ref="getEntityManagerFactoryBean" transaction-manager-ref="transactionManager"/>
-
     <jpa:repositories base-package="by.ibrel.kitan.logic.dao.auth.repository" entity-manager-factory-ref="getEntityManagerFactoryBean" transaction-manager-ref="transactionManager"/>
-
-
     <context:annotation-config/>
     <tx:annotation-driven/>
     <context:component-scan base-package="by.ibrel.kitan"/>
-    <context:property-placeholder location="classpath:jdbc.properties" file-encoding="UTF-8"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-    <import resource="classpath:security-config.xml"/>
-    <!--message-->
-    <import resource="classpath:messages-conf.xml"/>
+    <!--<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>-->
 
-    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
-
-    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <property name="favorPathExtension" value="false"/>
-        <property name="favorParameter" value="true"/>
-        <property name="mediaTypes">
-            <value>
-                <!--x-javascript=application/x-javascript-->
-                <!--json=application/json-->
-                xml=application/xml
-            </value>
-        </property>
-    </bean>
-
-    <bean id="sortResolver" class="org.springframework.data.web.SortHandlerMethodArgumentResolver"/>
-    <bean id="pageableResolver" class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
-        <constructor-arg ref="sortResolver"/>
-    </bean>
-
-    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <!--<property name="prefix" value="/WEB-INF/views/jsp/"/>-->
-        <property name="prefix" value="/WEB-INF/kitan/tiles/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="order" value="2"/>
-    </bean>
+    <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+        <!--<property name="favorPathExtension" value="false"/>-->
+        <!--<property name="favorParameter" value="true"/>-->
+        <!--<property name="mediaTypes">-->
+            <!--<value>-->
+                <!--&lt;!&ndash;x-javascript=application/x-javascript&ndash;&gt;-->
+                <!--&lt;!&ndash;json=application/json&ndash;&gt;-->
+                <!--xml=application/xml-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
@@ -68,7 +49,7 @@
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>
-                <value>/WEB-INF/kitan/tiles-kitan.xml</value>
+                <value>classpath:tiles-kitan.xml</value>
             </list>
         </property>
         <property name="checkRefresh" value="true"/>
@@ -84,34 +65,6 @@
     <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
     <bean id="passwordMatchesValidator" class="by.ibrel.kitan.logic.validation.PasswordMatchesValidator"/>
-
-    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <property name="userDetailsService" ref="userDetailsService"/>
-        <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean>
-
-    <bean id="myAuthenticationSuccessHandler" class="by.ibrel.kitan.web.security.MySimpleUrlAuthenticationSuccessHandler"/>
-
-    <bean id="userDetailsService" class="by.ibrel.kitan.web.security.MyUserDetailsService"/>
-
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-        <constructor-arg value="11"/>
-    </bean>
-
-    <!-- Defines which remember me implementation to use - in this case using a database table to log 'remembered' tokens -->
-    <bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
-        <constructor-arg index="0" value="rememberKey"/>
-        <constructor-arg index="1" ref="userDetailsService"/>
-        <constructor-arg index="2" ref="jdbcTokenRepository"/>
-        <property name="alwaysRemember" value="true" />
-    </bean>
-
-    <!-- Uses a database table to maintain a set of persistent login data -->
-    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
-        <property name="createTableOnStartup" value="false" />
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-
 
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

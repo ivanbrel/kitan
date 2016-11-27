@@ -43,28 +43,25 @@ public class UserService extends AbstractService<User> implements IUserService{
 
     //API
 
+    @Override
     public User findByLogin(String login) {
         return repository.findByUser(login);
+    }
+
+    @Override
+    public void updateUserRole(UserDto userDto) {
+        User user = findByLogin(userDto.getLogin());
+
+        user.getRoles().clear();
+        userDto.getRoles().forEach(r -> user.addRole(roleService.findByName(r)));
+
+        save(user);
     }
 
     @Transactional
     public void changeUserPassword(User user, String password) {
         user.setPassword(passwordEncoder.encode(password));
         save(user);
-    }
-
-    public boolean checkIfValidOldPassword(User user, String oldPassword) {
-        return passwordEncoder.matches(oldPassword, user.getPassword());
-    }
-
-    /**
-     * Checks exist login
-     *
-     * @param login user login
-     * @return if true, login exist
-     */
-    private boolean loginExist(final String login){
-        return findByLogin(login) != null;
     }
 
     @Override
@@ -109,9 +106,23 @@ public class UserService extends AbstractService<User> implements IUserService{
             }
         }
         User user = new User(userDto.getFirstName(),userDto.getLastName(),userDto.getLogin(),
-                userDto.getEmail(),userDto.getPhone(),passwordEncoder.encode(userDto.getPassword()),image);
+                userDto.getEmail(),Integer.getInteger(userDto.getPhone()),passwordEncoder.encode(userDto.getPassword()),image);
         user.addRole(roleService.findByName(Const.DEFAULT_ROLE));
         save(user);
         return user;
+    }
+
+    /**
+     * Checks exist login
+     *
+     * @param login user login
+     * @return if true, login exist
+     */
+    private boolean loginExist(final String login){
+        return findByLogin(login) != null;
+    }
+
+    public boolean checkIfValidOldPassword(User user, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 }

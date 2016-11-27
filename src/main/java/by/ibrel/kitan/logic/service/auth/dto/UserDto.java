@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author ibrel
@@ -37,7 +38,7 @@ public class UserDto implements Serializable{
 
     @NotNull
     @Size(min = 4)
-    private Integer phone;
+    private String phone;
 
     @ValidPassword
     private String password;
@@ -46,5 +47,5 @@ public class UserDto implements Serializable{
     @Size(min = 8)
     private String matchingPassword;
 
-    private Integer role;
+    private List<String> roles;
 }

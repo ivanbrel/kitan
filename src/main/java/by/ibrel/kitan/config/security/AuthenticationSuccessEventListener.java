@@ -1,4 +1,4 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -9,8 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
+    private final LoginAttemptService loginAttemptService;
+
     @Autowired
-    private LoginAttemptService loginAttemptService;
+    public AuthenticationSuccessEventListener(LoginAttemptService loginAttemptService) {
+        this.loginAttemptService = loginAttemptService;
+    }
 
     @Override
     public void onApplicationEvent(final AuthenticationSuccessEvent e) {

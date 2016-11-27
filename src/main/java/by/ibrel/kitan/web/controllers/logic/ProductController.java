@@ -1,23 +1,25 @@
 package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.Product;
-import by.ibrel.kitan.logic.service.logic.impl.*;
 import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
+import by.ibrel.kitan.logic.service.logic.impl.*;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.IOException;
-
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static by.ibrel.kitan.Const.*;
 
@@ -98,5 +100,17 @@ public class ProductController extends AbstractController<Product>{
     @RequestMapping(value = {"/edit/{id}" }, method = RequestMethod.GET)
     public String initFormProduct(@PathVariable Long id, ModelMap model) {
         return initForm(id,model, productCategoryService.findAll(),PRODUCT_EDIT_PAGE);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/courses/converter" }, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BigDecimal> courses() {
+        List<BigDecimal> list = new ArrayList<>();
+
+        priceService.findAll().forEach(price -> {
+            list.add(price.getRubleBY());
+            list.add(price.getRubleRUS());
+        });
+        return list;
     }
 }

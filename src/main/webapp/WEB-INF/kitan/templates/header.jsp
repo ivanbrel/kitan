@@ -69,13 +69,20 @@
                             <li><a href="${ctx}/ref">Ссылки</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-clone"></i>Админ панель <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="${ctx}/users/list">Список пользователе</a></li>
-                            <li><a href="${ctx}/role/list">Список ролей</a></li>
-                            <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
-                        </ul>
-                    </li>
+                    <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')"/>
+                        <c:choose>
+                        <c:when test="${loggedIn}">
+                            <li><a><i class="fa fa-clone"></i>Админ панель <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="${ctx}/users/list">Список пользователе</a></li>
+                                    <li><a href="${ctx}/role/list">Список ролей</a></li>
+                                    <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
+                                </ul>
+                            </li>
+                        </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+                        </c:choose>
                 </ul>
             </div>
         </div>

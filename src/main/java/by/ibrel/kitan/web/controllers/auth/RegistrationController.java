@@ -1,9 +1,8 @@
 package by.ibrel.kitan.web.controllers.auth;
 
 import by.ibrel.kitan.logic.dao.auth.entity.User;
-import by.ibrel.kitan.logic.service.auth.UserService;
-import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.exception.auth.UserAlreadyExistException;
+import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.web.util.GenericResponse;
 import org.slf4j.Logger;
@@ -16,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -37,7 +38,7 @@ public class RegistrationController {
     private AuthenticationProvider provider;
 
     @Autowired
-    public RegistrationController(IUserService userService, @Qualifier("authProvider") AuthenticationProvider provider) {
+    public RegistrationController(IUserService userService,@Qualifier("myAuthProvider") AuthenticationProvider provider) {
         this.userService = userService;
         this.provider = provider;
     }

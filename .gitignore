@@ -18,3 +18,5 @@ overlays/
 target/
 *.log
 
+script.txt
+task

@@ -1,4 +1,4 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -14,14 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 
-@Component("authenticationFailureHandler")
+@Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Autowired
-    private MessageSource messages;
+    private final MessageSource messages;
+    private final LocaleResolver localeResolver;
 
     @Autowired
-    private LocaleResolver localeResolver;
+    public CustomAuthenticationFailureHandler(LocaleResolver localeResolver, MessageSource messages) {
+        this.localeResolver = localeResolver;
+        this.messages = messages;
+    }
 
     @Override
     public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException exception) throws IOException, ServletException {

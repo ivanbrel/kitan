@@ -67,7 +67,7 @@ public class ProductService extends AbstractService<Product> implements IProduct
         }
 
         Product product = new Product(productDto.getNameProduct(), productDto.getModel(), colorProductService.findByName(productDto.getColor()),
-                productDto.getCountryProduct(), new BigDecimal(productDto.getPrice()), productDto.getBrand(),
+                productDto.getCountryProduct(), new BigDecimal(productDto.getPriceByn()), productDto.getBrand(),
                 productCategoryService.findByName(productDto.getCategory()), productDto.quantityConvert(productDto.getQuantity()), image);
 
         save(product);

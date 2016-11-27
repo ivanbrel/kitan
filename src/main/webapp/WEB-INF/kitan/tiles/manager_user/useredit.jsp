@@ -111,7 +111,7 @@
                                         <div class="x_content">
 
                                             <!-- start id-form -->
-                                            <forms:form modelAttribute="entity" id="formEditUser" class="form-horizontal form-label-left" method="post" >
+                                            <forms:form modelAttribute="entity" id="formEditUser" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
                                                 <div class="form-group" style="display: none">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="login">login <span class="required">*</span>
                                                     </label>

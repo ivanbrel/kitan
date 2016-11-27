@@ -1,4 +1,4 @@
-package by.ibrel.kitan.web.security;
+package by.ibrel.kitan.config.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

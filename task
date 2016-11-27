@@ -8,11 +8,7 @@
 21. if exists return error
 22. change price (BYN,RUS)
 
-db config java
-fix photo load and add def photo new user
-change client, add color entity(full)
-
-
+java config (security, message), personal user(change controller, jsp),
 
 <Resource name="jdbc/kitanDB"
 				  auth="Container"

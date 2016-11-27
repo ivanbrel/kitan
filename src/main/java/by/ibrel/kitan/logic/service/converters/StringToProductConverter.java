@@ -11,13 +11,8 @@ import org.springframework.core.convert.converter.Converter;
  */
 public class StringToProductConverter implements Converter<String,Product> {
 
-
-    private IProductService productService;
-
     @Autowired
-    public StringToProductConverter(IProductService productService) {
-        this.productService = productService;
-    }
+    private IProductService productService;
 
     @Override
     public Product convert(String s) {

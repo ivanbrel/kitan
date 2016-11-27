@@ -11,12 +11,8 @@ import org.springframework.core.convert.converter.Converter;
  */
 public class StringToProductCategoryConverter implements Converter<String,ProductCategory> {
 
-    private IProductCategoryService productCategoryService;
-
     @Autowired
-    public StringToProductCategoryConverter(IProductCategoryService productCategoryService) {
-        this.productCategoryService = productCategoryService;
-    }
+    private IProductCategoryService productCategoryService;
 
     @Override
     public ProductCategory convert(String nameProductCategoryString) {
