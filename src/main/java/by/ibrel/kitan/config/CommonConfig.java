@@ -7,7 +7,9 @@ import by.ibrel.kitan.logic.validation.PasswordMatchesValidator;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -44,6 +46,7 @@ import java.util.List;
  */
 @EnableWebMvc
 @Configuration
+@ComponentScan("by.ibrel.kitan")
 public class CommonConfig extends WebMvcConfigurerAdapter {
 
     /*
@@ -62,7 +65,7 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/help").setViewName("main.help");
         registry.addViewController("/ref").setViewName("main.ref");
         registry.addViewController("/about").setViewName("main.about");
-        registry.addViewController("/users/list").setViewName("auth.user.list");
+        registry.addViewController("/user/admin/list").setViewName("auth.user.list");
         registry.addViewController("/user/edit").setViewName("auth.user.edit");
         registry.addViewController("/role/list").setViewName("auth.role.list");
         registry.addViewController("/users/add-page").setViewName("auth.user.add");

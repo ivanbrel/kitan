@@ -34,34 +34,60 @@
             <div class="menu_section">
                 <h3><spring:message code="info.word.controlpanel"/></h3>
                 <ul class="nav side-menu">
+
                     <li><a><i class="fa fa-home"></i> <spring:message code="info.word.home"/> <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/client/list"><spring:message code="info.word.createorder"/></a></li>
-                            <%--<li><a href="">Показать остатки</a></li>--%>
-                            <%--<li><a href="">Вывести остатки</a></li>--%>
+                            <%--<li><a href="${ctx}/client/list"><spring:message code="info.word.createorder"/></a></li>--%>
+                            <li><a href="${ctx}/client/list">Клиенты</a></li>
+                            <li><a href="${ctx}/product/list">Товар</a></li>
+                            <li><a href="${ctx}/cart/list">Заказы</a></li>
                         </ul>
                     </li>
+
                     <li><a><i class="fa fa-edit"></i> <spring:message code="info.word.add"/> <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/client/add-page"><spring:message code="info.word.buyer"/></a></li>
-                            <li><a href="${ctx}/product/add-page"><spring:message code="info.word.product"/></a></li>
+                            <li><a href="">Заказ</a></li>
+                            <%--for admin--%>
+                            <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')"/>
+                            <c:choose>
+                                <c:when test="${loggedIn}">
+                                    <li><a href="${ctx}/product/add-page"><spring:message code="info.word.product"/></a></li>
+                                    <li><a href="${ctx}/configuration/product-category/list">Категорию</a></li>
+                                    <li><a href="${ctx}/configuration/product-color/list">Цвет</a></li>
+                                    <li><a href="${ctx}/configuration/price/list">Управление курсом</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.management"/><span class="fa fa-chevron-down"></span></a>
+
+                    <%--for admin--%>
+                    <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')"/>
+                    <c:choose>
+                        <c:when test="${loggedIn}">
+                        <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.users"/><span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="${ctx}/user/admin/list">Список пользователе</a></li>
+                                <li><a href="${ctx}/role/list">Список ролей</a></li>
+                                <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
+                            </ul>
+                        </li>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <li><a><i class="fa fa-table"></i> Остатки <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${ctx}/configuration/price/list"><spring:message code="info.word.ratedetermination"/> </a></li>
-                            <li><a href="${ctx}/configuration/product-category/list"><spring:message code="info.word.categoryProducts"/> </a></li>
-                            <li><a href="${ctx}/configuration/product-color/list"><spring:message code="info.word.colorProducts"/> </a></li>
+                            <li><a href="">Показать остатки</a></li>
+                            <li><a href="">Вывести остатки</a></li>
+                            <li><a href="">Архив фото</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-table"></i> Таблицы <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="${ctx}/client/list">Все клиенты</a></li>
-                            <li><a href="${ctx}/product/list">Весь товар</a></li>
-                            <li><a href="${ctx}/cart/list">Все заказы</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-bar-chart-o"></i>Информация <span class="fa fa-chevron-down"></span></a>
+
+                    <li><a><i class="fa fa-info"></i>Info <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${ctx}/about">О программе</a></li>
                             <li><a href="${ctx}/contacts"><spring:message code="info.word.contacts"/></a></li>
@@ -69,20 +95,7 @@
                             <li><a href="${ctx}/ref">Ссылки</a></li>
                         </ul>
                     </li>
-                    <sec:authorize var="loggedIn" access="hasAuthority('ADMIN_PRIVILEGE')"/>
-                        <c:choose>
-                        <c:when test="${loggedIn}">
-                            <li><a><i class="fa fa-clone"></i>Админ панель <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="${ctx}/users/list">Список пользователе</a></li>
-                                    <li><a href="${ctx}/role/list">Список ролей</a></li>
-                                    <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
-                                </ul>
-                            </li>
-                        </c:when>
-                            <c:otherwise>
-                            </c:otherwise>
-                        </c:choose>
+
                 </ul>
             </div>
         </div>

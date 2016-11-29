@@ -1,8 +1,11 @@
 package by.ibrel.kitan.web.controllers.auth;
 
 import by.ibrel.kitan.logic.dao.auth.entity.User;
+import by.ibrel.kitan.logic.exception.auth.UserAlreadyExistException;
+import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.web.controllers.AbstractController;
+import by.ibrel.kitan.web.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +13,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static by.ibrel.kitan.Const.*;
 
@@ -29,6 +32,7 @@ import static by.ibrel.kitan.Const.*;
  */
 @Controller
 @RequestMapping("/user/admin")
+@PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
 public class UserAdminController extends AbstractController<User>{
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -41,14 +45,13 @@ public class UserAdminController extends AbstractController<User>{
         this.userService = userService;
     }
 
-    @RequestMapping(value = {USER_LIST_URL}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
+    @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
-        return listEntity(model,USER_LIST_PAGE);
+        model.addAttribute("list", userService.findAll());
+        return USER_LIST_PAGE;
     }
 
-    @RequestMapping(value = {USER_EDIT_URL + "/{id}"}, method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
+    @RequestMapping(value = {"/edit/{id}"}, method = RequestMethod.POST)
     public String updateUser(@Valid final User user, @Valid final String login, BindingResult result, ModelMap model,
                              @ModelAttribute("fileUpload") MultipartFile fileUpload) {
 
@@ -62,24 +65,35 @@ public class UserAdminController extends AbstractController<User>{
         return USER_EDIT_PAGE;
     }
 
-    @RequestMapping(value = {USER_EDIT_URL + "/{id}"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
+    @RequestMapping(value = {"/edit/{id}"}, method = RequestMethod.GET)
     public String editUser(@PathVariable Long id, ModelMap model) {
         return initForm(id,model,null,USER_EDIT_PAGE);
     }
 
     @RequestMapping(value = {USER_DELETE_URL + "/{id}"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
     public String deleteUser(@PathVariable Long id, ModelMap modelMap) {
         return deleteEntity(id, modelMap,listUsers(modelMap));
     }
 
-    @RequestMapping(value = {CHANGE_PASSWORD_URL + "/{user}"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
+    @RequestMapping(value = {CHANGE_PASSWORD_URL + "/reset-password/{user}"}, method = RequestMethod.GET)
     public String changePassword(@PathVariable String user, ModelMap model) {
         User u = userService.findByLogin(user);
         userService.changeUserPassword(u, DEFAULT_PASS);
         model.addAttribute("success", "Данные пользователя " + u.getLogin() + " изменены");
-        return "redirect:/users/list";
+        return listUsers(model);
+    }
+
+    @RequestMapping(value = "/add-user", method = RequestMethod.POST)
+    @ResponseBody
+    public String registerUser(@Valid final UserDto userDto, ModelMap modelMap){
+
+        if (userService.findByLogin(userDto.getLogin())!=null){
+            throw new UserAlreadyExistException();
+        }
+
+        userService.create(userDto);
+
+        LOGGER.debug("Registering user account with information: {}" + userDto);
+        return listUsers(modelMap);
     }
 }

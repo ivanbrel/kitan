@@ -49,31 +49,31 @@ $(document).ready(function () {
     });
 
     $(":password").keyup(function () {
-        //if($("#password").val() != $("#matchPassword").val()){
-        //    $("#globalError").show().html([["Пароли не совпадают!"]]);
-        //}else{
-        //    $("#globalError").html("").hide();
-        //}
+        if($("#password").val() != $("#matchPassword").val()){
+           $("#globalError").show().html([["Пароли не совпадают!"]]);
+        }else{
+           $("#globalError").html("").hide();
+        }
         $("#globalError").html("").hide();
     });
 
-    //options = {
-    //    common: {minChar:6},
-    //    ui: {
-    //        showVerdictsInsideProgressBar:true,
-    //        showErrors:true,
-    //        errorMessages:{
-    //            wordLength: [["Длинна пароля меньше 6-ми символов"]],
-    //            wordNotEmail: [["Нельзя использовать логин в качестве пароля"]],
-    //            //wordSequences: [["Ваш пароль содержит последовательности"]],
-    //            //wordLowercase: [["Используйте символы нижнего регистра"]],
-    //            //wordUppercase: [["Используйте символы верхнего регистра"]],
-    //            wordOneNumber: [["Используйте цифры"]],
-    //            //wordOneSpecialChar: [["Используйте спец. символы (пример: _ @ # $ %)"]]
-    //        }
-    //    }
-    //};
-    //$('#password').pwstrength(options);
+    options = {
+       common: {minChar:6},
+       ui: {
+           showVerdictsInsideProgressBar:true,
+           showErrors:true,
+           errorMessages:{
+               wordLength: [["Длинна пароля меньше 6-ми символов"]],
+               wordNotEmail: [["Нельзя использовать логин в качестве пароля"]],
+               //wordSequences: [["Ваш пароль содержит последовательности"]],
+               //wordLowercase: [["Используйте символы нижнего регистра"]],
+               //wordUppercase: [["Используйте символы верхнего регистра"]],
+               wordOneNumber: [["Используйте цифры"]],
+               //wordOneSpecialChar: [["Используйте спец. символы (пример: _ @ # $ %)"]]
+           }
+       }
+    };
+    $('#password').pwstrength(options);
 
 });
 

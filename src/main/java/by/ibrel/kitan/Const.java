@@ -46,7 +46,6 @@ public final class Const {
 
     public final static String REGISTRATION_URL = "/registration";
     public final static String LOGIN_EXISTS_CHECK = "/checkLogin";
-    public final static String USER_LIST_URL = "/users/list";
     public final static String USER_EDIT_URL = "/user/edit";
     public final static String USER_DELETE_URL = "/user/delete";
     public final static String UPDATE_PASSWORD_URL = "/update/password";

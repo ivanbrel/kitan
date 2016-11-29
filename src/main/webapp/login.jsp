@@ -135,6 +135,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="${pageContext.request.contextPath}/resources/js/registr.js"></script>
+<script type="text/javascript" charset="utf8" src="${pageContext.request.contextPath}/resources/js/jquery.pwstrength.min.js"></script>
 <script src="${ctx}/resources/js/fileinput.min.js"></script>
 
 <%--file upload--%>
