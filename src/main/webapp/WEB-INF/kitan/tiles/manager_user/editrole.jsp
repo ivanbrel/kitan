@@ -47,7 +47,7 @@
                                 <%--<c:if test="${not (elements.name == 'ADMIN_PRIVILEGE')}">--%>
                                 <tr>
                                     <td ><form:checkbox path="privileges" class="person_data" value="${elements}"/></td>
-                                    <td><small><c:out value='${elements.name}' /></small></td>
+                                    <td><small><c:out value='${elements.name}'/></small></td>
                                         <%--<td><small><c:out value='${elements.information}' /></small></td>--%>
                                 </tr>
                                 <%--</c:if>--%>

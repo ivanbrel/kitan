@@ -45,7 +45,7 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
-                                    <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/avatar/${entity.image.fileName}" alt="Avatar" title="Change the avatar">
+                                    <img class="img-responsive avatar-view" src="<c:url value='/user/image/${entity.id}'/>" alt="Avatar" title="Change the avatar">
                                 </div>
                             </div>
 

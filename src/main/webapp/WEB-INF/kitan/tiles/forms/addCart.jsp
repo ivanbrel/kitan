@@ -39,7 +39,7 @@
                                             <td id="idProduct" style="display: none"><form:input value="${elements.id}" path="products"/></td>
                                             <td>
                                                 <a href="<c:url value="/resources/img/upload/product/${elements.image.fileName}"/>" data-toggle="lightbox" data-title="${elements.nameProduct}" data-footer="${elements.price}">
-                                                    <img src="<c:url value="/resources/img/upload/product/${elements.image.fileName}"/>" class="avatar">
+                                                    <img src="<c:url value='/product/image/${elements.id}'/>" class="avatar">
                                                 </a>
                                             </td>
                                             <td><c:out value="${elements.nameProduct}"/></td>

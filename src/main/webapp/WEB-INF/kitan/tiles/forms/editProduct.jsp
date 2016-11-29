@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -35,7 +36,7 @@
                         <div class="profile_img">
                             <div id="crop-avatar">
                                 <!-- Current avatar -->
-                                <img class="img-responsive avatar-view" src="${ctx}/resources/img/upload/product/${entity.image.fileName}" alt="Avatar" title="${product.nameProduct} ${product.model}">
+                                <img class="img-responsive avatar-view" src="<c:url value='/product/image/${entity.id}'/>" alt="Avatar" title="${entity.nameProduct} ${entity.model}">
                             </div>
                         </div>
                     </div>

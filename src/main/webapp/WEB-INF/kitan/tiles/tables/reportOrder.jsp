@@ -101,7 +101,7 @@
                                             <tr>
                                                 <td>
                                                     <a href="<c:url value="/resources/img/upload/product/${history.product.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
-                                                        <img src="<c:url value="/resources/img/upload/product/${history.product.image.fileName}"/>" class="avatar">
+                                                        <img src="<c:url value='/product/image/${history.product.id}'/>" class="avatar">
                                                     </a>
                                                 </td>
                                                 <td>${history.quantity}</td>

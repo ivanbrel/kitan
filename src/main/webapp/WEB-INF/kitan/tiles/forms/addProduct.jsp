@@ -5,7 +5,7 @@
 <!-- jQuery -->
 <script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.js"></script>
 <script src="${ctx}/resources/js/select2.full.js"></script>
-<script src="${ctx}/resources/js/calc.js"></script>
+<%--<script src="${ctx}/resources/js/calc.js"></script>--%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -98,23 +98,23 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="pricebyn" class="control-label col-md-3 col-sm-3 col-xs-12">Цена BYN</label>
+                                <label for="priceByn" class="control-label col-md-3 col-sm-3 col-xs-12">Цена BYN</label>
                                 <div class="col-md-3 col-sm-6 col-xs-6">
-                                    <input id="pricebyn" name="byr" class="date-picker form-control col-md-3 col-xs-6" type="number" onkeyup="calcItLocal('byr')">
+                                    <input id="priceByn" name="priceByn" class="date-picker form-control col-md-3 col-xs-6" type="number" onkeyup="calcItLocal('byr')" step="any" value="0">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="pricerus" class="control-label col-md-3 col-sm-3 col-xs-12">Цена RUB</label>
-                                <div class="col-md-3 col-sm-6 col-xs-6">
-                                    <input id="pricerus" name="rur" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('rur')">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="priceusd" class="control-label col-md-3 col-sm-3 col-xs-12">Цена USD</label>
-                                <div class="col-md-3 col-sm-6 col-xs-6">
-                                    <input id="priceusd" name="usd" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('usd')" value="1">
-                                </div>
-                            </div>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="pricerus" class="control-label col-md-3 col-sm-3 col-xs-12">Цена RUB</label>--%>
+                                <%--<div class="col-md-3 col-sm-6 col-xs-6">--%>
+                                    <%--<input id="pricerus" name="rur" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('rur')" step="any" value="0">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="priceusd" class="control-label col-md-3 col-sm-3 col-xs-12">Цена USD</label>--%>
+                                <%--<div class="col-md-3 col-sm-6 col-xs-6">--%>
+                                    <%--<input id="priceusd" name="usd" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('usd')" value="1" step="any">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                             <div class="form-group">
                                 <label for="quantity" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<sec:authentication var="avatar" property="principal.user.image.fileName"/>
+<sec:authentication var="userId" property="principal.user.id"/>
 
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -118,7 +118,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="${ctx}/resources/img/upload/avatar/${avatar}" alt=""><sec:authentication property="principal.user.firstName"/>
+                        <img src="${ctx}/user/image/${userId}" alt=""><sec:authentication property="principal.user.firstName"/>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

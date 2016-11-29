@@ -2,8 +2,11 @@ package by.ibrel.kitan.logic.dao.logic.entity;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import java.io.Serializable;;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+;
 
 
 /**
@@ -22,11 +25,16 @@ public class Image extends AbstractFile implements Serializable {
     public Image(){
     }
 
-    public Image(String imageName){
-        super(imageName);
+    public Image(String imageName, String path){
+        super(imageName,path);
     }
 
     public Image(String path, MultipartFile fileUpload){
         super(path,fileUpload);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

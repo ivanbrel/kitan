@@ -3,6 +3,7 @@ package by.ibrel.kitan.web.controllers.auth;
 import by.ibrel.kitan.logic.dao.auth.entity.User;
 import by.ibrel.kitan.logic.exception.auth.InvalidOldPasswordException;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
+import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import by.ibrel.kitan.web.util.GenericResponse;
 import org.slf4j.Logger;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
+import java.io.IOException;
+
 import static by.ibrel.kitan.Const.*;
 
 /**
@@ -25,16 +28,18 @@ import static by.ibrel.kitan.Const.*;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends AbstractController<User>{
+public class UserController extends AbstractController<User> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private IUserService userService;
+    private IImageService imageService;
 
     @Autowired
-    public UserController(IUserService userService) {
+    public UserController(IUserService userService, IImageService imageService) {
         super(userService);
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @RequestMapping(value = {"/update-password"}, method = RequestMethod.POST)
@@ -52,24 +57,28 @@ public class UserController extends AbstractController<User>{
 
     //for common user
     @RequestMapping(value = {"/edit"}, method = RequestMethod.GET)
-    public String editCommonUser( ModelMap model) {
+    public String editCommonUser(ModelMap model) {
         final User user = userService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("entity",user);
+        model.addAttribute("entity", user);
         return USER_EDIT_PAGE;
     }
 
     //for common user
     @RequestMapping(value = {"/edit"}, method = RequestMethod.POST)
     public String updateCommonUser(@Valid final User user, final BindingResult result,
-                                   final ModelMap model, @ModelAttribute("fileUpload") MultipartFile fileUpload){
+                                   final ModelMap model, @ModelAttribute("fileUpload") MultipartFile fileUpload) {
 
         if (result.hasErrors()) {
             LOGGER.debug(result.toString());
         }
 
-        userService.update(user,fileUpload);
+        userService.update(user, fileUpload);
 
         return editCommonUser(model);
     }
 
+    @RequestMapping(value = {"/image/{id}"}, method = RequestMethod.GET)
+    public @ResponseBody byte[] courses(@PathVariable Long id) throws IOException {
+        return imageService.getImage(userService.findOne(id).getImage().getId());
+    }
 }

@@ -20,7 +20,7 @@
     <context:annotation-config/>
     <tx:annotation-driven/>
     <context:component-scan base-package="by.ibrel.kitan"/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
     <!--<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>-->
 
@@ -123,6 +123,5 @@
     <mvc:view-controller path="/error/trace" view-name="error.trace"/>
     <mvc:view-controller path="/error/403" view-name="error.403"/>
     <mvc:view-controller path="/test" view-name="test"/>
-
 
 </beans>

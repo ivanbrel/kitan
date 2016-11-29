@@ -7,6 +7,8 @@ import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +23,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.ibrel.kitan.Const.*;
+import static by.ibrel.kitan.Const.PRODUCT_EDIT_PAGE;
+import static by.ibrel.kitan.Const.PRODUCT_LIST_PAGE;
 
 /**
  * @author ibrel
@@ -30,6 +33,7 @@ import static by.ibrel.kitan.Const.*;
 
 @Controller
 @RequestMapping("/product")
+@PropertySource({"classpath:app.properties"})
 public class ProductController extends AbstractController<Product>{
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -41,12 +45,13 @@ public class ProductController extends AbstractController<Product>{
     private IProductCategoryService productCategoryService;
     private IColorProductService colorProductService;
     private IShoppingCartService shoppingCartService;
+    private Environment environment;
 
     @Autowired
     public ProductController(final IProductService productService, final IImageService imageService,
                              final IPriceService priceService, final ServletContext servletContext,
                              final IProductCategoryService productCategoryService, final IShoppingCartService shoppingCartService,
-                             final IColorProductService colorProductService) {
+                             final IColorProductService colorProductService, Environment environment) {
         super(productService);
         this.productService = productService;
         this.imageService = imageService;
@@ -55,6 +60,7 @@ public class ProductController extends AbstractController<Product>{
         this.productCategoryService = productCategoryService;
         this.shoppingCartService = shoppingCartService;
         this.colorProductService = colorProductService;
+        this.environment = environment;
     }
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
@@ -74,7 +80,7 @@ public class ProductController extends AbstractController<Product>{
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
     public String createProduct(@Valid final ProductDto productDto, @RequestParam MultipartFile fileUpload,
                                 final ModelMap model) throws IOException {
-        productService.create(productDto, imageService.createImage(fileUpload,servletContext.getRealPath(PRODUCT_PATH)));
+        productService.create(productDto, imageService.createImage(fileUpload,environment.getProperty("fileImageProductPath")));
         return listProduct(model);
     }
 
@@ -112,5 +118,10 @@ public class ProductController extends AbstractController<Product>{
             list.add(price.getRubleRUS());
         });
         return list;
+    }
+
+    @RequestMapping(value = {"/image/{id}" },  method = RequestMethod.GET)
+    public @ResponseBody byte[] courses(@PathVariable Long id) throws IOException {
+        return imageService.getImage(productService.findOne(id).getImage().getId());
     }
 }

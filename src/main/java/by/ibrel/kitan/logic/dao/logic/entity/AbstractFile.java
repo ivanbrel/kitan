@@ -33,15 +33,20 @@ abstract class AbstractFile implements Serializable{
     @Getter @Setter
     private String fileName;
 
+    @Getter @Setter
+    private String path;
+
     AbstractFile(){
     }
 
-    AbstractFile(String fileName) {
+    AbstractFile(String fileName, String path) {
         this.fileName=fileName;
+        this.path = path;
     }
 
     AbstractFile(String path, MultipartFile fileUpload){
         this.fileName = createFile(path,fileUpload);
+        this.path = path;
     }
 
     private String createFile(String path, MultipartFile fileUpload) {
@@ -74,5 +79,10 @@ abstract class AbstractFile implements Serializable{
 
     public String getCreateFile(String path, MultipartFile fileUpload){
         return createFile(path,fileUpload);
+    }
+
+    @Override
+    public String toString() {
+        return path + "/" +fileName;
     }
 }

@@ -1,8 +1,10 @@
 package by.ibrel.kitan.logic.service.logic;
 
+import by.ibrel.kitan.Const;
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
 import by.ibrel.kitan.logic.service.AbstractService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 
@@ -22,12 +27,12 @@ import java.util.Objects;
 @Service
 public class ImageService extends AbstractService<Image> implements IImageService {
 
-    @Autowired
-    private ServletContext servletContext;
+    private ServletContext context;
 
     @Autowired
-    public ImageService(final JpaRepository<Image, Long> repository) {
+    public ImageService(final JpaRepository<Image, Long> repository, ServletContext context) {
         super(repository);
+        this.context = context;
     }
 
     //API
@@ -51,12 +56,24 @@ public class ImageService extends AbstractService<Image> implements IImageServic
 
 
         if (image.getFileName()!=null) {
-            entity.deleteFile(servletContext.getRealPath(path), image.getFileName());
+            entity.deleteFile(path, image.getFileName());
         }
 
-        entity.setFileName(entity.getCreateFile(servletContext.getRealPath(path),fileUpload));
-
+        entity.setFileName(entity.getCreateFile(path,fileUpload));
+        entity.setPath(path);
         save(entity);
+    }
+
+    @Override
+    public byte[] getImage(Long idImage) throws IOException {
+        InputStream in;
+        try {
+            in = new FileInputStream(findOne(idImage).toString());
+            return IOUtils.toByteArray(in);
+        } catch (IOException e) {
+            in = new FileInputStream(context.getRealPath(Const.DEFAULT_IMG));
+            return IOUtils.toByteArray(in);
+        }
     }
 
     @Override

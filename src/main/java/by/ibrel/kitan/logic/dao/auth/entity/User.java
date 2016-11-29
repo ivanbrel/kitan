@@ -39,13 +39,13 @@ public class User implements Serializable {
     private String email;
 
     @Getter @Setter
-    private Integer phone;
+    private String phone;
 
     @Getter @Setter
     @Column(length = 60)
     private String password;
 
-    @Getter @Setter
+    @Getter
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -57,9 +57,10 @@ public class User implements Serializable {
     private Image image;
 
     public User() {
+        this.roles = new ArrayList<>();
     }
 
-    public User(String firstName, String lastName, String login, String email, Integer phone, String password, Image image){
+    public User(String firstName, String lastName, String login, String email, String phone, String password, Image image){
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -70,8 +71,16 @@ public class User implements Serializable {
         this.image = image;
     }
 
+    private void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     public void addRole(Role role){
         roles.add(role);
+    }
+
+    public void deleteRole(Role role){
+        roles.remove(role);
     }
 
     @Override

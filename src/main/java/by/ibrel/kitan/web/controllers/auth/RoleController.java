@@ -2,10 +2,7 @@ package by.ibrel.kitan.web.controllers.auth;
 
 import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
-import by.ibrel.kitan.logic.exception.auth.RoleExistsException;
 import by.ibrel.kitan.logic.exception.auth.UserAlreadyExistException;
-import by.ibrel.kitan.logic.service.auth.PrivilegeService;
-import by.ibrel.kitan.logic.service.auth.RoleService;
 import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
 import by.ibrel.kitan.logic.service.auth.impl.IPrivilegeService;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
@@ -80,11 +77,11 @@ public class RoleController {
 
     @RequestMapping(value = {"/role/edit/{name}"}, method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String updateRole(final Role role, final BindingResult result, final ModelMap map){
+    public String updateRole(Role roleDto, final BindingResult result, final ModelMap map){
 
         if (result.hasErrors()){return "users.roles.edit";}
-        service.update(role);
-        map.addAttribute("success", "Роль " + role.getName() + " изменена");
+        service.update(roleDto);
+        map.addAttribute("success", "Роль " + roleDto.getName() + " изменена");
 
         return "redirect:/role/list";
     }

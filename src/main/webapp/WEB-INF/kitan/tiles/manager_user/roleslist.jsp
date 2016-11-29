@@ -53,7 +53,11 @@
                                 <tr>
 
                                     <td><small>${role.name}</small></td>
-                                    <td><small>${role.privileges}</small></td>
+                                    <td><small>
+                                        <c:forEach items="${role.privileges}" var="privilege">
+                                            ${privilege.name} ;
+                                        </c:forEach>
+                                    </small></td>
                                     <td>
                                         <a href="<c:url value='/role/edit/${role.name}'/>" title="Edit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

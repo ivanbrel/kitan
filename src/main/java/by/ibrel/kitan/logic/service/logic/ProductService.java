@@ -11,17 +11,14 @@ import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;
 import by.ibrel.kitan.logic.service.logic.impl.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import java.math.BigDecimal;
 import java.util.Collection;
-
-import static by.ibrel.kitan.Const.PRODUCT_PATH;
-
-//TODO избавиться от контескта
 
 /**
  * @author ibrel
@@ -30,26 +27,27 @@ import static by.ibrel.kitan.Const.PRODUCT_PATH;
  */
 
 @Service
+@PropertySource({"classpath:app.properties"})
 public class ProductService extends AbstractService<Product> implements IProductService {
 
     private ProductRepository productRepository;
     private IImageService iImageService;
     private IProductCategoryService productCategoryService;
     private IColorProductService colorProductService;
-    private ServletContext servletContext;
+    private Environment env;
 
     //API
 
     @Autowired
     public ProductService(final ProductRepository productRepository, final IImageService iImageService,
-                          final IProductCategoryService productCategoryService, final ServletContext servletContext,
-                          final IColorProductService colorProductService) {
+                          final IProductCategoryService productCategoryService, final IColorProductService colorProductService,
+                          Environment env) {
         super(productRepository);
         this.productRepository = productRepository;
         this.iImageService = iImageService;
         this.productCategoryService = productCategoryService;
-        this.servletContext = servletContext;
         this.colorProductService = colorProductService;
+        this.env = env;
     }
 
 
@@ -125,7 +123,7 @@ public class ProductService extends AbstractService<Product> implements IProduct
         Product entity = findOne(product.getId());
 
         update(product);
-        iImageService.updateImage(entity.getImage(),fileUpload, PRODUCT_PATH);
+        iImageService.updateImage(entity.getImage(),fileUpload, env.getProperty("fileImageProductPath"));
 
         save(entity);
 
@@ -134,7 +132,7 @@ public class ProductService extends AbstractService<Product> implements IProduct
     //temp
     @Transactional
     private void deleteProductAndImage(Long id){
-        findOne(id).getImage().deleteFile(servletContext.getRealPath(PRODUCT_PATH),findOne(id).getImage().getFileName());
+        findOne(id).getImage().deleteFile(env.getProperty("fileImageProductPath"),findOne(id).getImage().getFileName());
         productRepository.delete(id);
     }
 

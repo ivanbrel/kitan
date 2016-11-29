@@ -12,9 +12,8 @@ import org.springframework.stereotype.Component;
 public final class Const {
 
     //file image path
-    public static final String PRODUCT_PATH = "/resources/img/upload/product";
-
-    public static final String USER_PATH = "/resources/img/upload/avatar";
+    public static final String DEFAULT_IMG = "/resources/img/logo.png";
+    public static final String PATH_IMG = "/resources/img/";
 
     //start number for purchase
     public static final int START_NUMBER = 1;

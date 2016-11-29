@@ -1,20 +1,16 @@
 package by.ibrel.kitan.logic.service.auth;
 
 
-import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.dao.auth.repository.RoleRepository;
 import by.ibrel.kitan.logic.exception.auth.RoleExistsException;
-import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
 import by.ibrel.kitan.logic.service.AbstractService;
+import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
 import by.ibrel.kitan.logic.service.auth.impl.IPrivilegeService;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import java.util.Collection;
 
 /**
  * @author ibrel
@@ -60,28 +56,30 @@ public class RoleService extends AbstractService<Role> implements IRoleService {
     }
 
     @Override
+    public void update(RoleDto roleDto) {
+        Role entity = findByName(roleDto.getName());
+
+        if(roleDto.getPrivileges()!=null) {
+            entity.getPrivileges().clear();
+            roleDto.getPrivileges().forEach(privilege -> entity.addPrivilege(privilegeService.findByName(privilege)));
+        }else {
+            entity.getPrivileges().clear();
+        }
+        save(entity);
+    }
+
+    @Override
     @Transactional
     public void update(Role role) {
         Role entity = findByName(role.getName());
 
-        Collection<Privilege> privileges = role.getPrivileges();
-
-        if(privileges!=null) {
-            Collection<Privilege> p = entity.getPrivileges();
+        if(role.getPrivileges()!=null) {
             entity.getPrivileges().clear();
-            for (Privilege privilege : role.getPrivileges()) {
-                privilege = privilegeService.findByName(privilege.getName());
-//                if (!p.contains(privilege)) {
-                p.add(privilege);
-//                }
-            }
-            entity.setPrivileges(p);
+            role.getPrivileges().forEach(privilege -> entity.addPrivilege(privilegeService.findByName(privilege.getName())));
         }else {
             entity.getPrivileges().clear();
         }
-
         save(entity);
-
     }
 
     @Override

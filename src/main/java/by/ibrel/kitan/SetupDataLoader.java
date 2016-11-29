@@ -1,13 +1,12 @@
 package by.ibrel.kitan;
 
-import by.ibrel.kitan.logic.dao.auth.repository.PrivilegeRepository;
-import by.ibrel.kitan.logic.dao.auth.repository.RoleRepository;
-import by.ibrel.kitan.logic.dao.auth.repository.UserRepository;
 import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.dao.auth.entity.User;
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
-import by.ibrel.kitan.logic.service.logic.ImageService;
+import by.ibrel.kitan.logic.service.auth.impl.IPrivilegeService;
+import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
+import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -15,7 +14,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,20 +29,21 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     private boolean alreadySetup = false;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
-
-    @Autowired
+    private IUserService userService;
+    private IRoleService roleService;
+    private IPrivilegeService privilegeService;
     private PasswordEncoder passwordEncoder;
+    private IImageService imageService;
 
     @Autowired
-    private IImageService imageService;
+    public SetupDataLoader(IUserService userService, IRoleService roleService, IPrivilegeService privilegeService,
+                           PasswordEncoder passwordEncoder, IImageService imageService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.privilegeService = privilegeService;
+        this.passwordEncoder = passwordEncoder;
+        this.imageService = imageService;
+    }
 
     // API
 
@@ -73,29 +72,24 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Transactional
     private Privilege createPrivilegeIfNotFound(final String name) {
-        Privilege privilege = privilegeRepository.findByName(name);
+        Privilege privilege = privilegeService.findByName(name);
         if (privilege == null) {
             privilege = new Privilege(name);
-            privilegeRepository.save(privilege);
+            privilegeService.save(privilege);
         }
         return privilege;
     }
 
     @Transactional
     private Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
-        Role role = roleRepository.findByName(name);
+        Role role = roleService.findByName(name);
 //        Privilege privilege = privilegeRepository.findByName("READ_PRIVILEGE");
 
         if (role == null) {
             role = new Role(name);
 
-//            for (Privilege privilege:privileges){
-//                //role.getPrivileges().add(privilegeRepository.findByName(privilege.getName()));
-//                role.setPrivileges(Arrays.asList(privilegeRepository.findByName(privilege.getName())));
-//            }
-            role.setPrivileges(privileges);
-            //role.setPrivileges(Arrays.asList(privilege));
-            roleRepository.save(role);
+            privileges.forEach(role::addPrivilege);
+            roleService.save(role);
         }
         return role;
     }
@@ -103,8 +97,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Transactional
     private User createUserIfNotFound(final String name){
 
-        final Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-        User user = userRepository.findByUser(name);
+        final Role adminRole = roleService.findByName("ROLE_ADMIN");
+        User user = userService.findByLogin(name);
         if (user==null){
 
             Image image = new Image();
@@ -115,10 +109,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             user.setLastName("Admin");
             user.setLogin("admin");
             user.setPassword(passwordEncoder.encode("admin"));
-            user.setRoles(Arrays.asList(adminRole));
+            user.addRole(adminRole);
             user.setImage(image);
 
-            userRepository.save(user);
+            userService.save(user);
         }
         return user;
     }
