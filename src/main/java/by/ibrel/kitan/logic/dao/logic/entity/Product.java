@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @ToString
 @Getter@Setter
 @Entity
-@Table(name = "product")
+@Table(name = "product", schema = "LOGIC")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

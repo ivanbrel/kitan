@@ -20,7 +20,7 @@ import static by.ibrel.kitan.Const.*;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "shopping_cart")
+@Table(name = "shopping_cart", schema = "LOGIC")
 public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class ShoppingCart implements Serializable {
 
     @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(name = "catr_product", joinColumns = @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
+    @JoinTable(name = "catr_product", schema = "LOGIC", joinColumns = @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
     private Collection<Product> products;
 
     @Getter @Setter

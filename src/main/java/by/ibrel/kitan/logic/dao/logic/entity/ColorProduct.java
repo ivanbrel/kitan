@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @version 1.0 (23/11/16)
  */
 @Entity
-@Table(name = "color_product")
+@Table(name = "color_product", schema = "LOGIC")
 @ToString
 public class ColorProduct extends AbstractCatalog implements Serializable{
 

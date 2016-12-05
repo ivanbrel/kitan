@@ -2,39 +2,6 @@
 <%@ page isErrorPage="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<style type="text/css">
-    .tftable {
-        font-size: 12px;
-        color: #333333;
-        width: 100%;
-        border-width: 1px;
-        /*border-color: #729ea5;*/
-        border-collapse: collapse;
-    }
-
-    .tftable th {
-        font-size: 12px;
-        background-color: #acc8cc;
-        border-width: 1px;
-        padding: 8px;
-        border-style: solid;
-        /*border-color: #729ea5;*/
-        text-align: left;
-    }
-
-    .tftable tr {
-        background-color: #d4e3e5;
-        valign: top
-    }
-
-    .tftable td {
-        font-size: 12px;
-        border-width: 1px;
-        padding: 8px;
-        border-style: solid;
-        /*border-color: #729ea5;*/
-    }
-</style>
 
 <table class="tftable" border="1">
     <tr>

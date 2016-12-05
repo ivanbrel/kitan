@@ -23,8 +23,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.ibrel.kitan.Const.PRODUCT_EDIT_PAGE;
-import static by.ibrel.kitan.Const.PRODUCT_LIST_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.PRODUCT_EDIT_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.PRODUCT_LIST_PAGE;
 
 /**
  * @author ibrel

@@ -2,7 +2,6 @@ package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.Const;
 import by.ibrel.kitan.logic.dao.logic.entity.Client;
-import by.ibrel.kitan.logic.service.logic.ClientService;
 import by.ibrel.kitan.logic.service.logic.dto.ClientDto;
 import by.ibrel.kitan.logic.service.logic.impl.IClientService;
 import by.ibrel.kitan.web.controllers.AbstractController;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
+import static by.ibrel.kitan.constants.PageConstants.CLIENT_LIST_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.CLIENT_EDIT_PAGE;
 
 /**
  * @author ibrel
@@ -37,7 +38,7 @@ public class ClientController extends AbstractController<Client> {
 
     @RequestMapping(value = {"/client/list"}, method = RequestMethod.GET)
     public String listClients(ModelMap model) {
-        return listEntity(model, Const.CLIENT_LIST_PAGE);
+        return listEntity(model, CLIENT_LIST_PAGE);
     }
 
     @RequestMapping(value = {"/client/add"}, method = RequestMethod.POST)
@@ -58,6 +59,6 @@ public class ClientController extends AbstractController<Client> {
 
     @RequestMapping(value = { "/client/edit/{id}" }, method = RequestMethod.GET)
     public String editClient(@PathVariable Long id, ModelMap model) {
-        return initForm(id,model,null,Const.CLIENT_EDIT_PAGE);
+        return initForm(id,model, null, CLIENT_EDIT_PAGE);
     }
 }

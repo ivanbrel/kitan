@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "privilege")
+@Table(name = "PRIVILEGE", schema = "AUTH")
 @ToString
 @EqualsAndHashCode
 @Getter @Setter

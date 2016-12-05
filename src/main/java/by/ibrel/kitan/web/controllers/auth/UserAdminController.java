@@ -5,7 +5,6 @@ import by.ibrel.kitan.logic.exception.auth.UserAlreadyExistException;
 import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.web.controllers.AbstractController;
-import by.ibrel.kitan.web.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import java.util.List;
-
-import static by.ibrel.kitan.Const.*;
+import static by.ibrel.kitan.constants.PageConstants.*;
+import static by.ibrel.kitan.constants.UrlConstants.*;
+import static by.ibrel.kitan.Const.DEFAULT_PASS;
 
 /**
  * @author ibrel

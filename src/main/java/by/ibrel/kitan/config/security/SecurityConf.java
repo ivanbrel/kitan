@@ -84,7 +84,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PersistentTokenRepository jdbcTokenRepository(){
-        JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
+        MyRememberMePersistentTokenRepository jtr = new MyRememberMePersistentTokenRepository();
         jtr.setDataSource(dbConf.dataSource());
         jtr.setCreateTableOnStartup(false);
         return jtr;

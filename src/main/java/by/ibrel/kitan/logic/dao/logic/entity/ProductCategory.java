@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "product_category")
+@Table(name = "product_category", schema = "LOGIC")
 public class ProductCategory extends AbstractCatalog implements Serializable{
 
     private static final long serialVersionUID = 1L;

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 import java.io.IOException;
 
-import static by.ibrel.kitan.Const.*;
+import static by.ibrel.kitan.constants.PageConstants.USER_EDIT_PAGE;
 
 /**
  * Created by ibrel on 20.04.2016.

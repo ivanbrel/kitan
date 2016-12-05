@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
-import static by.ibrel.kitan.Const.PRODUCT_COLOR_EDIT_PAGE;
-import static by.ibrel.kitan.Const.PRODUCT_COLOR_LIST_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.PRODUCT_COLOR_EDIT_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.PRODUCT_COLOR_LIST_PAGE;
 
 /**
  * @author ibrel

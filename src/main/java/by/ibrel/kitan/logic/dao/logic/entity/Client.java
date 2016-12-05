@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  *
  */
 @Entity
-@Table(name = "client")
+@Table(name = "client", schema = "LOGIC")
 @EqualsAndHashCode
 @ToString
 @Getter@Setter

@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 
 @Entity
-@Table(name = "role")
+@Table(name = "ROLE", schema = "AUTH")
 @EqualsAndHashCode
 @ToString
 @Getter @Setter
@@ -29,7 +29,7 @@ public class Role implements Serializable {
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+    @JoinTable(name = "roles_privileges", schema = "AUTH",joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns =  @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
 

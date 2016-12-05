@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @Entity
 @ToString
-@Table(name = "price")
+@Table(name = "price", schema = "LOGIC")
 public class Price implements Serializable{
 
     private static final long serialVersionUID = 1L;

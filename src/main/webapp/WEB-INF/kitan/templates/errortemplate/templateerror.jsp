@@ -10,13 +10,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <tiles:insertAttribute name="inHeader"/>
-    <title><tiles:getAsString name="titleKey"/></title>
+    <title>ERROR</title>
     <link href="${ctx}/resources/img/logo.png" rel="shortcut icon">
 </head>
-<body class="error_page">
-<div  id="wrap" class="clearfix">
-<tiles:insertAttribute name="content"/>
-<tiles:insertAttribute name="footer"/>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+        <tiles:insertAttribute name="content"/>
+        <!-- /page content -->
+    </div>
 </div>
+<!-- jQuery -->
+<script src="${ctx}/resources/bootstrap/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="${ctx}/resources/bootstrap/vendors/bootstrap/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="${ctx}/resources/bootstrap/fastclick.js"></script>
+<!-- NProgress -->
+<script src="${ctx}/resources/bootstrap/nprogress.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="${ctx}/resources/bootstrap/js/custom.min.js"></script>
 </body>
 </html>

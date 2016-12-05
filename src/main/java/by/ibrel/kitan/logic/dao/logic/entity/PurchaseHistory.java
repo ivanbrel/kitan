@@ -17,7 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "purchase_history")
+@Table(name = "purchase_history", schema = "LOGIC")
 public class PurchaseHistory implements Serializable{
 
     private static final long serialVersionUID = 1L;

@@ -10,8 +10,7 @@ import java.io.Serializable;
  * @author ibrel
  * @version 1.0 (16/09/16)
  */
-@Entity
-@Table(name = "address")
+
 public class Address implements Serializable{
 
     private static final long serialVersionUID = 1L;

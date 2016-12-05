@@ -20,21 +20,6 @@
     <context:annotation-config/>
     <tx:annotation-driven/>
     <context:component-scan base-package="by.ibrel.kitan"/>
-    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
-
-    <!--<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>-->
-
-    <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
-        <!--<property name="favorPathExtension" value="false"/>-->
-        <!--<property name="favorParameter" value="true"/>-->
-        <!--<property name="mediaTypes">-->
-            <!--<value>-->
-                <!--&lt;!&ndash;x-javascript=application/x-javascript&ndash;&gt;-->
-                <!--&lt;!&ndash;json=application/json&ndash;&gt;-->
-                <!--xml=application/xml-->
-            <!--</value>-->
-        <!--</property>-->
-    <!--</bean>-->
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
@@ -45,83 +30,5 @@
             </list>
         </property>
     </bean>
-
-    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>classpath:tiles-kitan.xml</value>
-            </list>
-        </property>
-        <property name="checkRefresh" value="true"/>
-        <!--enabling auto-refresh of Tiles definitions. -->
-        <property name="preparerFactoryClass"
-                  value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
-    </bean>
-
-    <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-        <property name="order" value="2"/>
-    </bean>
-
-    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-    <bean id="passwordMatchesValidator" class="by.ibrel.kitan.logic.validation.PasswordMatchesValidator"/>
-
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- max upload size in bytes -->
-        <property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
-
-        <!-- max size of file in memory (in bytes) -->
-        <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
-
-    </bean>
-
-    <!--convert-->
-    <mvc:annotation-driven conversion-service="conversionService"/>
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean" >
-        <property name="converters">
-            <set>
-                <bean class="by.ibrel.kitan.logic.service.converters.StringToProductCategoryConverter"/>
-                <bean class="by.ibrel.kitan.logic.service.converters.StringToProductConverter"/>
-            </set>
-        </property>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="webBindingInitializer">
-            <bean class="by.ibrel.kitan.logic.service.converters.CustomWebBindingInitializer"/>
-        </property>
-    </bean>
-
-
-
-    <!--<mvc:view-controller path="/login_" view-name="auth.login"/>-->
-    <!--<mvc:view-controller path="/home" view-name="main.home"/>-->
-    <!--<mvc:view-controller path="/contacts" view-name="main.contacts"/>-->
-    <!--<mvc:view-controller path="/help" view-name="main.help"/>-->
-    <!--<mvc:view-controller path="/ref" view-name="main.ref"/>-->
-    <!--<mvc:view-controller path="/about" view-name="main.about"/>-->
-    <!--<mvc:view-controller path="/users/list" view-name="auth.user.list"/>-->
-    <!--<mvc:view-controller path="/user/edit" view-name="auth.user.edit"/>-->
-    <!--<mvc:view-controller path="/role/list" view-name="auth.role.list"/>-->
-    <!--<mvc:view-controller path="/users/add-page" view-name="auth.user.add"/>-->
-    <!--<mvc:view-controller path="/client/list" view-name="client.list"/>-->
-    <!--<mvc:view-controller path="/client/add-page" view-name="client.add"/>-->
-    <!--<mvc:view-controller path="/cart/list" view-name="purchase.list"/>-->
-    <!--<mvc:view-controller path="/product/list" view-name="product.list"/>-->
-    <!--<mvc:view-controller path="/product/add-page" view-name="product.add"/>-->
-    <!--<mvc:view-controller path="/cart/show" view-name="purchase.show"/>-->
-
-    <!--<mvc:view-controller path="/configuration/price/list" view-name="price.list"/>-->
-    <!--<mvc:view-controller path="/configuration/price/add-page" view-name="price.add"/>-->
-    <!--<mvc:view-controller path="/configuration/product-category/list" view-name="product.category.list"/>-->
-    <!--<mvc:view-controller path="/configuration/product-color/list" view-name="product.color.list"/>-->
-
-    <!--<mvc:view-controller path="/error/404" view-name="error.404"/>-->
-    <!--<mvc:view-controller path="/error/405" view-name="error.405"/>-->
-    <!--<mvc:view-controller path="/error/trace" view-name="error.trace"/>-->
-    <!--<mvc:view-controller path="/error/403" view-name="error.403"/>-->
-    <!--<mvc:view-controller path="/test" view-name="test"/>-->
 
 </beans>

@@ -1,5 +1,6 @@
 package by.ibrel.kitan.logic.dao.logic.entity;
 
+import by.ibrel.kitan.logic.exception.HashGenerationException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,11 +9,14 @@ import javax.persistence.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Random;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-import static by.ibrel.kitan.Const.RANDOM_SEGMENT;
+import static by.ibrel.kitan.Const.ENCODING;
+import static by.ibrel.kitan.Const.HASH_STRATEGY;
 
 
 /**
@@ -31,6 +35,7 @@ abstract class AbstractFile implements Serializable{
     private Long id;
 
     @Getter @Setter
+    @Column(name = "FILE_NAME")
     private String fileName;
 
     @Getter @Setter
@@ -49,15 +54,33 @@ abstract class AbstractFile implements Serializable{
         this.path = path;
     }
 
+    //TODO shitcode !!!
     private String createFile(String path, MultipartFile fileUpload) {
 
-        String nameFile = new Random().nextInt(RANDOM_SEGMENT) + "_" + fileUpload.getOriginalFilename();
+//        String nameFile = new Random().nextInt(RANDOM_SEGMENT) + "_" + fileUpload.getOriginalFilename();
+        String originalFilename = String.valueOf(fileUpload.getOriginalFilename());
+        String nameFile = null;
 
         try {
+            MessageDigest digest = MessageDigest.getInstance(HASH_STRATEGY);
+            byte[] hashedBytes = digest.digest(originalFilename.getBytes(ENCODING));
+
+            nameFile = convertByteArrayToHexString(hashedBytes);
+
             Files.copy(fileUpload.getInputStream(), Paths.get(createPath(path).getPath(),nameFile));
-        } catch (IOException e) {
+
+        } catch (NoSuchAlgorithmException ex) {
+
+            try {
+                throw new HashGenerationException("Could not generate hash from String", ex);
+            } catch (HashGenerationException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e){
             e.printStackTrace();
         }
+
         return nameFile;
     }
 
@@ -85,4 +108,15 @@ abstract class AbstractFile implements Serializable{
     public String toString() {
         return path + "/" +fileName;
     }
+
+    private static String convertByteArrayToHexString(byte[] arrayBytes) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < arrayBytes.length; i++) {
+            stringBuffer.append(Integer.toString((arrayBytes[i] & 0xff) + 0x100, 16)
+                    .substring(1));
+        }
+        return stringBuffer.toString();
+    }
+
+
 }

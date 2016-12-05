@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "image")
+@Table(name = "IMAGE", schema = "LOGIC")
 public class Image extends AbstractFile implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,5 @@
 package by.ibrel.kitan.web.controllers.logic;
 
-import by.ibrel.kitan.Const;
 import by.ibrel.kitan.logic.dao.logic.entity.Price;
 import by.ibrel.kitan.logic.service.logic.dto.PriceDto;
 import by.ibrel.kitan.logic.service.logic.impl.IPriceService;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
+import static by.ibrel.kitan.constants.PageConstants.PRICE_LIST_PAGE;
+import static by.ibrel.kitan.constants.PageConstants.PRICE_EDIT_PAGE;
 
 /**
  * @author ibrel
@@ -40,12 +41,12 @@ public class PriceController extends AbstractController<Price> {
 
     @RequestMapping(value = { "/edit/{id}" }, method = RequestMethod.POST)
     public String updatePrice(@Valid Price price, final BindingResult result, final ModelMap model){
-        return update(price,result,model, Const.PRICE_LIST_PAGE);
+        return update(price,result,model, PRICE_LIST_PAGE);
     }
 
     @RequestMapping(value = { "/edit/{id}" }, method = RequestMethod.GET)
     public String initFormPrice(@PathVariable Long id, ModelMap model) {
-        return initForm(id,model,null,Const.PRICE_EDIT_PAGE);
+        return initForm(id,model,null, PRICE_EDIT_PAGE);
     }
 
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST)

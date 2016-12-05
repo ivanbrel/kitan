@@ -128,6 +128,6 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/jquery.min.js"></script>
 
 

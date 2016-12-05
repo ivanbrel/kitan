@@ -9,7 +9,6 @@ import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -20,22 +19,20 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory;
-import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import javax.validation.ConstraintValidator;
 import java.util.ArrayList;
 import java.util.List;
+
+import static by.ibrel.kitan.constants.PageConstants.*;
+import static by.ibrel.kitan.constants.UrlConstants.*;
 
 /**
  * @author ibrel
@@ -49,6 +46,11 @@ import java.util.List;
 @ComponentScan("by.ibrel.kitan")
 public class CommonConfig extends WebMvcConfigurerAdapter {
 
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
     /*
      * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
      */
@@ -59,30 +61,31 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login_").setViewName("auth.login");
-        registry.addViewController("/home").setViewName("main.home");
-        registry.addViewController("/contacts").setViewName("main.contacts");
-        registry.addViewController("/help").setViewName("main.help");
-        registry.addViewController("/ref").setViewName("main.ref");
-        registry.addViewController("/about").setViewName("main.about");
-        registry.addViewController("/user/admin/list").setViewName("auth.user.list");
-        registry.addViewController("/user/edit").setViewName("auth.user.edit");
-        registry.addViewController("/role/list").setViewName("auth.role.list");
-        registry.addViewController("/users/add-page").setViewName("auth.user.add");
-        registry.addViewController("/client/list").setViewName("client.list");
-        registry.addViewController("/client/add-page").setViewName("client.add");
-        registry.addViewController("/cart/list").setViewName("purchase.list");
-        registry.addViewController("/product/list").setViewName("product.list");
-        registry.addViewController("/product/add-page").setViewName("product.add");
-        registry.addViewController("/cart/show").setViewName("purchase.show");
-        registry.addViewController("/configuration/price/list").setViewName("price.list");
-        registry.addViewController("/configuration/price/add-page").setViewName("price.add");
-        registry.addViewController("/configuration/product-category/list").setViewName("product.category.list");
-        registry.addViewController("/configuration/product-color/list").setViewName("product.color.list");
-        registry.addViewController("/error/404").setViewName("error.404");
-        registry.addViewController("/error/405").setViewName("error.405");
-        registry.addViewController("/error/trace").setViewName("error.trace");
-        registry.addViewController("/error/403").setViewName("error.403");
+
+        registry.addViewController(LOGIN_URL).setViewName(LOGIN_PAGE);
+        registry.addViewController(HOME_URL).setViewName(HOME_PAGE);
+        registry.addViewController(CONTACT_URL).setViewName(CONTACTS_PAGE);
+        registry.addViewController(HELP_URL).setViewName(HELP_PAGE);
+        registry.addViewController(REF_URL).setViewName(REF_PAGE);
+        registry.addViewController(ABOUT_URL).setViewName(ABOUT_PAGE);
+        registry.addViewController(USER_LIST_URL).setViewName(USER_LIST_PAGE);
+        registry.addViewController(USER_EDIT_URL).setViewName(USER_EDIT_PAGE);
+        registry.addViewController(ROLE_LIST_URL).setViewName(ROLE_LIST_PAGE);
+        registry.addViewController(USER_ADD_URL).setViewName(USER_ADD_PAGE);
+        registry.addViewController(CLIENT_LIST_URL).setViewName(CLIENT_LIST_PAGE);
+        registry.addViewController(CLIENT_ADD_URL).setViewName(CLIENT_ADD_PAGE);
+        registry.addViewController(CART_LIST_URL).setViewName(CART_LIST_PAGE);
+        registry.addViewController(PRODUCT_LIST_URL).setViewName(PRODUCT_LIST_PAGE);
+        registry.addViewController(PRODUCT_ADD_URL).setViewName(PRODUCT_ADD_PAGE);
+        registry.addViewController(CART_SHOW_URL).setViewName(CART_SHOW_PAGE);
+        registry.addViewController(PRICE_LIST_URL).setViewName(PRICE_LIST_PAGE);
+        registry.addViewController(PRICE_ADD_URL).setViewName(PRICE_ADD_PAGE);
+        registry.addViewController(PRODUCT_CATEGORY_LIST_URL).setViewName(PRODUCT_CATEGORY_LIST_PAGE);
+        registry.addViewController(PRODUCT_COLOR_LIST_URL).setViewName(PRODUCT_COLOR_LIST_PAGE);
+        registry.addViewController(ERROR_404_URL).setViewName(ERROR_404_PAGE);
+        registry.addViewController(ERROR_405_URL).setViewName(ERROR_405_PAGE);
+        registry.addViewController(ERROR_TRACE_URL).setViewName(ERROR_TRACE_PAGE);
+        registry.addViewController(ERROR_403_URL).setViewName(ERROR_403_PAGE);
     }
 
     @Override
@@ -172,20 +175,6 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
         TilesViewResolver tilesViewResolver = new TilesViewResolver();
         tilesViewResolver.setOrder(2);
         return tilesViewResolver;
-    }
-
-    /**
-     * Configure TilesConfigurer.
-     */
-    @Bean
-    public TilesConfigurer tilesConfigurer(){
-        TilesConfigurer tilesConfigurer = new TilesConfigurer();
-        tilesConfigurer.setDefinitions("classpath:tiles-kitan.xml");
-        tilesConfigurer.setCheckRefresh(true);
-
-//       enabling auto-refresh of Tiles definitions
-        tilesConfigurer.setPreparerFactoryClass(SpringBeanPreparerFactory.class);
-        return tilesConfigurer;
     }
 
     @Bean

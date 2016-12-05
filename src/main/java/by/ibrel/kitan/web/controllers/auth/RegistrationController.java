@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import static by.ibrel.kitan.Const.LOGIN_EXISTS_CHECK;
-import static by.ibrel.kitan.Const.REGISTRATION_URL;
+import static by.ibrel.kitan.constants.UrlConstants.*;
 
 /**
  * @author ibrel

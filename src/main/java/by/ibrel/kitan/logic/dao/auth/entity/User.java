@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 
 @Entity
-@Table(name = "user")
+@Table(name = "USER", schema = "AUTH")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class User implements Serializable {
 
     @Getter
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    @JoinTable(name = "user_roles",schema = "AUTH",joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 

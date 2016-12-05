@@ -4,7 +4,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="forms" uri="http://www.springframework.org/tags/form" %>
 
-<script src="${pageContext.request.contextPath}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="${ctx}/resources/js/updateAndCheckPassword.js"></script>
 
 <!-- page content -->
