@@ -1,7 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.ProductCategory;
-import by.ibrel.kitan.logic.service.logic.dto.ProductCategoryDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductCategoryDto;
 import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;

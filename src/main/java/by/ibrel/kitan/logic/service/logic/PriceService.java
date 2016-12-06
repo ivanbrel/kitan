@@ -2,7 +2,7 @@ package by.ibrel.kitan.logic.service.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.Price;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.logic.dto.PriceDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.PriceDto;
 import by.ibrel.kitan.logic.service.logic.impl.IPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

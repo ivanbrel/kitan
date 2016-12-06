@@ -46,14 +46,11 @@
 <script src="${ctx}/resources/bootstrap/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="${ctx}/resources/bootstrap/vendors/pdfmake/build/vfs_fonts.js"></script>
 <script src="${ctx}/resources/js/tableExport.js"></script>
-<script src="${ctx}/resources/js/jquery.base64.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="${ctx}/resources/bootstrap/js/custom.min.js"></script>
 
 <script src="${ctx}/resources/js/ekko-lightbox.min.js"></script>
-
-<script src="${ctx}/resources/js/add.and.post.column.js"></script>
 
 <script src="${ctx}/resources/js/fileinput.min.js"></script>
 

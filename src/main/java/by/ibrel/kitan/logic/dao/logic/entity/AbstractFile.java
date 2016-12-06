@@ -9,14 +9,13 @@ import javax.persistence.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static by.ibrel.kitan.Const.ENCODING;
-import static by.ibrel.kitan.Const.HASH_STRATEGY;
+import static by.ibrel.kitan.constants.Const.ENCODING;
+import static by.ibrel.kitan.constants.Const.HASH_STRATEGY;
 
 
 /**
@@ -54,10 +53,8 @@ abstract class AbstractFile implements Serializable{
         this.path = path;
     }
 
-    //TODO shitcode !!!
     private String createFile(String path, MultipartFile fileUpload) {
 
-//        String nameFile = new Random().nextInt(RANDOM_SEGMENT) + "_" + fileUpload.getOriginalFilename();
         String originalFilename = String.valueOf(fileUpload.getOriginalFilename());
         String nameFile = null;
 
@@ -70,13 +67,7 @@ abstract class AbstractFile implements Serializable{
             Files.copy(fileUpload.getInputStream(), Paths.get(createPath(path).getPath(),nameFile));
 
         } catch (NoSuchAlgorithmException ex) {
-
-            try {
-                throw new HashGenerationException("Could not generate hash from String", ex);
-            } catch (HashGenerationException e) {
-                e.printStackTrace();
-            }
-
+            throw new HashGenerationException("Could not generate hash from String", ex);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -110,13 +101,11 @@ abstract class AbstractFile implements Serializable{
     }
 
     private static String convertByteArrayToHexString(byte[] arrayBytes) {
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < arrayBytes.length; i++) {
-            stringBuffer.append(Integer.toString((arrayBytes[i] & 0xff) + 0x100, 16)
+        StringBuilder stringBuffer = new StringBuilder();
+        for (byte arrayByte : arrayBytes) {
+            stringBuffer.append(Integer.toString((arrayByte & 0xff) + 0x100, 16)
                     .substring(1));
         }
         return stringBuffer.toString();
     }
-
-
 }

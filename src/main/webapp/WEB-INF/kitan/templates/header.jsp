@@ -69,9 +69,8 @@
                         <c:when test="${loggedIn}">
                         <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.users"/><span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="${ctx}/user/admin/list">Список пользователе</a></li>
-                                <li><a href="${ctx}/role/list">Список ролей</a></li>
-                                <li><a href="${ctx}/users/add-page">Добавить пользователя</a></li>
+                                <li><a href="${ctx}/admin/user/list">Список пользователе</a></li>
+                                <li><a href="${ctx}/admin/role/list">Список ролей</a></li>
                             </ul>
                         </li>
                         </c:when>

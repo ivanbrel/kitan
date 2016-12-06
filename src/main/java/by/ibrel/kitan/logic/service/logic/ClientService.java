@@ -4,7 +4,7 @@ import by.ibrel.kitan.logic.dao.logic.entity.Client;
 import by.ibrel.kitan.logic.dao.logic.repository.ClientRepository;
 import by.ibrel.kitan.logic.exception.logic.ClientExistsException;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.logic.dto.ClientDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ClientDto;
 import by.ibrel.kitan.logic.service.logic.impl.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

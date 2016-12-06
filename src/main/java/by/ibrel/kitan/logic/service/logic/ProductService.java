@@ -5,7 +5,7 @@ import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.dao.logic.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.logic.repository.ProductRepository;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.IColorProductService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
 import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;

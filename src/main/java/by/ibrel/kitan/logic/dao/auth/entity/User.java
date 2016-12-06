@@ -46,7 +46,7 @@ public class User implements Serializable {
     private String password;
 
     @Getter
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
+    @ManyToMany(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",schema = "AUTH",joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;

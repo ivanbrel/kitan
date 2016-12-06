@@ -2,7 +2,7 @@ package by.ibrel.kitan.logic.service.auth.impl;
 
 import by.ibrel.kitan.logic.dao.auth.entity.User;
 import by.ibrel.kitan.logic.service.ICommonService;
-import by.ibrel.kitan.logic.service.auth.dto.UserDto;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.UserDto;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -15,7 +15,7 @@ public interface IUserService extends ICommonService<User> {
 
     boolean checkIfValidOldPassword(User user, String oldPassword);
 
-    void changeUserPassword(User user, String password);
+    void changeUserPassword(Long id, String password);
 
     User findByLogin(String login);
 

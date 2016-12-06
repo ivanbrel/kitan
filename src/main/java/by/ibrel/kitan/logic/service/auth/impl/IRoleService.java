@@ -2,7 +2,7 @@ package by.ibrel.kitan.logic.service.auth.impl;
 
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.service.ICommonService;
-import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.RoleDto;
 
 /**
  * @author ibrel

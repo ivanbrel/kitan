@@ -23,7 +23,6 @@ public final class PageConstants {
 
     public final static String USER_LIST_PAGE = "auth.user.list";
     public final static String USER_EDIT_PAGE = "auth.user.edit";
-    public final static String USER_ADD_PAGE = "auth.user.add";
 
     public final static String ROLE_LIST_PAGE = "auth.role.list";
     public final static String ROLE_EDIT_PAGE = "auth.role.edit";

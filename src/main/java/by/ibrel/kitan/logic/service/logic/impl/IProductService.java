@@ -3,7 +3,7 @@ package by.ibrel.kitan.logic.service.logic.impl;
 import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.dao.logic.entity.ShoppingCart;
 import by.ibrel.kitan.logic.service.ICommonService;
-import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;

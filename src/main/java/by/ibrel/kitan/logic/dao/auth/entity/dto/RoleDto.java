@@ -1,4 +1,4 @@
-package by.ibrel.kitan.logic.service.auth.dto;
+package by.ibrel.kitan.logic.dao.auth.entity.dto;
 
 
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class RoleDto implements Serializable{
+    private Long id;
     private String name;
     private List<String> privileges;
 }

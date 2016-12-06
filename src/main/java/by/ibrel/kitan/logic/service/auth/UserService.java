@@ -1,12 +1,12 @@
 package by.ibrel.kitan.logic.service.auth;
 
-import by.ibrel.kitan.Const;
+import by.ibrel.kitan.constants.Const;
 import by.ibrel.kitan.logic.dao.auth.entity.User;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.UserDto;
 import by.ibrel.kitan.logic.dao.auth.repository.UserRepository;
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
 import by.ibrel.kitan.logic.exception.auth.LoginExistsException;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.auth.dto.UserDto;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 
+import static by.ibrel.kitan.constants.Const.DEFAULT_AVATAR;
 /**
  * @author ibrel
  * @version 1.1 (08.04.2016)
@@ -34,19 +34,16 @@ public class UserService extends AbstractService<User> implements IUserService{
     private PasswordEncoder passwordEncoder;
     private IImageService iImageService;
     private Environment environment;
-    private ServletContext context;
 
     @Autowired
     public UserService(final UserRepository repository, final IRoleService roleService,
-                       final PasswordEncoder passwordEncoder, final IImageService iImageService, Environment environment,
-                       ServletContext context) {
+                       final PasswordEncoder passwordEncoder, final IImageService iImageService, Environment environment) {
         super(repository);
         this.repository=repository;
         this.roleService=roleService;
         this.passwordEncoder=passwordEncoder;
         this.iImageService=iImageService;
         this.environment = environment;
-        this.context = context;
     }
 
     //API
@@ -67,7 +64,8 @@ public class UserService extends AbstractService<User> implements IUserService{
     }
 
     @Transactional
-    public void changeUserPassword(User user, String password) {
+    public void changeUserPassword(Long id, String password) {
+        User user = findOne(id);
         user.setPassword(passwordEncoder.encode(password));
         save(user);
     }
@@ -103,15 +101,11 @@ public class UserService extends AbstractService<User> implements IUserService{
 
         UserDto userDto = (UserDto) o;
 
-        Image image = new Image("user.png",context.getRealPath(Const.PATH_IMG));
+        Image image = new Image(DEFAULT_AVATAR,environment.getProperty("fileImageAvatarPath"));
         iImageService.save(image);
 
         if (loginExist(userDto.getLogin())){
-            try {
-                throw new LoginExistsException("There is an account with that login: " + userDto.getLogin());
-            } catch (LoginExistsException e) {
-                e.printStackTrace();
-            }
+            throw new LoginExistsException("There is an account with that login: " + userDto.getLogin());
         }
         User user = new User(userDto.getFirstName(),userDto.getLastName(),userDto.getLogin(),
                 userDto.getEmail(),userDto.getPhone(),passwordEncoder.encode(userDto.getPassword()),image);
@@ -130,7 +124,15 @@ public class UserService extends AbstractService<User> implements IUserService{
         return findByLogin(login) != null;
     }
 
+    @Override
     public boolean checkIfValidOldPassword(User user, String oldPassword) {
         return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
+
+    @Override
+    public void delete(Long id) {
+//        delete avatar user
+        iImageService.deleteImage(findOne(id).getImage().getId());
+        super.delete(id);
     }
 }

@@ -3,7 +3,7 @@ package by.ibrel.kitan.logic.exception.auth;
 /**
  * Created by ibrel on 12.04.2016.
  */
-public final class LoginExistsException extends Throwable{
+public final class LoginExistsException extends RuntimeException{
 
     public LoginExistsException() {
     }

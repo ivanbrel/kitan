@@ -1,6 +1,6 @@
 package by.ibrel.kitan.logic.dao.logic.entity;
 
-import by.ibrel.kitan.logic.service.logic.dto.PriceDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.PriceDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

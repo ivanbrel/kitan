@@ -4,7 +4,7 @@ import by.ibrel.kitan.logic.dao.logic.entity.ColorProduct;
 import by.ibrel.kitan.logic.dao.logic.repository.ColorProductRepository;
 import by.ibrel.kitan.logic.exception.logic.ColorProductExceptions;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.logic.dto.ColorProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ColorProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.IColorProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,22 +25,16 @@ public class ColorProductService extends AbstractService<ColorProduct> implement
     }
 
     @Override
-    //TODO хуй знает как ты мог так написать ! исправить
     public ColorProduct create(Object o) {
 
         final ColorProductDto colorProductDto = (ColorProductDto) o;
 
         if (exists(colorProductDto.getNameColorProduct())) {
-            try {
-                throw new ColorProductExceptions("Color exists");
-            } catch (ColorProductExceptions c) {
-                c.printStackTrace();
-            }
+            throw new ColorProductExceptions("Color exists");
         }
 
         ColorProduct colorProduct = new ColorProduct(colorProductDto);
         save(colorProduct);
-
         return colorProduct;
     }
 

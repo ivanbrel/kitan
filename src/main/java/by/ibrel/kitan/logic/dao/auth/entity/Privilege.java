@@ -3,7 +3,6 @@ package by.ibrel.kitan.logic.dao.auth.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +14,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "PRIVILEGE", schema = "AUTH")
-@ToString
 @EqualsAndHashCode
 @Getter @Setter
 public class Privilege implements Serializable {
@@ -32,5 +30,10 @@ public class Privilege implements Serializable {
 
     public Privilege(final String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

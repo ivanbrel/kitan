@@ -1,7 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.ColorProduct;
-import by.ibrel.kitan.logic.service.logic.dto.ColorProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ColorProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.IColorProductService;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;

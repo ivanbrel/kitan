@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import static by.ibrel.kitan.Const.*;
+import static by.ibrel.kitan.constants.Const.*;
 
 @EqualsAndHashCode
 @ToString

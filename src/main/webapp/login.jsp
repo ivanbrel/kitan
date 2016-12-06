@@ -135,37 +135,6 @@
 
 <!-- jQuery -->
 <script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${pageContext.request.contextPath}/resources/js/registr.js"></script>
-<script type="text/javascript" charset="utf8" src="${pageContext.request.contextPath}/resources/js/jquery.pwstrength.min.js"></script>
-<script src="${ctx}/resources/js/fileinput.min.js"></script>
-
-<%--file upload--%>
-<script>
-    $("#file-3").fileinput({
-        showUpload: false,
-        showCaption: false,
-        browseClass: "btn btn-primary btn-lg",
-        fileType: "any",
-        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
-    });
-    $(".btn-warning").on('click', function() {
-        if ($('#file-4').attr('disabled')) {
-            $('#file-4').fileinput('enable');
-        } else {
-            $('#file-4').fileinput('disable');
-        }
-    });
-    $(".btn-info").on('click', function() {
-        $('#file-4').fileinput('refresh', {previewClass:'bg-info'});
-    });
-    $(document).ready(function() {
-        $("#test-upload").fileinput({
-            'showPreview' : false,
-            'allowedFileExtensions' : ['jpg', 'png','gif'],
-            'elErrorContainer': '#errorBlock'
-        });
-    });
-</script>
-
+<script src="${ctx}/resources/js/registr.js" type="text/javascript" charset="utf8" ></script>
 </body>
 </html>

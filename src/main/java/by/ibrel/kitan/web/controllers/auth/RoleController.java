@@ -3,7 +3,7 @@ package by.ibrel.kitan.web.controllers.auth;
 import by.ibrel.kitan.logic.dao.auth.entity.Privilege;
 import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.exception.auth.UserAlreadyExistException;
-import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.RoleDto;
 import by.ibrel.kitan.logic.service.auth.impl.IPrivilegeService;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
 import org.slf4j.Logger;
@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.util.List;
 
+import static by.ibrel.kitan.constants.PageConstants.*;
 /**
  * @author ibrel
  * @version 1.1 (26.06.2016)
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin/role")
+@PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
 public class RoleController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -40,64 +42,47 @@ public class RoleController {
         this.privilegeService = privilegeService;
     }
 
-    //list all roles
-    @RequestMapping(value = {"/role/list" }, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String listRoles(final ModelMap model) {
-
+    @RequestMapping(value = {"/list" }, method = RequestMethod.GET)
+    public String listRoles(final ModelMap modelMap) {
         List<Role> roles = service.findAll();
-        model.addAttribute("roles", roles);
-
-        return "auth.role.list";
+        modelMap.addAttribute("roles", roles);
+        return ROLE_LIST_PAGE;
     }
 
-    //add new role
-    @RequestMapping(value = {"/role/add"}, method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String addRole(@Valid final RoleDto roleDto, final ModelMap model){
-
-        LOGGER.debug("Add new role with name:" + roleDto);
-
-        final Role add = service.create(roleDto);
-        if (add==null){
-            throw new UserAlreadyExistException();
-        }
-        model.addAttribute("success");
-
-        return "redirect:/role/list";
+    @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
+    public String createRole(@Valid final RoleDto roleDto, final ModelMap modelMap){
+        final Role role = service.create(roleDto);
+        if (role == null) throw new UserAlreadyExistException();
+        LOGGER.debug("Create new role with name: " + roleDto);
+        return listRoles(modelMap);
     }
 
-    @RequestMapping(value = { "/role/delete/{id}" }, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String deleteUser(@PathVariable final Long id) {
+    @RequestMapping(value = { "/delete/{id}" }, method = RequestMethod.GET)
+    public String deleteRole(@PathVariable final Long id, final ModelMap modelMap) {
         service.emptyRole(id);
         service.delete(id);
-        return "redirect:/role/list";
+        LOGGER.debug("Delete role with id: " + id);
+        return listRoles(modelMap);
     }
 
-    @RequestMapping(value = {"/role/edit/{name}"}, method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String updateRole(Role roleDto, final BindingResult result, final ModelMap map){
+    @RequestMapping(value = {"/edit/{id}"}, method = RequestMethod.POST)
+    public String updateRole(final RoleDto roleDto, final BindingResult result, final ModelMap modelMap){
 
-        if (result.hasErrors()){return "users.roles.edit";}
+        if (result.hasErrors()){return ROLE_EDIT_PAGE;}
         service.update(roleDto);
-        map.addAttribute("success", "Роль " + roleDto.getName() + " изменена");
-
-        return "redirect:/role/list";
+        LOGGER.debug("Update role with name: " + roleDto.getName());
+        return listRoles(modelMap);
     }
 
-    @RequestMapping(value = {"/role/edit/{name}"}, method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN_PRIVILEGE')")
-    public String editRole(@PathVariable String name, final ModelMap map){
+    @RequestMapping(value = {"/edit/{id}"}, method = RequestMethod.GET)
+    public String initRoleForm(@PathVariable Long id, final ModelMap map){
 
-        Role r = service.findByName(name);
-        map.addAttribute("role", r);
-
+        Role role = service.findOne(id);
+        map.addAttribute("role", role);
 
         List<Privilege> privileges = privilegeService.findAll();
         map.addAttribute("privileges", privileges);
 
-        return "auth.role.edit";
+        return ROLE_EDIT_PAGE;
     }
-
 }

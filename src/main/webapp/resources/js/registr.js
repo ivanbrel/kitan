@@ -1,19 +1,6 @@
 $(document).ready(function () {
 
     $('#form').submit(function (event) {
-        //for(var i=0; i < 200000000; i++);
-        //{
-        //    var n = noty({
-        //        text: 'Проверка данных ...',
-        //        animation: {
-        //            open: {height: 'toggle'}, // jQuery animate function property object
-        //            close: {height: 'toggle'}, // jQuery animate function property object
-        //            easing: 'swing', // easing
-        //            speed: 100 // opening & closing animation speed
-        //        }
-        //    });
-        //    n.show();
-        //}
         if ($("#login").val()!=0 && $("#password").val()!=0 && $("#firstName").val()!=0 && $("#lastName").val()!=0) {
             register(event);
         } else {
@@ -25,7 +12,7 @@ $(document).ready(function () {
     $('#login').on('blur', function () {
 
         jQuery.ajax({
-            type: "POST",
+            type: "GET",
             url: ctx + "/checkLogin",
             data: {"login": document.getElementById('login').value},
             success: function (data) {
@@ -57,23 +44,23 @@ $(document).ready(function () {
         $("#globalError").html("").hide();
     });
 
-    options = {
-       common: {minChar:6},
-       ui: {
-           showVerdictsInsideProgressBar:true,
-           showErrors:true,
-           errorMessages:{
-               wordLength: [["Длинна пароля меньше 6-ми символов"]],
-               wordNotEmail: [["Нельзя использовать логин в качестве пароля"]],
-               //wordSequences: [["Ваш пароль содержит последовательности"]],
-               //wordLowercase: [["Используйте символы нижнего регистра"]],
-               //wordUppercase: [["Используйте символы верхнего регистра"]],
-               wordOneNumber: [["Используйте цифры"]],
-               //wordOneSpecialChar: [["Используйте спец. символы (пример: _ @ # $ %)"]]
-           }
-       }
-    };
-    $('#password').pwstrength(options);
+    // options = {
+    //    common: {minChar:6},
+    //    ui: {
+    //        showVerdictsInsideProgressBar:true,
+    //        showErrors:true,
+    //        errorMessages:{
+    //            wordLength: [["Длинна пароля меньше 6-ми символов"]],
+    //            wordNotEmail: [["Нельзя использовать логин в качестве пароля"]],
+    //            //wordSequences: [["Ваш пароль содержит последовательности"]],
+    //            //wordLowercase: [["Используйте символы нижнего регистра"]],
+    //            //wordUppercase: [["Используйте символы верхнего регистра"]],
+    //            wordOneNumber: [["Используйте цифры"]],
+    //            //wordOneSpecialChar: [["Используйте спец. символы (пример: _ @ # $ %)"]]
+    //        }
+    //    }
+    // };
+    // $('#password').pwstrength(options);
 
 });
 

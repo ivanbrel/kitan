@@ -16,5 +16,11 @@ public interface IImageService extends ICommonService<Image> {
 
     void updateImage(Image image, MultipartFile fileUpload, String path);
 
+    /**
+     * Method delete image file
+     * @param id entity image
+     */
+    void deleteImage(Long id);
+
     byte[] getImage(Long idImage) throws IOException;
 }

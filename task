@@ -1,20 +1,9 @@
-7. Учесть http://corwin.calepin.co/design-jpa-entities-tips-and-trics.html
-10. Выподающие списки в изминении товара
-13. return null заменить exception!
-14. отшлифовать контроллеры
-16. админку !!!
-19. удаление товара.
-20. online update principal for avatar
-21. if exists return error
-22. change price (BYN,RUS)
-
-java config (security, message), personal user(change controller, jsp),
-
-<Resource name="jdbc/kitanDB"
-				  auth="Container"
-				  type="javax.sql.DataSource"
-				  username="root"
-				  password="ibrel"
-				  driverClassName="com.mysql.jdbc.Driver"
-				  url="jdbc:mysql://localhost:3306/kitan"
-				  />
+1. fix user edit (for admin)
+2. fix on page load pic
+3. redirect strategy (admin/not admin)
+4. locale for title page
+5. price enter in 2 field (urs,byn)
+6. check password
+7. check exists (login, client)
+8. exception control (all app)
+9. login validation (eng)

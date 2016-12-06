@@ -1,6 +1,6 @@
 package by.ibrel.kitan.logic.dao.logic.entity;
 
-import by.ibrel.kitan.logic.service.logic.dto.ColorProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ColorProductDto;
 import lombok.ToString;
 
 import javax.persistence.Entity;

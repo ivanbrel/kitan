@@ -7,7 +7,7 @@ package by.ibrel.kitan.logic.exception;
  * @datecreate (05.12.2016)
  * @datechange (05.12.2016)
  */
-public class HashGenerationException extends Exception {
+public class HashGenerationException extends RuntimeException {
     public HashGenerationException(String s, Exception ex) {
     }
 }

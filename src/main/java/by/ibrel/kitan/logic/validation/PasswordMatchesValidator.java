@@ -1,6 +1,6 @@
 package by.ibrel.kitan.logic.validation;
 
-import by.ibrel.kitan.logic.service.auth.dto.UserDto;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.UserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

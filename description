@@ -1,0 +1,10 @@
+JNDI
+
+<Resource name="jdbc/kitanDB"
+          auth="Container"
+          type="javax.sql.DataSource"
+          username="postgres"
+          password="root"
+          driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://localhost:5432/kitan"
+/>

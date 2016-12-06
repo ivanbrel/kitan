@@ -1,6 +1,6 @@
 package by.ibrel.kitan.logic.service.logic;
 
-import by.ibrel.kitan.Const;
+import by.ibrel.kitan.constants.Const;
 import by.ibrel.kitan.logic.dao.logic.entity.Image;
 import by.ibrel.kitan.logic.service.AbstractService;
 import by.ibrel.kitan.logic.service.logic.impl.IImageService;
@@ -13,10 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+
+import static by.ibrel.kitan.constants.Const.DEFAULT_AVATAR;
 
 
 /**
@@ -54,10 +55,7 @@ public class ImageService extends AbstractService<Image> implements IImageServic
     public void updateImage(Image image, MultipartFile fileUpload, String path) {
         Image entity = findOne(image.getId());
 
-
-        if (image.getFileName()!=null) {
-            entity.deleteFile(path, image.getFileName());
-        }
+        if (image.getFileName()!=null && !image.getFileName().equals(DEFAULT_AVATAR)) deleteImage(image.getId());
 
         entity.setFileName(entity.getCreateFile(path,fileUpload));
         entity.setPath(path);
@@ -65,14 +63,23 @@ public class ImageService extends AbstractService<Image> implements IImageServic
     }
 
     @Override
+    public void deleteImage(Long id) {
+        Image image = findOne(id);
+        image.deleteFile(image.getPath(), image.getFileName());
+    }
+
+    @Override
     public byte[] getImage(Long idImage) throws IOException {
-        InputStream in;
+        InputStream in = null;
         try {
             in = new FileInputStream(findOne(idImage).toString());
             return IOUtils.toByteArray(in);
         } catch (IOException e) {
             in = new FileInputStream(context.getRealPath(Const.DEFAULT_IMG));
             return IOUtils.toByteArray(in);
+        }finally {
+            assert in != null;
+            in.close();
         }
     }
 
@@ -83,5 +90,4 @@ public class ImageService extends AbstractService<Image> implements IImageServic
         save(image);
         return image;
     }
-
 }

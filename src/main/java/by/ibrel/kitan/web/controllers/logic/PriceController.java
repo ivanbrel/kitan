@@ -1,7 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.Price;
-import by.ibrel.kitan.logic.service.logic.dto.PriceDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.PriceDto;
 import by.ibrel.kitan.logic.service.logic.impl.IPriceService;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;

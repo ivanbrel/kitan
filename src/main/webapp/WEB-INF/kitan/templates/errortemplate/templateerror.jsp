@@ -21,14 +21,15 @@
         <!-- /page content -->
     </div>
 </div>
+
 <!-- jQuery -->
-<script src="${ctx}/resources/bootstrap/jquery.min.js"></script>
+<script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="${ctx}/resources/bootstrap/vendors/bootstrap/bootstrap.min.js"></script>
+<script src="${ctx}/resources/bootstrap/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="${ctx}/resources/bootstrap/fastclick.js"></script>
+<script src="${ctx}/resources/bootstrap/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
-<script src="${ctx}/resources/bootstrap/nprogress.js"></script>
+<script src="${ctx}/resources/bootstrap/vendors/nprogress/nprogress.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="${ctx}/resources/bootstrap/js/custom.min.js"></script>

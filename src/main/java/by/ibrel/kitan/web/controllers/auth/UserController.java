@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-
 import java.io.IOException;
 
 import static by.ibrel.kitan.constants.PageConstants.USER_EDIT_PAGE;
@@ -50,7 +49,7 @@ public class UserController extends AbstractController<User> {
         if (!userService.checkIfValidOldPassword(user, oldPassword)) {
             throw new InvalidOldPasswordException();
         } else {
-            userService.changeUserPassword(user, password);
+            userService.changeUserPassword(user.getId(), password);
             return new GenericResponse("success");
         }
     }

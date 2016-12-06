@@ -4,13 +4,9 @@ import org.apache.tiles.Attribute;
 import org.apache.tiles.Definition;
 import org.apache.tiles.definition.DefinitionsFactory;
 import org.apache.tiles.request.Request;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -85,7 +81,6 @@ public class TilesDefinitionsConfig implements DefinitionsFactory {
 
 //        user page
         addDefaultLayoutDef(USER_LIST_PAGE, messages.getMessage("title.name.listUsers",null,locale), USER_LIST_JSP);
-        addDefaultLayoutDef(USER_ADD_PAGE, messages.getMessage("title.name.addUser",null,locale), USER_ADD_JSP);
         addDefaultLayoutDef(USER_EDIT_PAGE, messages.getMessage("title.name.editUser",null,locale), USER_EDIT_JSP);
 
 //        role page

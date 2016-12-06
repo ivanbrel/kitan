@@ -5,7 +5,7 @@ import by.ibrel.kitan.logic.dao.auth.entity.Role;
 import by.ibrel.kitan.logic.dao.auth.repository.RoleRepository;
 import by.ibrel.kitan.logic.exception.auth.RoleExistsException;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.auth.dto.RoleDto;
+import by.ibrel.kitan.logic.dao.auth.entity.dto.RoleDto;
 import by.ibrel.kitan.logic.service.auth.impl.IPrivilegeService;
 import by.ibrel.kitan.logic.service.auth.impl.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class RoleService extends AbstractService<Role> implements IRoleService {
 
     @Override
     public void update(RoleDto roleDto) {
-        Role entity = findByName(roleDto.getName());
+        Role entity = findOne(roleDto.getId());
 
         if(roleDto.getPrivileges()!=null) {
             entity.getPrivileges().clear();

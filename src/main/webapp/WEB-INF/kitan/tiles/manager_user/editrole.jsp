@@ -30,39 +30,32 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
+
                     <div class="x_content">
 
                         <form:form method="POST" commandName="role">
-                        <div>
-                        <table  class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th><small>Привилегии</small></th>
-                                <%--<th width="1000"><small>Описание</small></th>--%>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${privileges}" var="elements" varStatus="loop">
-                                <%--<c:if test="${not (elements.name == 'ADMIN_PRIVILEGE')}">--%>
-                                <tr>
-                                    <td ><form:checkbox path="privileges" class="person_data" value="${elements}"/></td>
-                                    <td><small><c:out value='${elements.name}'/></small></td>
-                                        <%--<td><small><c:out value='${elements.information}' /></small></td>--%>
-                                </tr>
-                                <%--</c:if>--%>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                        <br>
-                            <input type="submit" value="Обновить" class="btn btn-success custom-width"/>
-                            <input type="button" value="Отменить" class="btn" onclick="history.back()">
-
-                            <div class="isa_success">
-                                    ${success}
+                            <div>
+                                <table  class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th width="1"></th>
+                                        <th><small>Привилегии</small></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${privileges}" var="elements" varStatus="loop">
+                                        <tr>
+                                            <td><form:checkbox path="privileges" class="person_data" value="${elements}"/></td>
+                                            <td><c:out value='${elements.name}'/></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <input type="submit" value="Обновить" class="btn btn-success custom-width"/>
+                                <input type="button" value="Отменить" class="btn" onclick="history.back()">
                             </div>
-                            </form:form>
-                        </div>
+                        </form:form>
                     </div>
                 </div>
             </div>

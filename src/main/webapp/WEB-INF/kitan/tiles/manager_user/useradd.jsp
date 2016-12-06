@@ -99,9 +99,6 @@
     </div>
 </div>
 
-<script type="text/javascript" charset="utf8" src="${pageContext.request.contextPath}/resources/js/jquery.pwstrength.min.js"></script>
-<script src="${ctx}/resources/js/jquery.base64.js"></script>
-
 <script>
     $(document).ready(function () {
         $('#login').on('blur', function () {

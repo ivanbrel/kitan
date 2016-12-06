@@ -3,7 +3,7 @@ package by.ibrel.kitan.logic.exception.auth;
 /**
  * Created by ibrel on 05/07/16.
  */
-public final class RoleExistsException extends Throwable {
+public final class RoleExistsException extends RuntimeException {
 
     public RoleExistsException() {
     }

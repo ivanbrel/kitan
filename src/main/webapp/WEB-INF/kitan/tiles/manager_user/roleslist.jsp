@@ -11,7 +11,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="well">
-                        <form action="${ctx}/role/add" method="post">
+                        <form action="${ctx}/admin/role/add" method="post">
                             <div class="col-xs-4">
                                 <input type="text" class="form-control" name="name" value="" required="required"/>
                             </div>
@@ -59,10 +59,10 @@
                                         </c:forEach>
                                     </small></td>
                                     <td>
-                                        <a href="<c:url value='/role/edit/${role.name}'/>" title="Edit" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/admin/role/edit/${role.id}'/>" title="Edit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                         </a>
-                                        <a href="<c:url value='/role/delete/${role.id}'/>" title="Delete" class="btn btn-default btn-xs">
+                                        <a href="<c:url value='/admin/role/delete/${role.id}'/>" title="Delete" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </a>
                                     </td>

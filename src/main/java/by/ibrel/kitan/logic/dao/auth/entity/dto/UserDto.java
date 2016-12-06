@@ -1,4 +1,4 @@
-package by.ibrel.kitan.logic.service.auth.dto;
+package by.ibrel.kitan.logic.dao.auth.entity.dto;
 
 import by.ibrel.kitan.logic.validation.PasswordMatches;
 import by.ibrel.kitan.logic.validation.ValidPassword;

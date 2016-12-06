@@ -1,4 +1,4 @@
-package by.ibrel.kitan.logic.service.logic.dto;
+package by.ibrel.kitan.logic.dao.logic.entity.dto;
 
 
 import lombok.Getter;

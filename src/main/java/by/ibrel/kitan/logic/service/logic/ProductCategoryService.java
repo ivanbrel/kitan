@@ -3,7 +3,7 @@ package by.ibrel.kitan.logic.service.logic;
 import by.ibrel.kitan.logic.dao.logic.entity.ProductCategory;
 import by.ibrel.kitan.logic.dao.logic.repository.ProductCatalogRepository;
 import by.ibrel.kitan.logic.service.AbstractService;
-import by.ibrel.kitan.logic.service.logic.dto.ProductCategoryDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductCategoryDto;
 import by.ibrel.kitan.logic.service.logic.impl.IProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

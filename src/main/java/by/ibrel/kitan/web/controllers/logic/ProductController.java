@@ -1,7 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.logic.entity.Product;
-import by.ibrel.kitan.logic.service.logic.dto.ProductDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.*;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;

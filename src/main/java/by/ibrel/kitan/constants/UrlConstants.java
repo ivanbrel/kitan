@@ -8,9 +8,6 @@ public final class UrlConstants {
 
     public final static String REGISTRATION_URL = "/registration";
     public final static String LOGIN_EXISTS_CHECK = "/checkLogin";
-    public final static String USER_DELETE_URL = "/user/delete";
-    public final static String UPDATE_PASSWORD_URL = "/update/password";
-    public final static String CHANGE_PASSWORD_URL = "/user/change-password";
 
     public final static String LOGIN_URL = "/login_";
     public final static String HOME_URL = "/home";
@@ -18,10 +15,9 @@ public final class UrlConstants {
     public final static String HELP_URL = "/help";
     public final static String REF_URL = "/ref";
     public final static String ABOUT_URL = "/about";
-    public final static String USER_LIST_URL = "/user/admin/list";
+    public final static String USER_LIST_URL = "/admin//user/list";
     public final static String USER_EDIT_URL = "/user/edit";
-    public final static String ROLE_LIST_URL = "/role/list";
-    public final static String USER_ADD_URL = "/users/add-page";
+    public final static String ROLE_LIST_URL = "/admin/role/list";
     public final static String CLIENT_LIST_URL = "/client/list";
     public final static String CLIENT_ADD_URL = "/client/add-page";
     public final static String CART_LIST_URL = "/cart/list";

@@ -1,8 +1,7 @@
 package by.ibrel.kitan.web.controllers.logic;
 
-import by.ibrel.kitan.Const;
 import by.ibrel.kitan.logic.dao.logic.entity.Client;
-import by.ibrel.kitan.logic.service.logic.dto.ClientDto;
+import by.ibrel.kitan.logic.dao.logic.entity.dto.ClientDto;
 import by.ibrel.kitan.logic.service.logic.impl.IClientService;
 import by.ibrel.kitan.web.controllers.AbstractController;
 import org.slf4j.Logger;

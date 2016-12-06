@@ -1,4 +1,4 @@
-package by.ibrel.kitan;
+package by.ibrel.kitan.constants;
 
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,8 @@ public final class Const {
 
     //file image path
     public static final String DEFAULT_IMG = "/resources/img/logo.png";
-    public static final String PATH_IMG = "/resources/img/";
+    public static final String DEFAULT_AVATAR = "user.png";
+    
     //start number for purchase
     public static final int START_NUMBER = 1;
     public static final int INIT_INT = 0;

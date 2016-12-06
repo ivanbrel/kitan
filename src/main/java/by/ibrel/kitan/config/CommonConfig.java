@@ -71,7 +71,6 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
         registry.addViewController(USER_LIST_URL).setViewName(USER_LIST_PAGE);
         registry.addViewController(USER_EDIT_URL).setViewName(USER_EDIT_PAGE);
         registry.addViewController(ROLE_LIST_URL).setViewName(ROLE_LIST_PAGE);
-        registry.addViewController(USER_ADD_URL).setViewName(USER_ADD_PAGE);
         registry.addViewController(CLIENT_LIST_URL).setViewName(CLIENT_LIST_PAGE);
         registry.addViewController(CLIENT_ADD_URL).setViewName(CLIENT_ADD_PAGE);
         registry.addViewController(CART_LIST_URL).setViewName(CART_LIST_PAGE);

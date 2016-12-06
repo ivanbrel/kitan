@@ -24,7 +24,6 @@ public final class PathPageConstants {
 
     //        user page
     public static final String USER_LIST_JSP = "/WEB-INF/kitan/tiles/manager_user/userslist.jsp";
-    public static final String USER_ADD_JSP = "/WEB-INF/kitan/tiles/manager_user/useradd.jsp";
     public static final String USER_EDIT_JSP = "/WEB-INF/kitan/tiles/manager_user/useredit.jsp";
 
     //        role page
