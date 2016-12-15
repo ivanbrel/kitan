@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -31,13 +33,19 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@PropertySource({"classpath:hibernate.properties", "classpath:jdbc.properties"})
+@PropertySource({"classpath:app.properties"})
+@EnableJpaRepositories(basePackages = {"by.ibrel.kitan.logic.dao"})
+@ComponentScan("by.ibrel.kitan.logic")
 public class DbConf {
 
     private static final Logger LOG = LoggerFactory.getLogger(DbConf.class);
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public DbConf(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource dataSource() {
@@ -51,7 +59,7 @@ public class DbConf {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
         lcemfb.setDataSource(dataSource());
         lcemfb.setJpaVendorAdapter(jpaVendorAdapter());
@@ -64,7 +72,7 @@ public class DbConf {
     public PlatformTransactionManager transactionManager(){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                getEntityManagerFactoryBean().getObject() );
+                entityManagerFactory().getObject() );
         return transactionManager;
     }
 

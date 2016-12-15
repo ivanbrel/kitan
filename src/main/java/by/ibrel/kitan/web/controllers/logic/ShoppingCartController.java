@@ -2,8 +2,8 @@ package by.ibrel.kitan.web.controllers.logic;
 
 import by.ibrel.kitan.logic.dao.auth.entity.User;
 import by.ibrel.kitan.logic.dao.logic.entity.Price;
-import by.ibrel.kitan.logic.dao.logic.entity.ShoppingCart;
 import by.ibrel.kitan.logic.dao.logic.entity.Product;
+import by.ibrel.kitan.logic.dao.logic.entity.ShoppingCart;
 import by.ibrel.kitan.logic.exception.logic.PurchaseQuantityLimitException;
 import by.ibrel.kitan.logic.service.auth.impl.IUserService;
 import by.ibrel.kitan.logic.service.logic.impl.IPriceService;
@@ -18,7 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.Collection;

@@ -1,7 +1,6 @@
 package by.ibrel.kitan.logic.dao.logic.entity;
 
 import by.ibrel.kitan.logic.dao.logic.entity.dto.ColorProductDto;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,7 +12,6 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "color_product", schema = "LOGIC")
-@ToString
 public class ColorProduct extends AbstractCatalog implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -27,5 +25,10 @@ public class ColorProduct extends AbstractCatalog implements Serializable{
 
     public ColorProduct(ColorProductDto productDto){
         this(productDto.getNameColorProduct(),productDto.getDescriptionColorProduct());
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

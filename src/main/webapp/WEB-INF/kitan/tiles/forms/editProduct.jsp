@@ -66,9 +66,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет</label>
+                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <form:input path="color" id="color" name="color" class="date-picker form-control col-md-7 col-xs-12" type="text"/>
+
+                                    <form:select path="color" cssClass="js-example form-control select2-hidden-accessible">
+                                        <form:options items="${listColor}" />
+                                    </form:select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -86,10 +89,9 @@
                             <div class="form-group">
                                 <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <%--<form:select path="category" items="${listCategory}"/>--%>
-                                            <form:select path="category">
-                                                <form:options items="${lists}" />
-                                            </form:select>
+                                    <form:select path="category" cssClass="js-example form-control select2-hidden-accessible">
+                                        <form:options items="${lists}" />
+                                    </form:select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -127,7 +129,5 @@
         </div>
     </div>
 </div>
-
-<script src="${pageContext.request.contextPath}/resources/bootstrap/jquery.min.js"></script>
 
 

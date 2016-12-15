@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by ibrel on 08.04.2016.
  */
-@Repository
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.login = ?1")

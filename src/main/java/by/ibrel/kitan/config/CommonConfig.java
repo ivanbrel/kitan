@@ -1,35 +1,43 @@
 package by.ibrel.kitan.config;
 
+import by.ibrel.kitan.config.tiles.TilesDefinitionsConfig;
 import by.ibrel.kitan.logic.service.converters.CustomWebBindingInitializer;
 import by.ibrel.kitan.logic.service.converters.StringToProductCategoryConverter;
+import by.ibrel.kitan.logic.service.converters.StringToProductColorConverter;
 import by.ibrel.kitan.logic.service.converters.StringToProductConverter;
-import by.ibrel.kitan.logic.validation.PasswordMatchesValidator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.data.web.SortHandlerMethodArgumentResolver;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-import javax.validation.ConstraintValidator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static by.ibrel.kitan.constants.PageConstants.*;
 import static by.ibrel.kitan.constants.UrlConstants.*;
@@ -46,9 +54,16 @@ import static by.ibrel.kitan.constants.UrlConstants.*;
 @ComponentScan("by.ibrel.kitan")
 public class CommonConfig extends WebMvcConfigurerAdapter {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private ConversionService conversionService;
+
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(stringToProductConverter());
+        registry.addConverter(stringToProductCategoryConverter());
+        registry.addConverter(stringToProductColorConverter());
     }
 
     /*
@@ -90,105 +105,83 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(byteArrayHttpMessageConverter());
+        converters.add(mappingJackson2HttpMessageConverter());
+
+//        // http
+//        HttpMessageConverter converter = new StringHttpMessageConverter();
+//        converters.add(converter);
+//        LOGGER.info("HttpMessageConverter added");
+//
+//        // string
+//        converter = new FormHttpMessageConverter();
+//        converters.add(converter);
+//        LOGGER.info("FormHttpMessageConverter added");
+//
+//        // json
+//        converter = new MappingJackson2HttpMessageConverter();
+//        converters.add(converter);
+//        LOGGER.info("MappingJackson2HttpMessageConverter added");
     }
 
-    /*
-      HandlerMethodArgumentResolver to automatically create Sort instances from request parameters or SortDefault annotations.
+    /**
+     * Configure ViewResolvers to deliver preferred views.
+     */
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.viewResolver(getTilesViewResolver());
+    }
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer matcher) {
+        matcher.setUseRegisteredSuffixPatternMatch(true);
+    }
+
+    /**
+     * Resolves views selected for rendering by @Controllers to tiles resources in the Apache TilesConfigurer bean
      */
     @Bean
-    public HandlerMethodArgumentResolver sortResolver(){
-        return new SortHandlerMethodArgumentResolver();
+    public TilesViewResolver getTilesViewResolver() {
+        TilesViewResolver tilesViewResolver = new TilesViewResolver();
+        tilesViewResolver.setViewClass(TilesView.class);
+        return tilesViewResolver;
     }
 
-    @Bean
-    public HandlerMethodArgumentResolver pageableResolver(){
-        return new PageableHandlerMethodArgumentResolver((SortHandlerMethodArgumentResolver) sortResolver());
-    }
-
-    /*
-     * Convenient subclass of UrlBasedViewResolver that supports InternalResourceView (i.e. Servlets and JSPs) and subclasses such as JstlView.
+    /**
+     * Configures Apache tiles definitions bean used by Apache TilesViewResolver to resolve views selected for rendering by @Controllers
      */
     @Bean
-    public InternalResourceViewResolver jspViewResolver(){
-        InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();
-        jspViewResolver.setViewClass(JstlView.class);
-        jspViewResolver.setPrefix("/WEB-INF/kitan/tiles/");
-        jspViewResolver.setSuffix(".jsp");
-        jspViewResolver.setOrder(2);
-        return jspViewResolver;
+    public TilesConfigurer getTilesConfigurer() {
+        TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setCheckRefresh(true);
+        tilesConfigurer.setDefinitionsFactoryClass(TilesDefinitionsConfig.class);
+        //       enabling auto-refresh of Tiles definitions
+        tilesConfigurer.setPreparerFactoryClass(SpringBeanPreparerFactory.class);
+
+        // Add apache tiles definitions
+        TilesDefinitionsConfig.addDefinitions(messageSource());
+
+        LOGGER.info("TilesDefinitionsConfig - successfully added definitions");
+        return tilesConfigurer;
     }
 
-    /*
-     * Configure ContentNegotiationManager
-     */
-//    @Override
-//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-//        configurer.ignoreAcceptHeader(true).defaultContentType(
-//                MediaType.APPLICATION_XML);
-//    }
+    @Override
+    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(false)
+                .favorParameter(true)
+                .parameterName("mediaType")
+                .ignoreAcceptHeader(true)
+                .useJaf(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType("xml", MediaType.APPLICATION_XML)
+                .mediaType("json", MediaType.APPLICATION_JSON);
+    }
 
     @Bean
     public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
         ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
         resolver.setOrder(1);
-
-        // Define all possible view resolvers
-//        resolvers.add(jaxb2MarshallingXmlViewResolver());
-//        resolvers.add(jsonViewResolver());
-//        resolvers.add(pdfViewResolver());
-//        resolvers.add(excelViewResolver());
-
-        resolver.setViewResolvers(Lists.newArrayList(jspViewResolver(),tilesViewResolver()));
+        resolver.setViewResolvers(Lists.newArrayList(getTilesViewResolver()));
         return resolver;
-    }
-
-    /*
-     * Configure View resolver to provide JSON output using JACKSON library to
-     * convert object in JSON format.
-     */
-//    @Bean
-//    public ViewResolver jsonViewResolver() {
-//        return new JsonViewResolver();
-//    }
-
-    /*
-     * Configure View resolver to provide PDF output using lowagie pdf library to
-     * generate PDF output for an object content
-     */
-//    @Bean
-//    public ViewResolver pdfViewResolver() {
-//        return new PdfViewResolver();
-//    }
-
-    /*
-     * Configure View resolver to provide XLS output using Apache POI library to
-     * generate XLS output for an object content
-     */
-//    @Bean
-//    public ViewResolver excelViewResolver() {
-//        return new ExcelViewResolver();
-//    }
-
-    @Bean
-    public TilesViewResolver tilesViewResolver(){
-        TilesViewResolver tilesViewResolver = new TilesViewResolver();
-        tilesViewResolver.setOrder(2);
-        return tilesViewResolver;
-    }
-
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    @Bean
-    public ConstraintValidator passwordMatchesValidator(){
-        return new PasswordMatchesValidator();
-    }
-
-    @Bean
-    public RequestMappingHandlerMapping valueResolverAware(){
-        return new RequestMappingHandlerMapping();
     }
 
     @Bean
@@ -200,13 +193,13 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public CustomWebBindingInitializer customWebBindingInitializer(){
-        return new CustomWebBindingInitializer();
+        return new CustomWebBindingInitializer(conversionService);
     }
 
     @Bean
     public ConversionServiceFactoryBean conversionService(){
         ConversionServiceFactoryBean factoryBean = new ConversionServiceFactoryBean();
-        factoryBean.setConverters(Sets.newHashSet(stringToProductCategoryConverter(),stringToProductConverter()));
+        factoryBean.setConverters(Sets.newHashSet(stringToProductCategoryConverter(),stringToProductConverter(), stringToProductColorConverter()));
         return factoryBean;
     }
 
@@ -220,11 +213,19 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public Converter stringToProductCategoryConverter(){
+        LOGGER.info("String to ProductCategory converter add");
         return new StringToProductCategoryConverter();
     }
 
     @Bean
+    public Converter stringToProductColorConverter(){
+        LOGGER.info("String to ProductColor converter add");
+        return new StringToProductColorConverter();
+    }
+
+    @Bean
     public Converter stringToProductConverter(){
+        LOGGER.info("String to Product converter add");
         return new StringToProductConverter();
     }
 
@@ -235,11 +236,54 @@ public class CommonConfig extends WebMvcConfigurerAdapter {
         return arrayHttpMessageConverter;
     }
 
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        //objectMapper.registerModule(new JSR310Module());
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setObjectMapper(objectMapper);
+        converter.setSupportedMediaTypes(getJsonMediaTypes());
+        return converter;
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("messages");
+        source.setUseCodeAsDefaultMessage(true);
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+
+    @Bean
+    public CookieLocaleResolver localeResolver() {
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setCookieName("defaultLocale");
+        cookieLocaleResolver.setDefaultLocale(new Locale("ru"));
+        return cookieLocaleResolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor(){
+        LocaleChangeInterceptor localeChangeInterceptor=new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("language");
+        return localeChangeInterceptor;
+    }
+
     private List<MediaType> getSupportedMediaTypes() {
         List<MediaType> list = new ArrayList<>();
         list.add(MediaType.IMAGE_JPEG);
         list.add(MediaType.IMAGE_PNG);
         list.add(MediaType.APPLICATION_OCTET_STREAM);
+        return list;
+    }
+
+    private List<MediaType> getJsonMediaTypes(){
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.APPLICATION_JSON);
+        list.add(MediaType.APPLICATION_JSON_UTF8);
+        list.add(MediaType.ALL);
         return list;
     }
 }

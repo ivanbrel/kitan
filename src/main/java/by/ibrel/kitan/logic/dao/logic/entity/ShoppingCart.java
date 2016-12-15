@@ -39,12 +39,12 @@ public class ShoppingCart implements Serializable {
     private Date date;
 
     @Getter @Setter
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinTable(name = "catr_product", schema = "LOGIC", joinColumns = @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID"))
     private Collection<Product> products;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
@@ -59,7 +59,7 @@ public class ShoppingCart implements Serializable {
     private Status status;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "USER_ID")
     private User user;
 

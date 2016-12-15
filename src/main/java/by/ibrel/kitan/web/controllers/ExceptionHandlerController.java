@@ -11,21 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+import static by.ibrel.kitan.constants.PageConstants.ERROR_TRACE_PAGE;
+
 @ControllerAdvice
 public class ExceptionHandlerController {
-    private final static Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-    public static final String DEFAULT_ERROR_VIEW = "kitan-errortrace";
+    private final static Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
     @ExceptionHandler(value = {ServletException.class,Exception.class, RuntimeException.class})
     public ModelAndView defaultErrorHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
         logger.error("url:{}, exc:{}", request.getRequestURL(), e);
-        ModelAndView mav = new ModelAndView(DEFAULT_ERROR_VIEW);
+        ModelAndView mav = new ModelAndView(ERROR_TRACE_PAGE);
 
         mav.addObject("datetime", new Date());
         mav.addObject("exception", e);
         mav.addObject("url", request.getRequestURL());
-        mav.setViewName(DEFAULT_ERROR_VIEW);
+        mav.setViewName(ERROR_TRACE_PAGE);
         return mav;
     }
 }

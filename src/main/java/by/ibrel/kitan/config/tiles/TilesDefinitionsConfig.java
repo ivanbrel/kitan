@@ -29,7 +29,6 @@ public class TilesDefinitionsConfig implements DefinitionsFactory {
     private static final Attribute ERROR_TEMPLATE = new Attribute(ERROR_TEMPLATE_JSP);
     private static final Attribute LOGIN_PAGE_JSP = new Attribute(LOGIN_JSP);
 
-
     @Override
     public Definition getDefinition(String name, Request tilesContext) {
         return tilesDefinitions.get(name);
@@ -66,8 +65,9 @@ public class TilesDefinitionsConfig implements DefinitionsFactory {
     /**
      * Add Apache tiles definitions<
      */
-    static void addDefinitions(MessageSource messages){
+    public static void addDefinitions(MessageSource messages){
 
+//        TODO LOCALE
         Locale locale = Locale.getDefault();
 
 //        login page
@@ -123,5 +123,4 @@ public class TilesDefinitionsConfig implements DefinitionsFactory {
         addErrorLayoutDef(ERROR_405_PAGE, ERROR_405_JSP);
         addErrorLayoutDef(ERROR_TRACE_PAGE, ERROR_TRACE_JSP);
     }
-
 }

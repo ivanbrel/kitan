@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by ibrel on 13/05/16.
  */
-@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p from Product p where p.nameProduct = ?1")

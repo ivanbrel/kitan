@@ -35,7 +35,7 @@ public class Product implements Serializable {
 
     private String model;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "COLOR_ID")
     private ColorProduct color;
 
@@ -45,7 +45,7 @@ public class Product implements Serializable {
 
     private String brand;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "CATEGORY_ID")
     private ProductCategory category;
 

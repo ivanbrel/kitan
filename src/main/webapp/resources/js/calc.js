@@ -26,30 +26,30 @@
 
     function init() {}
 
-    function ajaxGet() {
-        return $.ajax({
-            url: _url,
-            dataType: 'json',
-            type: "GET"
-        })
-            .done(function (data) {
-                byn = data[0];
-                rus = data[1];
-                document.getElementById("pricebyn").value = 0;
-                document.getElementById("pricerus").value = 0;
-                document.getElementById("priceusd").value = 0;
-            })
-            .fail(function () {
-                alert("FAIL!!!")
-            })
-    }
-
-    ajaxGet();
+    // function ajaxGet() {
+    //     return $.ajax({
+    //         url: _url,
+    //         dataType: 'json',
+    //         type: "GET"
+    //     })
+    //         .done(function (data) {
+    //             byn = data[0];
+    //              rus = data[1];
+    //             document.getElementById("pricebyn").value = byn;
+    //             document.getElementById("pricerus").value = rus;
+    //             document.getElementById("priceusd").value = 0;
+    //         })
+    //         .fail(function () {
+    //             alert("FAIL!!!")
+    //         })
+    // }
+    //
+    // ajaxGet();
 
     var
-        byn = 0,
-        rus = 0,
-        usd = 0, lastChange;
+        byn = 20,
+        rus = 60,
+        usd = 1, lastChange;
 
     function calcItLocal(currency) {
         if (currency == "usd") {
@@ -62,7 +62,7 @@
                 document.getElementById("pricerus").value = 0;
                 return;
             }
-            document.getElementById("pricebyn").value= Math.round(parseFloat(document.getElementById("priceusd").value) * usd * 10000) / 10000;
+            document.getElementById("pricebyn").value= Math.round(parseFloat(document.getElementById("priceusd").value) * usd * 10000) / 100;
             document.getElementById("pricerus").value= Math.round(parseFloat(document.getElementById("priceusd").value) * usd / rus * 10000) / 100;
         }
 
@@ -75,8 +75,8 @@
                 document.getElementById("priceusd").value = 0;
                 return;
             }
-            document.getElementById("pricebyn").value= Math.round(parseFloat(document.getElementById("pricerus").value) * rus * 100) / 10000;
-            document.getElementById("priceusd").value= Math.round(parseFloat(document.getElementById("pricerus").value) * rus / usd * 100) / 10000;
+            document.getElementById("pricebyn").value= Math.round(parseFloat(document.getElementById("pricerus").value) / rus)*byn;
+            document.getElementById("priceusd").value= Math.round(parseFloat(document.getElementById("pricerus").value) / rus);
         }
 
         else if (currency == "byr"){

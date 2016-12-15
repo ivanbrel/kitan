@@ -22,17 +22,17 @@
                         </c:otherwise>
                     </c:choose>
                     <div class="x_title">
-                        <h2>Список товара </h2>
+                        <h2>Список продуктов </h2>
                         <div class="clearfix"></div>
                     </div>
                     <div style="float: right">
                         <a class="btn btn-success" href="${ctx}/product/add-page" >
-                            <span class="fa fa-plus-square" aria-hidden="true"></span>  Добавить товар
+                            <span class="fa fa-plus-square" aria-hidden="true"></span>  Добавить продукт
                         </a>
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
-                            В данной таблице представлен список всего товара </p>
+                            В данной таблице представлен список всех продуктов </p>
                         <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
                             <tr>

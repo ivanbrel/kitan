@@ -1,14 +1,13 @@
 package by.ibrel.kitan.config.security;
 
+import by.ibrel.kitan.config.CommonConfig;
 import by.ibrel.kitan.config.DbConf;
-import by.ibrel.kitan.config.MessageConf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -31,20 +29,24 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DbConf dbConf;
+    private  DbConf dbConf;
+    @Autowired
+    private  CommonConfig commonConfig;
 
     @Autowired
-    private MessageConf messageConf;
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(myUserDetailsService());
+        auth.authenticationProvider(myAuthProvider());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/login_*", "/registration*", "/checkLogin*").permitAll()
+                .antMatchers("/resources/**", "/login_*", "/registration*", "/checkLogin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -60,7 +62,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .key("rememberKey")
-                .rememberMeServices(rememberMeServices());
+                .rememberMeServices(rememberMeServices())
+                .and()
+                .exceptionHandling().accessDeniedPage("/error/403");
 
     }
 
@@ -110,11 +114,17 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationFailureHandler getAuthenticationFailureHandler(){
-        return new CustomAuthenticationFailureHandler(messageConf.localeResolver(),messageConf.messageSource());
+        return new CustomAuthenticationFailureHandler(commonConfig.localeResolver(),commonConfig.messageSource());
     }
 
     @Bean
     public MySimpleUrlAuthenticationSuccessHandler handler(){
         return new MySimpleUrlAuthenticationSuccessHandler();
     }
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new MyUserDetailsService();
+    }
+
 }

@@ -12,8 +12,12 @@ import org.springframework.web.context.request.WebRequest;
  */
 public class CustomWebBindingInitializer implements WebBindingInitializer {
 
+    private final ConversionService conversionService;
+
     @Autowired
-    private ConversionService conversionService;
+    public CustomWebBindingInitializer(ConversionService conversionService) {
+        this.conversionService = conversionService;
+    }
 
     @Override
     public void initBinder(WebDataBinder webDataBinder, WebRequest webRequest) {

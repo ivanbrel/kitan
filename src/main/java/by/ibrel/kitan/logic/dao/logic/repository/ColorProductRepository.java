@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  * @author ibrel
  * @version 1.0 (23/11/16)
  */
-@Repository
 public interface ColorProductRepository extends JpaRepository<ColorProduct, Long> {
 
     @Query("SELECT c FROM ColorProduct c WHERE c.name = ?1")

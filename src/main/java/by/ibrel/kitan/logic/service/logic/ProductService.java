@@ -64,8 +64,15 @@ public class ProductService extends AbstractService<Product> implements IProduct
             image = iImageService.findOne(idImage);
         }
 
+        BigDecimal price = null;
+
+        //TODO control data
+        if (!productDto.getPricebyn().equals("")) {
+            price = new BigDecimal(productDto.getPricebyn());
+        }
+
         Product product = new Product(productDto.getNameProduct(), productDto.getModel(), colorProductService.findByName(productDto.getColor()),
-                productDto.getCountryProduct(), new BigDecimal(productDto.getPriceByn()), productDto.getBrand(),
+                productDto.getCountryProduct(), price, productDto.getBrand(),
                 productCategoryService.findByName(productDto.getCategory()), productDto.quantityConvert(productDto.getQuantity()), image);
 
         save(product);

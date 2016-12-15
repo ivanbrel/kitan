@@ -4,22 +4,21 @@ import by.ibrel.kitan.logic.dao.logic.entity.Product;
 import by.ibrel.kitan.logic.dao.logic.entity.dto.ProductDto;
 import by.ibrel.kitan.logic.service.logic.impl.*;
 import by.ibrel.kitan.web.controllers.AbstractController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,6 @@ public class ProductController extends AbstractController<Product>{
     private IProductService productService;
     private IImageService imageService;
     private IPriceService priceService;
-    private ServletContext servletContext;
     private IProductCategoryService productCategoryService;
     private IColorProductService colorProductService;
     private IShoppingCartService shoppingCartService;
@@ -49,14 +47,13 @@ public class ProductController extends AbstractController<Product>{
 
     @Autowired
     public ProductController(final IProductService productService, final IImageService imageService,
-                             final IPriceService priceService, final ServletContext servletContext,
-                             final IProductCategoryService productCategoryService, final IShoppingCartService shoppingCartService,
-                             final IColorProductService colorProductService, Environment environment) {
+                             final IPriceService priceService, final IProductCategoryService productCategoryService,
+                             final IShoppingCartService shoppingCartService, final IColorProductService colorProductService,
+                             Environment environment) {
         super(productService);
         this.productService = productService;
         this.imageService = imageService;
         this.priceService = priceService;
-        this.servletContext = servletContext;
         this.productCategoryService = productCategoryService;
         this.shoppingCartService = shoppingCartService;
         this.colorProductService = colorProductService;
@@ -86,7 +83,12 @@ public class ProductController extends AbstractController<Product>{
 
     @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
     public String deleteProduct(@PathVariable Long id, ModelMap model) throws IOException {
-        productService.delete(id,shoppingCartService.findAll());
+        try{
+            productService.delete(id,shoppingCartService.findAll());
+        }catch (Exception e){
+            model.addAttribute("fail", true);
+            return listProduct(model);
+        }
         return listProduct(model);
     }
 
@@ -105,17 +107,24 @@ public class ProductController extends AbstractController<Product>{
 
     @RequestMapping(value = {"/edit/{id}" }, method = RequestMethod.GET)
     public String initFormProduct(@PathVariable Long id, ModelMap model) {
-        return initForm(id,model, productCategoryService.findAll(),PRODUCT_EDIT_PAGE);
+        model.addAttribute("entity", productService.findOne(id));
+        model.addAttribute("lists", productCategoryService.findAll());
+        model.addAttribute("listColor", colorProductService.findAll());
+        return PRODUCT_EDIT_PAGE;
     }
 
-    @ResponseBody
-    @RequestMapping(value = {"/courses/converter" }, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BigDecimal> courses() {
-        List<BigDecimal> list = new ArrayList<>();
+    @RequestMapping(value = {"/courses/converter" },  method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody List<String> courses() {
+        List<String> list = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
 
         priceService.findAll().forEach(price -> {
-            list.add(price.getRubleBY());
-            list.add(price.getRubleRUS());
+            try {
+                list.add(mapper.writeValueAsString(price.getRubleBY()));
+                list.add(mapper.writeValueAsString(price.getRubleRUS()));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
         return list;
     }

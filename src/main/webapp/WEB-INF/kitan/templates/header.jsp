@@ -39,7 +39,7 @@
                         <ul class="nav child_menu">
                             <%--<li><a href="${ctx}/client/list"><spring:message code="info.word.createorder"/></a></li>--%>
                             <li><a href="${ctx}/client/list">Клиенты</a></li>
-                            <li><a href="${ctx}/product/list">Товар</a></li>
+                            <li><a href="${ctx}/product/list">Продукты</a></li>
                             <li><a href="${ctx}/cart/list">Заказы</a></li>
                         </ul>
                     </li>
@@ -69,7 +69,7 @@
                         <c:when test="${loggedIn}">
                         <li><a><i class="fa fa-desktop"></i><spring:message code="info.word.users"/><span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="${ctx}/admin/user/list">Список пользователе</a></li>
+                                <li><a href="${ctx}/admin/user/list">Список пользователей</a></li>
                                 <li><a href="${ctx}/admin/role/list">Список ролей</a></li>
                             </ul>
                         </li>
@@ -80,7 +80,7 @@
 
                     <li><a><i class="fa fa-table"></i> Остатки <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="">Показать остатки</a></li>
+                            <li><a href="${ctx}/product/list">Показать остатки</a></li>
                             <li><a href="">Вывести остатки</a></li>
                             <li><a href="">Архив фото</a></li>
                         </ul>
@@ -135,12 +135,12 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li><a href="${ctx}/user/edit"> Личный кабинет</a></li>
-                        <li>
-                            <a href="javascript:;">
-                                <%--<span class="badge bg-red pull-right">50%</span>--%>
-                                <span>Настройки</span>
-                            </a>
-                        </li>
+                        <%--<li>--%>
+                            <%--<a href="javascript:;">--%>
+                                <%--&lt;%&ndash;<span class="badge bg-red pull-right">50%</span>&ndash;%&gt;--%>
+                                <%--<span>Настройки</span>--%>
+                            <%--</a>--%>
+                        <%--</li>--%>
                         <li><a href="${ctx}/help">Помощь</a></li>
                         <li><a href="${ctx}/logout"><i class="fa fa-sign-out pull-right"></i> Выход</a></li>
                     </ul>

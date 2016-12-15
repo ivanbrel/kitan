@@ -39,10 +39,10 @@ public class MyUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        final String ip = getClientIp();
-        if (loginAttemptService.isBlocked(ip)){
-            throw new RuntimeException("blocked");
-        }
+//        final String ip = getClientIp();
+//        if (loginAttemptService.isBlocked(ip)){
+//            throw new RuntimeException("blocked");
+//        }
         try {
             final User user = userService.findByLogin(username);
             if (username == null) {

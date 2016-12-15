@@ -1,6 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="ctx" scope="request" value="${pageContext.request.contextPath}"/>
+
+<script>var ctx = "${ctx}";</script>
+<!-- jQuery -->
+<script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.min.js"></script>
+<script src="${ctx}/resources/js/registr.js" type="text/javascript" charset="utf8" ></script>
+
 <div class="right_col" role="main">
     <div class="">
 
@@ -10,6 +18,15 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
+                    <c:choose>
+                        <c:when test="${fail}">
+                            <div class="alert alert-danger">
+                                <strong><spring:message code="error"/></strong><spring:message code="error.user.notEmpty"/>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="x_title">
                         <h2>Список пользователей </h2>
                         <ul class="nav navbar-right panel_toolbox">
@@ -52,7 +69,7 @@
                             <c:forEach items="${users}" var="user">
                                 <tr>
                                     <td>
-                                        <a href="<c:url value="/resources/img/upload/avatar/${user.image.fileName}"/>" data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
+                                        <a data-toggle="lightbox" data-title="${product.nameProduct}" data-footer="${product.price}">
                                             <img src="<c:url value='/user/image/${user.id}'/>" class="avatar">
                                         </a>
                                     </td>
@@ -67,8 +84,8 @@
                                         </c:forEach>
                                     </td>
                                     <td>
-                                        <a href="<c:url value='/admin/user/edit/${user.id}'/>" title="Edit" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                        <%--<a href="<c:url value='/admin/user/edit/${user.id}'/>" title="Edit" class="btn btn-default btn-xs">--%>
+                                            <%--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>--%>
                                         </a>
                                         <a href="<c:url value='/admin/user/delete/${user.id}'/>" title="Delete" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

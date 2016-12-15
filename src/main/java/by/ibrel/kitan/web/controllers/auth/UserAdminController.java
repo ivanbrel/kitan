@@ -67,8 +67,13 @@ public class UserAdminController{
 
     @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
     public String deleteUser(@PathVariable Long id, ModelMap modelMap) {
-        userService.delete(id);
-        LOGGER.debug("Delete user with id : " + id);
+        try {
+            userService.delete(id);
+            LOGGER.debug("Delete user with id : " + id);
+        }catch (Exception e){
+            modelMap.addAttribute("fail", true);
+            return listUsers(modelMap);
+        }
         return listUsers(modelMap);
     }
 

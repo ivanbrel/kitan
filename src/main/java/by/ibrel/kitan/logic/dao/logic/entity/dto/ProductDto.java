@@ -39,7 +39,7 @@ public class ProductDto implements Serializable{
 
     @NotNull
     @Size(min = 1)
-    private String priceByn;
+    private String pricebyn;
 
     @NotNull
     @Size(min = 1)

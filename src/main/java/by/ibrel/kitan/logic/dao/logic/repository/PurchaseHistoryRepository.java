@@ -11,7 +11,6 @@ import java.util.List;
  * Created by ibrel on 07/07/16.
  *
  */
-@Repository
 public interface PurchaseHistoryRepository extends JpaRepository<PurchaseHistory, Long> {
 
     @Query("select p from PurchaseHistory p where p.shoppingCart = ?1")

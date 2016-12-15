@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  * Created by ibrel on 13/05/16.
  *
  */
-@Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("select c from Client c where c.name = ?1")

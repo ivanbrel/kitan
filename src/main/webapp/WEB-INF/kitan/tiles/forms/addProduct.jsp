@@ -5,7 +5,7 @@
 <!-- jQuery -->
 <script src="${ctx}/resources/bootstrap/vendors/jquery/dist/jquery.js"></script>
 <script src="${ctx}/resources/js/select2.full.js"></script>
-<%--<script src="${ctx}/resources/js/calc.js"></script>--%>
+<script src="${ctx}/resources/js/calc.js"></script>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -18,7 +18,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Добавить товар </h2>
+                        <h2>Добавить продукт </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30">
-                            Заполните форму для добавление нового товара
+                            Заполните форму для добавление нового продукта
                         </p>
 
                         <!-- start id-form -->
@@ -52,13 +52,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Модель </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Модель продукта</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="model" name="model" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет </label>
+                                <label for="color" class="control-label col-md-3 col-sm-3 col-xs-12">Цвет продукта</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select id="color" name="color" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                         <option value="${null}">Выберите цвет</option>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель </label>
+                                <label for="countryProduct" class="control-label col-md-3 col-sm-3 col-xs-12">Страна производитель продукта</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <%--<input id="countryProduct" name="countryProduct" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">--%>
                                         <select id="countryProduct" name="countryProduct" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
@@ -81,43 +81,45 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand">Бренд (Торговая марка)</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand">Бренд (Торговая марка) продукта</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="brand" name="brand" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория </label>
+                                <label for="category" class="control-label col-md-3 col-sm-3 col-xs-12">Категория продукта</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select id="category" name="category" class="js-example form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                            <option value="${null}">Выберите категорию товара</option>
+                                            <option value="${null}">Выберите категорию продукта</option>
                                             <c:forEach items="${listCategory}" var="list">
                                                 <option value="${list.name}">${list.name}</option>
                                             </c:forEach>
                                         </select>
                                 </div>
                             </div>
+                                <%--price--%>
                             <div class="form-group">
                                 <label for="priceByn" class="control-label col-md-3 col-sm-3 col-xs-12">Цена BYN</label>
                                 <div class="col-md-3 col-sm-6 col-xs-6">
-                                    <input id="priceByn" name="priceByn" class="date-picker form-control col-md-3 col-xs-6" type="number" onkeyup="calcItLocal('byr')" step="any" value="0">
+                                    <input id="pricebyn" name="pricebyn" class="date-picker form-control col-md-3 col-xs-6" type="number" onkeyup="calcItLocal('byr')" step="any">
                                 </div>
                             </div>
-                            <%--<div class="form-group">--%>
-                                <%--<label for="pricerus" class="control-label col-md-3 col-sm-3 col-xs-12">Цена RUB</label>--%>
-                                <%--<div class="col-md-3 col-sm-6 col-xs-6">--%>
-                                    <%--<input id="pricerus" name="rur" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('rur')" step="any" value="0">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="form-group">--%>
-                                <%--<label for="priceusd" class="control-label col-md-3 col-sm-3 col-xs-12">Цена USD</label>--%>
-                                <%--<div class="col-md-3 col-sm-6 col-xs-6">--%>
-                                    <%--<input id="priceusd" name="usd" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('usd')" value="1" step="any">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+                            <div class="form-group">
+                                <label for="pricerus" class="control-label col-md-3 col-sm-3 col-xs-12">Цена RUB</label>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <input id="pricerus" name="rur" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('rur')" step="any">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="priceusd" class="control-label col-md-3 col-sm-3 col-xs-12">Цена USD</label>
+                                <div class="col-md-3 col-sm-6 col-xs-6">
+                                    <input id="priceusd" name="usd" class="date-picker form-control col-md-7 col-xs-12" type="number" onkeyup="calcItLocal('usd')" step="any">
+                                </div>
+                            </div>
+                                <%--end price--%>
                             <div class="form-group">
                                 <label for="quantity" class="control-label col-md-3 col-sm-3 col-xs-12">Количество </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-3 col-sm-6 col-xs-6">
                                     <input id="quantity" name="quantity" class="date-picker form-control col-md-7 col-xs-12" type="number">
                                 </div>
                             </div>
